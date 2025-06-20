@@ -7,6 +7,7 @@ function App() {
         <p>mChat logo -- here --</p>
       </div>
       <h1>mChat Messaging</h1>
+      <Outlet />
     </>
   );
 }
