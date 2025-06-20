@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router';
 
 function App() {
-
   return (
     <>
       <div>
@@ -9,7 +8,7 @@ function App() {
       </div>
       <h1>mChat Messaging</h1>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
