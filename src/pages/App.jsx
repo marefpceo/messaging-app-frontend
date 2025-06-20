@@ -1,0 +1,13 @@
+function App() {
+
+  return (
+    <>
+      <div>
+        <p>mChat logo -- here --</p>
+      </div>
+      <h1>mChat Messaging</h1>
+    </>
+  )
+}
+
+export default App
