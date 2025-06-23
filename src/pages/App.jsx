@@ -3,7 +3,7 @@ import Header from '../sections/Header';
 
 function App() {
   return (
-    <div className='flex flex-col p-2 h-full'>
+    <div className='flex flex-col p-2 h-svh overflow-auto'>
       <Header />
       <Outlet />
     </div>
