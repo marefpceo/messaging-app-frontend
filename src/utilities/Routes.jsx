@@ -4,6 +4,7 @@ import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import Interface from '../pages/Interface';
 import Home from '../sections/Home';
+import Contacts from '../sections/Contacts';
 
 function Router() {
   const router = createBrowserRouter([
@@ -16,7 +17,10 @@ function Router() {
         {
           path: 'user',
           element: <Interface />,
-          children: [{ index: true, element: <Home /> }],
+          children: [
+            { index: true, element: <Home /> },
+            { path: 'contacts', element: <Contacts /> },
+          ],
         },
       ],
     },
