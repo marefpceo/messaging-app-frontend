@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { TextField, Button, Typography, Divider } from '@mui/material';
+import { TextField, Button, Divider } from '@mui/material';
 import { Link } from 'react-router';
 
 function Signup() {
