@@ -1,14 +1,20 @@
 import Box from '@mui/material/Box';
-import { TextField } from '@mui/material';
-import Button from '@mui/material';
+import { TextField, Button, Typography, Divider } from '@mui/material';
+import { Link } from 'react-router';
 
 function Signup() {
   return (
     <section className='mt-10 flex flex-col flex-1 items-center justify-start'>
-      <Box component='div' className='flex flex-col' sx={{ width: '80%' }}>
-        <h2 className='mb-2 text-2xl text-center'>Sign Up</h2>
+      <Box
+        component='div'
+        className='flex flex-col p-6'
+        borderRadius={3}
+        boxShadow={4}
+        sx={{ width: '90%' }}
+      >
+        <h1 className='text-2xl'>Sign up</h1>
 
-        <div className='inputDiv'>
+        <div className='inputDiv mt-4'>
           <TextField
             fullWidth
             id='firstname'
@@ -84,7 +90,22 @@ function Signup() {
           />
         </div>
 
-        <Button variant='contained'>Sumbit</Button>
+        <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
+          <Button variant='contained' color='primary'>
+            Sign up
+          </Button>
+        </div>
+
+        <Divider>or</Divider>
+
+        <div className='mt-8 text-center'>
+          <p>
+            Already have an account? &nbsp;
+            <Link to='/login' className='underline text-blue-600'>
+              Login
+            </Link>
+          </p>
+        </div>
       </Box>
     </section>
   );
