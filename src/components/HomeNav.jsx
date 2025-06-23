@@ -9,10 +9,22 @@ function HomeNav() {
   return (
     <>
       <BottomNavigation showLabels sx={{ bgcolor: 'transparent' }}>
-        <BottomNavigationAction label='Home' icon={<HomeIcon />} />
-        <BottomNavigationAction label='Contacts' icon={<GroupIcon />} />
-        <BottomNavigationAction label='Chat' icon={<ChatIcon />} />
-        <BottomNavigationAction labet='Settings' icon={<SettingsIcon />} />
+        <BottomNavigationAction href='/user' label='Home' icon={<HomeIcon />} />
+        <BottomNavigationAction
+          href='/user/contacts'
+          label='Contacts'
+          icon={<GroupIcon />}
+        />
+        <BottomNavigationAction
+          href='/user/chats'
+          label='Chat'
+          icon={<ChatIcon />}
+        />
+        <BottomNavigationAction
+          href='/user/settings'
+          label='Settings'
+          icon={<SettingsIcon />}
+        />
       </BottomNavigation>
     </>
   );
