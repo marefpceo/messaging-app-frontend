@@ -5,6 +5,8 @@ import Login from '../pages/Login';
 import Interface from '../pages/Interface';
 import Home from '../sections/Home';
 import Contacts from '../sections/Contacts';
+import Chat from '../sections/Chat';
+import Settings from '../sections/Settings';
 
 function Router() {
   const router = createBrowserRouter([
@@ -20,6 +22,8 @@ function Router() {
           children: [
             { index: true, element: <Home /> },
             { path: 'contacts', element: <Contacts /> },
+            { path: 'chat', element: <Chat /> },
+            { path: 'settings', element: <Settings /> },
           ],
         },
       ],

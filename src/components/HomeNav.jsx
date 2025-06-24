@@ -16,7 +16,7 @@ function HomeNav() {
           icon={<GroupIcon />}
         />
         <BottomNavigationAction
-          href='/user/chats'
+          href='/user/chat'
           label='Chat'
           icon={<ChatIcon />}
         />
