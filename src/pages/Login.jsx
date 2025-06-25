@@ -16,36 +16,39 @@ function Login() {
       >
         <h1 className='text-2xl'>Login</h1>
 
-        <div className='inputDiv mt-4'>
-          <TextField
-            fullWidth
-            id='email'
-            name='email'
-            type='email'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Email'
-            color='success'
-          />
-          <TextField
-            fullWidth
-            id='password'
-            name='password'
-            type='password'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Last Name'
-            color='success'
-          />
-        </div>
-
-        <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
-          <Button variant='contained' color='primary'>
-            Login
-          </Button>
-        </div>
+        <form>
+          <div className='inputDiv mt-4'>
+            <TextField
+              fullWidth
+              id='email'
+              name='email'
+              type='email'
+              variant='outlined'
+              size='small'
+              margin='dense'
+              label='Email'
+              color='success'
+              autoComplete='email'
+            />
+            <TextField
+              fullWidth
+              id='password'
+              name='password'
+              type='password'
+              variant='outlined'
+              size='small'
+              margin='dense'
+              label='Password'
+              color='success'
+              autoComplete='current-password'
+            />
+          </div>
+          <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
+            <Button variant='contained' color='primary'>
+              Login
+            </Button>
+          </div>
+        </form>
 
         <Divider>or</Divider>
 
