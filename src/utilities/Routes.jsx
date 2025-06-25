@@ -1,16 +1,16 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { useState } from 'react';
 import App from '../pages/App';
-import Signup from '../pages/Signup';
-import Login from '../pages/Login';
+import Signup from '../sections/Signup';
+import Login from '../sections/Login';
 import Interface from '../pages/Interface';
-import Home from '../sections/Home';
-import Contacts from '../sections/Contacts';
-import Chat from '../sections/Chat';
-import Settings from '../sections/Settings';
+import Home from '../sections/protected/Home';
+import Contacts from '../sections/protected/Contacts';
+import Chat from '../sections/protected/Chat';
+import Settings from '../sections/protected/Settings';
 
 function Router() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = createBrowserRouter([
     {
       path: '/',

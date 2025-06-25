@@ -1,4 +1,4 @@
-import HomeNav from '../components/HomeNav';
+import HomeNav from '../../components/HomeNav';
 import { Outlet } from 'react-router';
 
 function Home() {
