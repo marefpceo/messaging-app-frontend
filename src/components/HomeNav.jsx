@@ -4,6 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/Group';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function HomeNav() {
   return (
@@ -24,6 +25,11 @@ function HomeNav() {
           href='/user/settings'
           label='Settings'
           icon={<SettingsIcon />}
+        />
+        <BottomNavigationAction
+          href='#logout'
+          label='Logout'
+          icon={<LogoutIcon />}
         />
       </BottomNavigation>
     </>
