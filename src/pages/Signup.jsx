@@ -2,9 +2,13 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import { Link } from 'react-router';
+import { Link, Navigate } from 'react-router';
 
-function Signup() {
+function Signup({ isLoggedIn }) {
+  if (isLoggedIn) {
+    return <Navigate to={'/user'} replace />;
+  }
+
   return (
     <section className='mt-10 flex flex-col flex-1 items-center justify-start'>
       <Box
