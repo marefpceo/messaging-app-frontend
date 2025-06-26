@@ -5,6 +5,10 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
 function SignupForm({ userSignUp, handleChange }) {
+  const hasEmptyString = Object.values(userSignUp).some(
+    (value) => typeof value === 'string' && value === '',
+  );
+
   return (
     <Box
       component='div'
@@ -106,7 +110,7 @@ function SignupForm({ userSignUp, handleChange }) {
           />
         </div>
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
-          <Button variant='contained' color='primary'>
+          <Button variant='contained' color='primary' disabled={hasEmptyString}>
             Sign up
           </Button>
         </div>
