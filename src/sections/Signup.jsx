@@ -10,11 +10,53 @@ function Signup({ isLoggedIn }) {
     date_of_birth: '',
     username: '',
     password: '',
-    matchPassword: '',
+    confirmPassword: '',
   });
+
+  const [formErrors, setFormErrors] = useState({});
+
+  const [newUser, setNewUser] = useState('');
 
   if (isLoggedIn) {
     return <Navigate to={'/user'} replace />;
+  }
+
+  async function createNewUser() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/signup`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstname: userSignUp.firstname,
+            lastname: userSignUp.lastname,
+            email: userSignUp.email,
+            date_of_birth: userSignUp.date_of_birth,
+            username: userSignUp.username,
+            password: userSignUp.password,
+            confirmPassword: userSignUp.confirmPassword,
+          }),
+        },
+      );
+
+      const responseData = await response.json();
+
+      if (response.status === 400) {
+        setNewUser(responseData.formData);
+        setFormErrors(responseData.errors);
+        console.log(newUser);
+        console.log(formErrors);
+      }
+      if (response.status === 200) {
+        setNewUser(responseData.formData);
+        console.log(newUser);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function handleChange(e) {
@@ -23,12 +65,15 @@ function Signup({ isLoggedIn }) {
       ...prevData,
       [e.target.name]: value,
     }));
-    console.log(userSignUp);
   }
 
   return (
     <section className='mt-10 flex flex-col flex-1 items-center justify-start'>
-      <SignupForm userSignUp={userSignUp} handleChange={handleChange} />
+      <SignupForm
+        userSignUp={userSignUp}
+        handleChange={handleChange}
+        handleClick={createNewUser}
+      />
     </section>
   );
 }

@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
-function SignupForm({ userSignUp, handleChange }) {
+function SignupForm({ userSignUp, handleChange, handleClick }) {
   const hasEmptyString = Object.values(userSignUp).some(
     (value) => typeof value === 'string' && value === '',
   );
@@ -97,20 +97,25 @@ function SignupForm({ userSignUp, handleChange }) {
           />
           <TextField
             fullWidth
-            id='matchPassword'
-            name='matchPassword'
+            id='confirmPassword'
+            name='confirmPassword'
             variant='outlined'
             size='small'
             margin='dense'
             label='Confirm Password'
             type='password'
             color='success'
-            value={userSignUp.matchPassword}
+            value={userSignUp.confirmPassword}
             onChange={handleChange}
           />
         </div>
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
-          <Button variant='contained' color='primary' disabled={hasEmptyString}>
+          <Button
+            variant='contained'
+            color='primary'
+            disabled={hasEmptyString}
+            onClick={handleClick}
+          >
             Sign up
           </Button>
         </div>
