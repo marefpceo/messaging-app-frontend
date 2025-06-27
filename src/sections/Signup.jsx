@@ -15,6 +15,7 @@ function Signup({ isLoggedIn }) {
   });
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
+  const [errorStatuses, setErrorStatuses] = useState({});
   const [newUser, setNewUser] = useState('');
 
   if (isLoggedIn) {
@@ -48,16 +49,24 @@ function Signup({ isLoggedIn }) {
         setNewUser(responseData.formData);
         setFormErrors(responseData.errors);
         setIsErrorModalOpen(true);
-        console.log(newUser);
-        console.log(formErrors);
+        getErrorStatues(responseData.errors);
       }
       if (response.status === 200) {
         setNewUser(responseData.formData);
-        console.log(newUser);
       }
     } catch (error) {
       console.error(error);
     }
+  }
+
+  function getErrorStatues(inputArray) {
+    const newObject = {};
+    inputArray.forEach((item) => {
+      const key = item.path;
+      newObject[key] = true;
+    });
+
+    setErrorStatuses(newObject);
   }
 
   function handleChange(e) {
@@ -73,6 +82,7 @@ function Signup({ isLoggedIn }) {
       <>
         <SignupForm
           userSignUp={userSignUp}
+          errorStatuses={errorStatuses}
           handleChange={handleChange}
           handleClick={createNewUser}
         />

@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
-function SignupForm({ userSignUp, handleChange, handleClick }) {
+function SignupForm({ userSignUp, errorStatuses, handleChange, handleClick }) {
   const hasEmptyString = Object.values(userSignUp).some(
     (value) => typeof value === 'string' && value === '',
   );
@@ -32,6 +32,7 @@ function SignupForm({ userSignUp, handleChange, handleClick }) {
             color='success'
             value={userSignUp.firstname}
             onChange={handleChange}
+            error={errorStatuses.firstname || false}
           />
           <TextField
             fullWidth
@@ -44,6 +45,7 @@ function SignupForm({ userSignUp, handleChange, handleClick }) {
             color='success'
             value={userSignUp.lastname}
             onChange={handleChange}
+            error={errorStatuses.lastname || false}
           />
           <TextField
             fullWidth
@@ -57,6 +59,7 @@ function SignupForm({ userSignUp, handleChange, handleClick }) {
             color='success'
             value={userSignUp.email}
             onChange={handleChange}
+            error={errorStatuses.email || false}
           />
           <TextField
             fullWidth
@@ -69,6 +72,7 @@ function SignupForm({ userSignUp, handleChange, handleClick }) {
             color='success'
             value={userSignUp.date_of_birth}
             onChange={handleChange}
+            error={errorStatuses.date_of_birth || false}
           />
           <TextField
             fullWidth
@@ -81,6 +85,7 @@ function SignupForm({ userSignUp, handleChange, handleClick }) {
             color='success'
             value={userSignUp.username}
             onChange={handleChange}
+            error={errorStatuses.username || false}
           />
           <TextField
             fullWidth
@@ -94,6 +99,7 @@ function SignupForm({ userSignUp, handleChange, handleClick }) {
             color='success'
             value={userSignUp.password}
             onChange={handleChange}
+            error={errorStatuses.password || false}
           />
           <TextField
             fullWidth
@@ -107,6 +113,7 @@ function SignupForm({ userSignUp, handleChange, handleClick }) {
             color='success'
             value={userSignUp.confirmPassword}
             onChange={handleChange}
+            error={errorStatuses.confirmPassword || false}
           />
         </div>
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
