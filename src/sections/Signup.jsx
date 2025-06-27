@@ -1,5 +1,6 @@
-import { Link, Navigate } from 'react-router';
+import { Navigate } from 'react-router';
 import SignupForm from '../components/SignupForm';
+import SignupErrorModal from '../components/SignupErrorModal';
 import { useState } from 'react';
 
 function Signup({ isLoggedIn }) {
@@ -12,9 +13,8 @@ function Signup({ isLoggedIn }) {
     password: '',
     confirmPassword: '',
   });
-
-  const [formErrors, setFormErrors] = useState({});
-
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [formErrors, setFormErrors] = useState([]);
   const [newUser, setNewUser] = useState('');
 
   if (isLoggedIn) {
@@ -47,6 +47,7 @@ function Signup({ isLoggedIn }) {
       if (response.status === 400) {
         setNewUser(responseData.formData);
         setFormErrors(responseData.errors);
+        setIsErrorModalOpen(true);
         console.log(newUser);
         console.log(formErrors);
       }
@@ -69,11 +70,19 @@ function Signup({ isLoggedIn }) {
 
   return (
     <section className='mt-10 flex flex-col flex-1 items-center justify-start'>
-      <SignupForm
-        userSignUp={userSignUp}
-        handleChange={handleChange}
-        handleClick={createNewUser}
-      />
+      <>
+        <SignupForm
+          userSignUp={userSignUp}
+          handleChange={handleChange}
+          handleClick={createNewUser}
+        />
+
+        <SignupErrorModal
+          formErrors={formErrors}
+          isErrorModalOpen={isErrorModalOpen}
+          setIsErrorModalOpen={setIsErrorModalOpen}
+        />
+      </>
     </section>
   );
 }
