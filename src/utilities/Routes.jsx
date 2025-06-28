@@ -11,14 +11,25 @@ import Settings from '../sections/protected/Settings';
 
 function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [user, setUser] = useState({});
   const router = createBrowserRouter([
     {
       path: '/',
       element: <App />,
       children: [
         { index: true, Component: Login },
-        { path: 'signup', element: <Signup isLoggedIn={isLoggedIn} /> },
-        { path: 'login', element: <Login isLoggedIn={isLoggedIn} /> },
+        {
+          path: 'signup',
+          element: (
+            <Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          ),
+        },
+        {
+          path: 'login',
+          element: (
+            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          ),
+        },
       ],
     },
     {

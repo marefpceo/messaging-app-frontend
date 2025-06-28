@@ -28,6 +28,7 @@ function Signup({ isLoggedIn }) {
         `${import.meta.env.VITE_API_BASE_URL}/signup`,
         {
           method: 'POST',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           },
