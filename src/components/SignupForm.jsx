@@ -3,8 +3,15 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-function SignupForm({ userSignUp, errorStatuses, handleChange, handleClick }) {
+function SignupForm({
+  userSignUp,
+  setUserSignUp,
+  errorStatuses,
+  handleChange,
+  handleClick,
+}) {
   const hasEmptyString = Object.values(userSignUp).some(
     (value) => typeof value === 'string' && value === '',
   );
@@ -61,18 +68,28 @@ function SignupForm({ userSignUp, errorStatuses, handleChange, handleClick }) {
             onChange={handleChange}
             error={errorStatuses.email || false}
           />
-          <TextField
-            fullWidth
-            id='date_of_birth'
-            name='date_of_birth'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Date of Birth'
-            color='success'
+          <DatePicker
+            format='yyyy-MM-dd'
             value={userSignUp.date_of_birth}
-            onChange={handleChange}
-            error={errorStatuses.date_of_birth || false}
+            onChange={(newValue) =>
+              setUserSignUp({
+                ...userSignUp,
+                date_of_birth: newValue,
+              })
+            }
+            name='date_of_birth'
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                required: true,
+                id: 'date_of_birth',
+                variant: 'outlined',
+                size: 'small',
+                margin: 'dense',
+                color: 'success',
+                error: errorStatuses.date_of_birth || false,
+              },
+            }}
           />
           <TextField
             fullWidth

@@ -8,7 +8,7 @@ function Signup({ isLoggedIn }) {
     firstname: '',
     lastname: '',
     email: '',
-    date_of_birth: '',
+    date_of_birth: null,
     username: '',
     password: '',
     confirmPassword: '',
@@ -86,6 +86,7 @@ function Signup({ isLoggedIn }) {
           errorStatuses={errorStatuses}
           handleChange={handleChange}
           handleClick={createNewUser}
+          setUserSignUp={setUserSignUp}
         />
 
         <SignupErrorModal
