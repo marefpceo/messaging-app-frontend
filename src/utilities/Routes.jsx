@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { useState } from 'react';
 import App from '../pages/App';
 import Signup from '../sections/Signup';
 import Login from '../sections/Login';
@@ -10,8 +9,6 @@ import Chat from '../sections/protected/Chat';
 import Settings from '../sections/protected/Settings';
 
 function Router() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [user, setUser] = useState({});
   const router = createBrowserRouter([
     {
       path: '/',
@@ -20,19 +17,15 @@ function Router() {
         { index: true, Component: Login },
         {
           path: 'signup',
-          element: (
-            <Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-          ),
+          element: <Signup />,
         },
         {
           path: 'login',
-          element: (
-            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-          ),
+          element: <Login />,
         },
         {
           path: '/user',
-          element: <Interface isLoggedIn={isLoggedIn} />,
+          element: <Interface />,
           children: [
             { index: true, element: <Home /> },
             { path: 'contacts', element: <Contacts /> },

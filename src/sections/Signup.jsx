@@ -1,9 +1,12 @@
 import { Navigate } from 'react-router';
 import SignupForm from '../components/SignupForm';
 import SignupErrorModal from '../components/SignupErrorModal';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
-function Signup({ isLoggedIn }) {
+function Signup() {
+  const { user, setUser } = useContext(AuthContext);
+
   const [userSignUp, setUserSignUp] = useState({
     firstname: '',
     lastname: '',
@@ -18,8 +21,8 @@ function Signup({ isLoggedIn }) {
   const [errorStatuses, setErrorStatuses] = useState({});
   const [newUser, setNewUser] = useState('');
 
-  if (isLoggedIn) {
-    return <Navigate to={'/user'} replace />;
+  if (user) {
+    return <Navigate to={'/user'} replace={true} />;
   }
 
   async function createNewUser() {
