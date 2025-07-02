@@ -30,16 +30,16 @@ function Router() {
             <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           ),
         },
-      ],
-    },
-    {
-      path: '/user',
-      element: <Interface isLoggedIn={isLoggedIn} />,
-      children: [
-        { index: true, element: <Home /> },
-        { path: 'contacts', element: <Contacts /> },
-        { path: 'chat', element: <Chat /> },
-        { path: 'settings', element: <Settings /> },
+        {
+          path: '/user',
+          element: <Interface isLoggedIn={isLoggedIn} />,
+          children: [
+            { index: true, element: <Home /> },
+            { path: 'contacts', element: <Contacts /> },
+            { path: 'chat', element: <Chat /> },
+            { path: 'settings', element: <Settings /> },
+          ],
+        },
       ],
     },
   ]);
