@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from 'react-router';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 
 function Interface() {
   const authData = useContext(AuthContext);
+  const [user, setUser] = useState(authData.user, authData.setUser);
 
   console.log(authData.user);
   if (authData.user === null) {
@@ -12,7 +13,7 @@ function Interface() {
 
   return (
     <section className='flex flex-col p-2 h-svh overflow-auto'>
-      <Outlet />
+      <Outlet context={{ user, setUser }} />
     </section>
   );
 }

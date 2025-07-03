@@ -1,7 +1,9 @@
 import HomeNav from '../../components/HomeNav';
-import { Outlet } from 'react-router';
+import { Outlet, useOutletContext } from 'react-router';
 
 function Home() {
+  const { user } = useOutletContext();
+  console.log(user);
   return (
     <>
       <section className='flex-1'>
