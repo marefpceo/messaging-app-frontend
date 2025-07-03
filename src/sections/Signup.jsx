@@ -19,7 +19,7 @@ function Signup() {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
   const [errorStatuses, setErrorStatuses] = useState({});
-  const [newUser, setNewUser] = useState('');
+  const [newUserReturnData, setNewUserReturnData] = useState('');
 
   if (user) {
     return <Navigate to={'/user'} replace={true} />;
@@ -50,13 +50,18 @@ function Signup() {
       const responseData = await response.json();
 
       if (response.status === 400) {
-        setNewUser(responseData.formData);
+        setNewUserReturnData(responseData);
         setFormErrors(responseData.errors);
         setIsErrorModalOpen(true);
         getErrorStatues(responseData.errors);
       }
       if (response.status === 200) {
-        setNewUser(responseData.formData);
+        setUser({
+          id: responseData.id,
+          email: responseData.email,
+          username: responseData.username,
+        });
+        console.log(user);
       }
     } catch (error) {
       console.error(error);
@@ -90,6 +95,7 @@ function Signup() {
           handleChange={handleChange}
           handleClick={createNewUser}
           setUserSignUp={setUserSignUp}
+          newUserReturnData={newUserReturnData}
         />
 
         <SignupErrorModal
