@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import { useState } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 import Header from '../sections/Header';
 
 function App() {
@@ -8,10 +8,10 @@ function App() {
   console.log(user);
   return (
     <div className='flex flex-col p-2 h-svh overflow-auto'>
-      <AuthContext value={{ user, setUser }}>
+      <UserContext value={{ user, setUser }}>
         <Header />
         <Outlet />
-      </AuthContext>
+      </UserContext>
     </div>
   );
 }

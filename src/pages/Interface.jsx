@@ -1,9 +1,9 @@
 import { Outlet, Navigate } from 'react-router';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 
 function Interface() {
-  const authData = useContext(AuthContext);
+  const authData = useContext(UserContext);
   const [user, setUser] = useState(authData.user, authData.setUser);
 
   console.log(authData.user);
