@@ -1,13 +1,14 @@
 import { Outlet, Navigate } from 'react-router';
 import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import { AuthContext } from '../contexts/AuthContext';
 
-function Interface() {
-  const authData = useContext(UserContext);
-  const [user, setUser] = useState(authData.user, authData.setUser);
+function ProtectedInterface() {
+  const userData = useContext(UserContext);
+  const isAuthenticated = useContext(AuthContext);
+  const [user, setUser] = useState(userData.user, userData.setUser);
 
-  console.log(authData.user);
-  if (authData.user === null) {
+  if (!isAuthenticated) {
     return <Navigate to={'/'} replace={true} />;
   }
 
@@ -18,4 +19,4 @@ function Interface() {
   );
 }
 
-export default Interface;
+export default ProtectedInterface;

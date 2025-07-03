@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import App from '../pages/App';
 import Signup from '../sections/Signup';
 import Login from '../sections/Login';
-import Interface from '../pages/Interface';
+import ProtectedInterface from '../pages/ProtectedInterface';
 import Home from '../sections/protected/Home';
 import Contacts from '../sections/protected/Contacts';
 import Chat from '../sections/protected/Chat';
@@ -25,7 +25,7 @@ function Router() {
         },
         {
           path: '/user',
-          element: <Interface />,
+          element: <ProtectedInterface />,
           children: [
             { index: true, element: <Home /> },
             { path: 'contacts', element: <Contacts /> },
