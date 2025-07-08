@@ -3,10 +3,12 @@ import SignupForm from '../components/SignupForm';
 import SignupErrorModal from '../components/SignupErrorModal';
 import { useState, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 function Signup() {
   const { user, setUser } = useContext(UserContext);
-
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  console.log(user);
   const [userSignUp, setUserSignUp] = useState({
     firstname: '',
     lastname: '',
@@ -21,7 +23,7 @@ function Signup() {
   const [errorStatuses, setErrorStatuses] = useState({});
   const [newUserReturnData, setNewUserReturnData] = useState('');
 
-  if (user) {
+  if (isAuthenticated) {
     return <Navigate to={'/user'} replace={true} />;
   }
 
@@ -61,6 +63,7 @@ function Signup() {
           email: responseData.email,
           username: responseData.username,
         });
+        setIsAuthenticated(true);
         console.log(user);
       }
     } catch (error) {

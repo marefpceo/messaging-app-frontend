@@ -5,8 +5,12 @@ import { AuthContext } from '../contexts/AuthContext';
 
 function ProtectedInterface() {
   const userData = useContext(UserContext);
-  const isAuthenticated = useContext(AuthContext);
+  const authStatus = useContext(AuthContext);
   const [user, setUser] = useState(userData.user, userData.setUser);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    authStatus.isAuthenticated,
+    authStatus.setIsAuthenticated,
+  );
 
   if (!isAuthenticated) {
     return <Navigate to={'/'} replace={true} />;
