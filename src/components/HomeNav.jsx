@@ -5,8 +5,11 @@ import GroupIcon from '@mui/icons-material/Group';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useOutletContext } from 'react-router';
 
 function HomeNav() {
+  const { logout } = useOutletContext();
+
   return (
     <>
       <BottomNavigation showLabels sx={{ bgcolor: 'transparent' }}>
@@ -27,7 +30,7 @@ function HomeNav() {
           icon={<SettingsIcon />}
         />
         <BottomNavigationAction
-          href='#logout'
+          onClick={logout}
           label='Logout'
           icon={<LogoutIcon />}
         />
