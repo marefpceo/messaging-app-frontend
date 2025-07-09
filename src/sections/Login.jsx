@@ -1,14 +1,70 @@
-import { Navigate } from 'react-router';
+import { Navigate, replace, useNavigate } from 'react-router';
 import LoginForm from '../components/LoginForm';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 
-function Login({ isLoggedIn }) {
-  if (isLoggedIn) {
-    return <Navigate to={'/user'} replace />;
+function Login() {
+  const navigate = useNavigate();
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserContext);
+  const [userInput, setUserInput] = useState({
+    email: '',
+    password: '',
+  });
+
+  async function login() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/login`,
+        {
+          method: 'POST',
+          // credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: userInput.email,
+            password: userInput.password,
+          }),
+        },
+      );
+
+      const responseData = await response.json();
+
+      if (response.status === 200) {
+        setUser(responseData.user);
+        setIsAuthenticated(true);
+        navigate('/user', replace);
+        console.log(isAuthenticated);
+        console.log(user);
+      } else {
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function handleClick() {
+    login();
+  }
+
+  function handleChange(e) {
+    const value = e.target.value;
+    setUserInput((prevData) => ({
+      ...prevData,
+      [e.target.name]: value,
+    }));
   }
 
   return (
     <section className='mt-10 flex flex-col flex-1 items-center justify-start'>
-      <LoginForm />
+      <LoginForm
+        handleChange={handleChange}
+        handleClick={handleClick}
+        userInput={userInput}
+      />
     </section>
   );
 }

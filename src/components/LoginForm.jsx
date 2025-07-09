@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
-function LoginForm() {
+function LoginForm({ userInput, handleChange, handleClick }) {
   return (
     <Box
       component='div'
@@ -28,6 +28,8 @@ function LoginForm() {
             label='Email'
             color='success'
             autoComplete='email'
+            value={userInput.email}
+            onChange={handleChange}
           />
           <TextField
             fullWidth
@@ -40,10 +42,12 @@ function LoginForm() {
             label='Password'
             color='success'
             autoComplete='current-password'
+            value={userInput.password}
+            onChange={handleChange}
           />
         </div>
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
-          <Button variant='contained' color='primary'>
+          <Button variant='contained' color='primary' onClick={handleClick}>
             Login
           </Button>
         </div>
