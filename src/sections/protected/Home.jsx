@@ -3,6 +3,8 @@ import { Outlet, useOutletContext } from 'react-router';
 
 function Home() {
   const { user } = useOutletContext();
+  const { isAuthenticated } = useOutletContext();
+  console.log(isAuthenticated);
   console.log(user);
   return (
     <>
