@@ -19,7 +19,7 @@ function Login() {
         `${import.meta.env.VITE_API_BASE_URL}/login`,
         {
           method: 'POST',
-          // credentials: 'include',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           },
