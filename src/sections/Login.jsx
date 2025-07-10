@@ -58,7 +58,9 @@ function Login() {
     }));
   }
 
-  return (
+  return isAuthenticated ? (
+    <Navigate to={'/user'} />
+  ) : (
     <section className='mt-10 flex flex-col flex-1 items-center justify-start'>
       <LoginForm
         handleChange={handleChange}
