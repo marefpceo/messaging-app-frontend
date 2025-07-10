@@ -1,4 +1,4 @@
-import { Outlet, Navigate, useOutletContext, useLocation } from 'react-router';
+import { Outlet, Navigate, useLocation } from 'react-router';
 import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { AuthContext } from '../contexts/AuthContext';
@@ -6,18 +6,16 @@ import { AuthContext } from '../contexts/AuthContext';
 function ProtectedInterface() {
   const location = useLocation();
   const userData = useContext(UserContext);
-  const authStatus = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { isLoading } = useContext(AuthContext);
   const [user, setUser] = useState(userData.user, userData.setUser);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    authStatus.isAuthenticated,
-    authStatus.setIsAuthenticated,
-  );
-  const { logout } = useOutletContext();
 
-  return isAuthenticated ? (
+  return isLoading ? (
+    <div>Loading. . . </div>
+  ) : isAuthenticated ? (
     <section className='flex flex-col p-2 h-svh overflow-auto'>
       <Outlet
-        context={{ user, setUser, isAuthenticated, setIsAuthenticated, logout }}
+        context={{ user, setUser, isAuthenticated, setIsAuthenticated }}
       />
     </section>
   ) : (
