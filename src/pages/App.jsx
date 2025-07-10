@@ -1,11 +1,13 @@
-import { Outlet } from 'react-router';
+import { Outlet, replace, useNavigate } from 'react-router';
 import { useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { AuthProvider } from '../contexts/AuthContext';
 import Header from '../sections/Header';
 
 function App() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
+
   async function logout() {
     try {
       const response = await fetch(
@@ -18,9 +20,10 @@ function App() {
           },
         },
       );
-      const responseData = await response.json();
-
-      console.log(responseData);
+      if (response.status === 200) {
+        setUser(null);
+        navigate('/', replace);
+      }
     } catch (error) {
       console.error(error);
     }
