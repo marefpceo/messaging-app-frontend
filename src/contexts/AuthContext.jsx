@@ -5,6 +5,7 @@ const AuthContext = createContext(false);
 function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function verifySession() {
@@ -19,8 +20,15 @@ function AuthProvider({ children }) {
         const responseData = await response.json();
 
         if (responseData.status === 'active') {
-          console.log(responseData);
+          console.log(user);
           setIsAuthenticated(true);
+          if (user === null) {
+            setUser(responseData.user);
+            localStorage.setItem(
+              'settings',
+              JSON.stringify(responseData.user.settings),
+            );
+          }
         } else {
           setIsAuthenticated(false);
         }
@@ -33,7 +41,7 @@ function AuthProvider({ children }) {
     verifySession();
 
     console.log('AuthContext Triggered. Status: ' + isAuthenticated);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
 
   async function logout() {
     try {
@@ -57,7 +65,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext
-      value={{ isAuthenticated, setIsAuthenticated, isLoading, logout }}
+      value={{ isAuthenticated, setIsAuthenticated, isLoading, logout, user }}
     >
       {children}
     </AuthContext>
