@@ -12,6 +12,7 @@ function Login() {
     email: '',
     password: '',
   });
+  const [loginError, setLoginError] = useState(false);
 
   async function login() {
     try {
@@ -31,6 +32,10 @@ function Login() {
       );
 
       const responseData = await response.json();
+
+      if (response.status === 401) {
+        setLoginError(true);
+      }
 
       if (response.status === 200) {
         setUser(responseData.user);

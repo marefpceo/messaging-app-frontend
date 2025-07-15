@@ -33,14 +33,12 @@ function AuthProvider({ children }) {
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
     }
     verifySession();
-
-    console.log('AuthContext Triggered. Status: ' + isAuthenticated);
   }, [isAuthenticated, user]);
 
   async function logout() {
