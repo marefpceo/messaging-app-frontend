@@ -8,7 +8,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   return (
-    <div className='flex flex-col p-2 h-svh overflow-auto'>
+    <div className='flex flex-col h-svh overflow-auto'>
       <AuthProvider>
         <UserContext value={{ user, setUser }}>
           <Header />

@@ -13,7 +13,7 @@ function ProtectedInterface() {
   return isLoading ? (
     <div>Loading. . . </div>
   ) : isAuthenticated ? (
-    <section className='flex flex-col p-2 h-svh overflow-auto'>
+    <section className='flex flex-col h-svh overflow-auto'>
       <Outlet
         context={{ user, setUser, isAuthenticated, setIsAuthenticated }}
       />
