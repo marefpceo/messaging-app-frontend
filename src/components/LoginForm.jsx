@@ -48,6 +48,15 @@ function LoginForm({ userInput, handleChange, handleClick, loginError }) {
             error={loginError === true ? true : false}
           />
         </div>
+
+        {loginError === true ? (
+          <p className='text-red-500 text-center'>
+            Email or password incorrect
+          </p>
+        ) : (
+          ''
+        )}
+
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
           <Button variant='contained' color='primary' onClick={handleClick}>
             Login
