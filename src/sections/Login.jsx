@@ -52,6 +52,9 @@ function Login() {
   }
 
   function handleClick() {
+    if (loginError === true) {
+      setLoginError(false);
+    }
     login();
   }
 
@@ -71,6 +74,7 @@ function Login() {
         handleChange={handleChange}
         handleClick={handleClick}
         userInput={userInput}
+        loginError={loginError}
       />
     </section>
   );
