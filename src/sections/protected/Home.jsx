@@ -14,7 +14,7 @@ function Home() {
           <h2 className='text-2xl font'>Home</h2>
           <p>
             <i>
-              Welcome back <b>{user.username}</b>
+              Welcome back <b>{user?.username}</b>
             </i>
           </p>
         </div>
