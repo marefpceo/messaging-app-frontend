@@ -9,7 +9,7 @@ function Home() {
 
   return (
     <>
-      <section className='flex-1 p-2 bg-slate-100'>
+      <section className='flex flex-1 flex-col p-2 bg-slate-100'>
         <div className='home-header flex justify-between items-end'>
           <h2 className='text-2xl font'>Home</h2>
           <p>
@@ -19,8 +19,14 @@ function Home() {
           </p>
         </div>
 
-        <div className='homeBody min-h-full flex flex-col justify-center items-center'>
-          <p>No new messages</p>
+        <div className='homeBody h-full flex flex-col justify-evenly items-center'>
+          <div className='home-message'>
+            <p>No new messages</p>
+          </div>
+
+          <div className='home-contacts'>
+            <p>No new contact request</p>
+          </div>
         </div>
       </section>
       <HomeNav />
