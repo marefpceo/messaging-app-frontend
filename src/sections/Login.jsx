@@ -2,12 +2,10 @@ import { Navigate, replace, useNavigate } from 'react-router';
 import LoginForm from '../components/LoginForm';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-import { UserContext } from '../contexts/UserContext';
 
 function Login() {
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-  const { user, setUser } = useContext(UserContext);
+  const { user, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [userInput, setUserInput] = useState({
     email: '',
     password: '',
@@ -31,14 +29,11 @@ function Login() {
         },
       );
 
-      const responseData = await response.json();
-
       if (response.status === 401) {
         setLoginError(true);
       }
 
       if (response.status === 200) {
-        setUser(responseData.user);
         setIsAuthenticated(true);
         navigate('/user', replace);
         console.log(isAuthenticated);
