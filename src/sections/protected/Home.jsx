@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
+import InterfaceHeader from '../../components/InterfaceHeader';
 
 function Home() {
   const { user, isAuthenticated } = useContext(AuthContext);
@@ -10,14 +11,7 @@ function Home() {
   return (
     <>
       <section className='flex flex-1 flex-col p-2 bg-slate-100'>
-        <div className='home-header flex justify-between items-end'>
-          <h2 className='text-2xl font'>Home</h2>
-          <p>
-            <i>
-              Welcome back <b>{user?.username}</b>
-            </i>
-          </p>
-        </div>
+        <InterfaceHeader title={'Home'} message={'Welcome back '} user={user} />
 
         <div className='homeBody h-full flex flex-col justify-evenly items-center'>
           <div className='home-message'>
