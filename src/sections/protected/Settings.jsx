@@ -5,11 +5,13 @@ import InterfaceHeader from '../../components/InterfaceHeader';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import BackgroundColorSelector from '../../components/BackgroundColorSelector';
 
 function Settings() {
   const { user } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedColor, setSelectedColor] = useState('');
 
   useEffect(() => {
     async function getUserInfo() {
@@ -25,8 +27,8 @@ function Settings() {
 
         if (response.status === 200) {
           setUserInfo(responseData);
+          setSelectedColor(responseData.background);
         }
-        console.log(userInfo);
       } catch (error) {
         console.log(error);
       } finally {
@@ -34,34 +36,55 @@ function Settings() {
       }
     }
     getUserInfo();
-    console.log(userInfo);
   }, []);
 
   return (
     <>
-      <section className='flex flex-1 flex-col p-2 bg-slate-100'>
-        <InterfaceHeader title={'Settings'} user={user} />
+      {isLoading ? (
+        <p>. . . Loading</p>
+      ) : (
+        <section className='flex flex-1 flex-col p-2 bg-slate-100'>
+          <InterfaceHeader title={'Settings'} user={user} />
 
-        <div className='user-profile flex flex-col justify-center'>
-          <div className='flex justify-between items-center'>
-            <Avatar sx={{ width: 100, height: 100 }} />
-            <p className='mr-16 text-2xl'>
-              {userInfo.firstname} {userInfo.lastname}
-            </p>
+          <div className='user-profile flex flex-col justify-center'>
+            <div className='flex justify-between items-center'>
+              <Avatar sx={{ width: 100, height: 100 }} />
+              <p className='mr-16 text-2xl'>
+                {userInfo.firstname} {userInfo.lastname}
+              </p>
+            </div>
+            <div className='bio my-8'>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
+                repellat.
+              </p>
+            </div>
           </div>
-          <div className='bio my-8'>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-              repellat.
-            </p>
-          </div>
-        </div>
-        <Button variant='contained' fullWidth='false'>
-          Edit Bio
-        </Button>
+          <Button
+            variant='contained'
+            fullWidth='false'
+            className='w-1/3 self-end'
+          >
+            Edit Bio
+          </Button>
 
-        <Divider className='bg-amber-700' />
-      </section>
+          <Divider className='my-8 bg-slate-500' />
+
+          <div className='user-settings flex flex-col justify-between'>
+            <BackgroundColorSelector
+              selectedColor={selectedColor}
+              setSelectedColor={setSelectedColor}
+            />
+            <div>
+              <h2>Font Color: </h2>
+            </div>
+            <div>
+              <h2>Font Size: </h2>
+            </div>
+          </div>
+        </section>
+      )}
+
       <HomeNav />
     </>
   );
