@@ -36,23 +36,23 @@ function BackgroundColorSelector({
           onChange={handleChange}
         >
           <FormControlLabel
-            value='text-gray-500'
+            value='bg-gray-200'
             control={<Radio size='large' className='text-gray-500' />}
           />
           <FormControlLabel
-            value='text-slate-400'
+            value='bg-slate-200'
             control={<Radio size='large' className='text-slate-400' />}
           />
           <FormControlLabel
-            value='text-lime-400'
+            value='bg-lime-200'
             control={<Radio size='large' className='text-lime-400' />}
           />
           <FormControlLabel
-            value='text-red-400'
+            value='bg-red-200'
             control={<Radio size='large' className='text-red-400' />}
           />
           <FormControlLabel
-            value='text-white'
+            value='bg-white'
             control={<Radio size='large' className='text-white' />}
           />
         </RadioGroup>

@@ -50,7 +50,7 @@ function Settings() {
       {isLoading ? (
         <p>. . . Loading</p>
       ) : (
-        <section className='flex flex-1 flex-col p-2 bg-slate-100'>
+        <section className={`flex flex-1 flex-col p-2 ${selectedColor}`}>
           <InterfaceHeader title={'Settings'} user={user} />
 
           <div className='user-profile flex flex-col justify-center'>
@@ -101,7 +101,7 @@ function Settings() {
           <Button
             variant='contained'
             fullWidth='false'
-            className='w-1/3 self-end'
+            className='w-1/3 self-end mt-4'
             disabled={settingsChange === false ? true : false}
           >
             Save
