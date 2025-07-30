@@ -4,8 +4,16 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 
-function FontColorSelector({ selectedFontColor, setSelectedFontColor }) {
+function FontColorSelector({
+  selectedFontColor,
+  setSelectedFontColor,
+  settingsChange,
+  setSettingsChange,
+}) {
   function handleChange(e) {
+    if (settingsChange === false) {
+      setSettingsChange(true);
+    }
     setSelectedFontColor(e.target.value);
   }
 

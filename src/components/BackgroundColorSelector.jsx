@@ -4,8 +4,16 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 
-function BackgroundColorSelector({ selectedColor, setSelectedColor }) {
+function BackgroundColorSelector({
+  selectedColor,
+  setSelectedColor,
+  settingsChange,
+  setSettingsChange,
+}) {
   function handleChange(e) {
+    if (settingsChange === false) {
+      setSettingsChange(true);
+    }
     setSelectedColor(e.target.value);
   }
 
