@@ -7,13 +7,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import BackgroundColorSelector from '../../components/BackgroundColorSelector';
 import FontColorSelector from '../../components/FontColorSelector';
+import FontSizeSelector from '../../components/FontSizeSelector';
 
 function Settings() {
   const { user } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState('');
-  const [selectedFontColor, setSeletectedFontColor] = useState('');
+  const [selectedFontColor, setSelectedFontColor] = useState('');
+  const [selectedFontSize, setSelectedFontSize] = useState('');
+  const [settingsChange, setSettingsChange] = useState(false);
 
   useEffect(() => {
     async function getUserInfo() {
@@ -30,7 +33,8 @@ function Settings() {
         if (response.status === 200) {
           setUserInfo(responseData);
           setSelectedColor(responseData.background);
-          setSeletectedFontColor(responseData.color);
+          setSelectedFontColor(responseData.color);
+          setSelectedFontSize(responseData.font);
         }
       } catch (error) {
         console.log(error);
@@ -71,23 +75,37 @@ function Settings() {
             Edit Bio
           </Button>
 
-          <Divider className='my-8 bg-slate-500' />
+          <Divider className='my-6 bg-slate-500' />
 
-          <div className='user-settings flex flex-col justify-between'>
+          <div className='user-settings flex flex-col justify-between gap-4'>
             <BackgroundColorSelector
               selectedColor={selectedColor}
               setSelectedColor={setSelectedColor}
+              setSettingsChange={setSettingsChange}
+              settingsChange={settingsChange}
             />
-            <div>
-              <FontColorSelector
-                selectedFontColor={selectedFontColor}
-                setSelectedFontColor={setSeletectedFontColor}
-              />
-            </div>
-            <div>
-              <h2>Font Size: </h2>
-            </div>
+            <FontColorSelector
+              selectedFontColor={selectedFontColor}
+              setSelectedFontColor={setSelectedFontColor}
+              setSettingsChange={setSettingsChange}
+              settingsChange={settingsChange}
+            />
+            <FontSizeSelector
+              selectedFontSize={selectedFontSize}
+              setSelectedFontSize={setSelectedFontSize}
+              setSettingsChange={setSettingsChange}
+              settingsChange={settingsChange}
+            />
           </div>
+
+          <Button
+            variant='contained'
+            fullWidth='false'
+            className='w-1/3 self-end'
+            disabled={settingsChange === false ? true : false}
+          >
+            Save
+          </Button>
         </section>
       )}
 
