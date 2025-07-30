@@ -6,12 +6,14 @@ import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import BackgroundColorSelector from '../../components/BackgroundColorSelector';
+import FontColorSelector from '../../components/FontColorSelector';
 
 function Settings() {
   const { user } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState('');
+  const [selectedFontColor, setSeletectedFontColor] = useState('');
 
   useEffect(() => {
     async function getUserInfo() {
@@ -28,6 +30,7 @@ function Settings() {
         if (response.status === 200) {
           setUserInfo(responseData);
           setSelectedColor(responseData.background);
+          setSeletectedFontColor(responseData.color);
         }
       } catch (error) {
         console.log(error);
@@ -76,7 +79,10 @@ function Settings() {
               setSelectedColor={setSelectedColor}
             />
             <div>
-              <h2>Font Color: </h2>
+              <FontColorSelector
+                selectedFontColor={selectedFontColor}
+                setSelectedFontColor={setSeletectedFontColor}
+              />
             </div>
             <div>
               <h2>Font Size: </h2>
