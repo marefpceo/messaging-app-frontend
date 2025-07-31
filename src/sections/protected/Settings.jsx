@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import BackgroundColorSelector from '../../components/BackgroundColorSelector';
 import FontColorSelector from '../../components/FontColorSelector';
 import FontSizeSelector from '../../components/FontSizeSelector';
+import EditBioModal from '../../components/EditBioModal';
 
 function Settings() {
   const { user } = useContext(AuthContext);
@@ -17,6 +18,9 @@ function Settings() {
   const [selectedFontColor, setSelectedFontColor] = useState('');
   const [selectedFontSize, setSelectedFontSize] = useState('');
   const [settingsChange, setSettingsChange] = useState(false);
+  const [currentBio, setCurrentBio] = useState('');
+  const [open, setOpen] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   useEffect(() => {
     async function getUserInfo() {
@@ -35,22 +39,66 @@ function Settings() {
           setSelectedColor(responseData.background);
           setSelectedFontColor(responseData.color);
           setSelectedFontSize(responseData.font);
+          setCurrentBio(responseData.bio);
         }
       } catch (error) {
         console.log(error);
       } finally {
         setIsLoading(false);
+        setUpdated(false);
       }
     }
     getUserInfo();
-  }, []);
+  }, [updated]);
+
+  function handleOpen() {
+    setOpen(true);
+  }
+
+  function handleChange(e) {
+    setCurrentBio(e.target.value);
+  }
+
+  async function updateBio() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/${user.id}/edit_profile`,
+        {
+          credentials: 'include',
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            bio: currentBio,
+          }),
+        },
+      );
+
+      if (response.status === 200) {
+        setOpen(false);
+        setUpdated(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
       {isLoading ? (
         <p>. . . Loading</p>
       ) : (
-        <section className={`flex flex-1 flex-col p-2 ${selectedColor}`}>
+        <section
+          className={`flex flex-1 flex-col p-2 ${selectedColor} ${selectedFontColor} ${selectedFontSize}`}
+        >
+          <EditBioModal
+            currentBio={currentBio}
+            open={open}
+            setOpen={setOpen}
+            updateBio={updateBio}
+            handleChange={handleChange}
+          />
           <InterfaceHeader title={'Settings'} user={user} />
 
           <div className='user-profile flex flex-col justify-center'>
@@ -61,16 +109,14 @@ function Settings() {
               </p>
             </div>
             <div className='bio my-8'>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-                repellat.
-              </p>
+              <p>{userInfo.bio}</p>
             </div>
           </div>
           <Button
             variant='contained'
             fullWidth='false'
-            className='w-1/3 self-end'
+            className='w-1/3 self-end bg-green-600'
+            onClick={handleOpen}
           >
             Edit Bio
           </Button>
@@ -101,7 +147,7 @@ function Settings() {
           <Button
             variant='contained'
             fullWidth='false'
-            className='w-1/3 self-end mt-4'
+            className={`w-1/3 self-end mt-4 ${settingsChange === false ? '' : 'bg-green-600'}`}
             disabled={settingsChange === false ? true : false}
           >
             Save
