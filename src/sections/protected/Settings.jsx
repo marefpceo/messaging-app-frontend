@@ -9,6 +9,7 @@ import BackgroundColorSelector from '../../components/BackgroundColorSelector';
 import FontColorSelector from '../../components/FontColorSelector';
 import FontSizeSelector from '../../components/FontSizeSelector';
 import EditBioModal from '../../components/EditBioModal';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Settings() {
   const { user } = useContext(AuthContext);
@@ -115,7 +116,10 @@ function Settings() {
   return (
     <>
       {isLoading ? (
-        <p>. . . Loading</p>
+        <div className='flex flex-col flex-1 justify-center items-center self-center'>
+          <CircularProgress />
+          <p>. . . Loading</p>
+        </div>
       ) : (
         <section
           className={`flex flex-1 flex-col p-2 ${selectedColor} ${selectedFontColor} ${selectedFontSize}`}

@@ -1,6 +1,7 @@
 import { Outlet, Navigate, useLocation } from 'react-router';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function ProtectedInterface() {
   const location = useLocation();
@@ -8,7 +9,10 @@ function ProtectedInterface() {
     useContext(AuthContext);
 
   return isLoading ? (
-    <div>Loading. . . </div>
+    <div>
+      Loading. . .
+      <CircularProgress />
+    </div>
   ) : isAuthenticated ? (
     <section className='flex flex-col h-svh overflow-auto'>
       <Outlet context={{ isAuthenticated, setIsAuthenticated }} />
