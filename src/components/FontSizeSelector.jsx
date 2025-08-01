@@ -27,13 +27,13 @@ function FontSizeSelector({
   useEffect(() => {
     function convertFontSize() {
       switch (selectedFontSize) {
-        case 'small':
+        case 'text-sm':
           setConvertedSize(1);
           break;
-        case 'normal':
+        case 'text-base':
           setConvertedSize(2);
           break;
-        case 'large':
+        case 'text-lg':
           setConvertedSize(3);
           break;
       }
@@ -48,13 +48,13 @@ function FontSizeSelector({
 
     switch (e.target.value) {
       case 1:
-        setSelectedFontSize('small');
+        setSelectedFontSize('text-sm');
         break;
       case 2:
-        setSelectedFontSize('normal');
+        setSelectedFontSize('text-base');
         break;
       case 3:
-        setSelectedFontSize('large');
+        setSelectedFontSize('text-lg');
         break;
     }
   }

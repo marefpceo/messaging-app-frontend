@@ -84,6 +84,34 @@ function Settings() {
     }
   }
 
+  async function updateSettings() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/${user.id}/edit_profile`,
+        {
+          credentials: 'include',
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            bio: currentBio,
+            background: selectedColor,
+            font: selectedFontSize,
+            color: selectedFontColor,
+          }),
+        },
+      );
+
+      if (response.status === 200) {
+        setUpdated(true);
+        setSettingsChange(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
       {isLoading ? (
@@ -149,6 +177,7 @@ function Settings() {
             fullWidth='false'
             className={`w-1/3 self-end mt-4 ${settingsChange === false ? '' : 'bg-green-600'}`}
             disabled={settingsChange === false ? true : false}
+            onClick={updateSettings}
           >
             Save
           </Button>
