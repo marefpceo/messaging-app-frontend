@@ -2,10 +2,17 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
+import ContactTabPanel from '../../components/ContactTabPanel';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 function Contacts() {
   const { user } = useContext(AuthContext);
-  const [contactView, setContactView] = useState('user');
+  const [value, setValue] = useState(0);
+
+  function handleChange(e, newValue) {
+    setValue(newValue);
+  }
 
   return (
     <>
@@ -14,13 +21,20 @@ function Contacts() {
       >
         <InterfaceHeader title={'Contacts'} user={user} />
 
-        <div className='contacts-tab mt-4 h-full'>
-          <div className='tab-headers mt-4 py-2 flex justify-evenly text-center'>
-            <h2 className='w-1/2'>My Contacts</h2>
-            <h2 className='w-1/2'>All</h2>
-          </div>
-          <div className='contacts'></div>
+        <div className='contact-tabs mt-4 flex justify-center'>
+          <Tabs value={value} onChange={handleChange} aria-label='contact tabs'>
+            <Tab label='My Contacts' />
+            <Tab label='All' />
+          </Tabs>
         </div>
+
+        <ContactTabPanel value={value} index={0}>
+          List of my contacts
+        </ContactTabPanel>
+
+        <ContactTabPanel value={value} index={1}>
+          List of ALL contacts
+        </ContactTabPanel>
       </section>
       <HomeNav />
     </>
