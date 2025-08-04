@@ -9,9 +9,9 @@ function ProtectedInterface() {
     useContext(AuthContext);
 
   return isLoading ? (
-    <div>
-      Loading. . .
+    <div className='flex flex-col flex-1 justify-center items-center'>
       <CircularProgress />
+      Loading. . .
     </div>
   ) : isAuthenticated ? (
     <section className='flex flex-col h-svh overflow-auto'>
