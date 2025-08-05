@@ -3,9 +3,14 @@ import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import ContactTabPanel from '../../components/ContactTabPanel';
+import ContactList from '../../components/ContactList';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CircularProgress from '@mui/material/CircularProgress';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import GridView from '@mui/icons-material/GridView';
 
 const apiHeader = {
   credentials: 'include',
@@ -18,8 +23,9 @@ function Contacts() {
   const { user } = useContext(AuthContext);
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [contactList, setContactList] = useState([]);
-  const [userContacts, setUserContacts] = useState([]);
+  const [fullList, setFullList] = useState([]);
+  const [userContacts, setUserContacts] = useState();
+  const [currentView, setCurrentView] = useState('list');
 
   useEffect(() => {
     async function getContacts() {
@@ -36,7 +42,7 @@ function Contacts() {
         const userListData = await userList.json();
 
         if (fullList.ok && userList.ok) {
-          setContactList(fullListData);
+          setFullList(fullListData);
           setUserContacts(userListData);
         }
       } catch (error) {
@@ -52,6 +58,13 @@ function Contacts() {
     setValue(newValue);
   }
 
+  function handleView(e, newView) {
+    if (newView !== null) {
+      setCurrentView(newView);
+    }
+  }
+
+  console.log(userContacts);
   return (
     <>
       {isLoading ? (
@@ -65,6 +78,21 @@ function Contacts() {
         >
           <InterfaceHeader title={'Contacts'} user={user} />
 
+          <ToggleButtonGroup
+            value={currentView}
+            exclusive
+            onChange={handleView}
+            aria-label='contact list view'
+            className='mt-2'
+          >
+            <ToggleButton value={'list'} aria-label='list view'>
+              <ViewListIcon />
+            </ToggleButton>
+            <ToggleButton value={'icon'} aria-label='icon view'>
+              <GridView />
+            </ToggleButton>
+          </ToggleButtonGroup>
+
           <div className='contact-tabs mt-4 flex justify-center'>
             <Tabs
               value={value}
@@ -77,11 +105,17 @@ function Contacts() {
           </div>
 
           <ContactTabPanel value={value} index={0}>
-            List of my contacts
+            {typeof userContacts === 'object' ? (
+              <div className='flex justify-center'>
+                <p className='mt-24'>No saved contacts</p>
+              </div>
+            ) : (
+              <ContactList list={userContacts} currentView={currentView} />
+            )}
           </ContactTabPanel>
 
           <ContactTabPanel value={value} index={1}>
-            List of ALL contacts
+            <ContactList list={fullList} currentView={currentView} />
           </ContactTabPanel>
         </section>
       )}
