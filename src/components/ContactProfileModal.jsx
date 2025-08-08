@@ -7,20 +7,30 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
 
-function ContactProfileModal({ open, close }) {
+function ContactProfileModal({ open, close, selectedProfile }) {
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'lg'}>
       <CloseIcon
-        sx={{ position: 'absolute', right: 1, width: 40, height: 40 }}
+        sx={{
+          position: 'absolute',
+          top: '2%',
+          right: '2%',
+          width: 40,
+          height: 40,
+        }}
         onClick={close}
+        className='p-1 bg-lime-400 text-gray-700 rounded-4xl'
       />
-      <div className='flex flex-col items-center'>
+      <div className='flex flex-col items-center py-8'>
         <DialogTitle className='flex flex-col items-center'>
           <Avatar sx={{ width: 150, height: 150 }} />
-          <p className='mt-4'>User Name</p>
+          <p className='mt-4 text-2xl'>
+            {selectedProfile.firstname} {selectedProfile.lastname}
+          </p>
+          <p className='italic'>{selectedProfile.username}</p>
         </DialogTitle>
         <DialogContent>
-          <p>User's bio</p>
+          <p>{selectedProfile.bio}</p>
         </DialogContent>
         <DialogActions>
           <AddCircleOutlineIcon sx={{ width: 30, height: 30 }} />
