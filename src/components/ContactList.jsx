@@ -8,6 +8,7 @@ function ContactList({ list, currentView }) {
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState(null);
   const [selectedProfile, setSelectedProfile] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getUserInfo() {
@@ -35,6 +36,8 @@ function ContactList({ list, currentView }) {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
     getUserInfo();
@@ -57,6 +60,7 @@ function ContactList({ list, currentView }) {
         open={open}
         close={handleClose}
         selectedProfile={selectedProfile}
+        isLoading={isLoading}
       />
       <div
         className={`contact-list mt-8 ${currentView === 'list' ? 'ml-2' : 'grid grid-cols-2 gap-4'}`}

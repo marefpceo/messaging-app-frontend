@@ -20,7 +20,6 @@ function AuthProvider({ children }) {
         const responseData = await response.json();
 
         if (responseData.status === 'active') {
-          console.log(user);
           setIsAuthenticated(true);
           if (user === null) {
             setUser(responseData.user);

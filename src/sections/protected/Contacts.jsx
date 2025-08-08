@@ -64,7 +64,6 @@ function Contacts() {
     }
   }
 
-  console.log(userContacts);
   return (
     <>
       {isLoading ? (
