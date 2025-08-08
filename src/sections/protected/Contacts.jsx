@@ -24,7 +24,7 @@ function Contacts() {
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fullList, setFullList] = useState([]);
-  const [userContacts, setUserContacts] = useState();
+  const [userContacts, setUserContacts] = useState([]);
   const [currentView, setCurrentView] = useState('list');
 
   useEffect(() => {
@@ -42,10 +42,12 @@ function Contacts() {
         const userListData = await userList.json();
 
         if (fullList.ok && userList.ok) {
-          const filteredList = fullListData.filter(
-            (item) => item['id'] !== user.id,
+          const filteredFullList = fullListData.filter(
+            (item) =>
+              item['id'] !== user.id &&
+              ((item) => !userListData.includes(item)),
           );
-          setFullList(filteredList);
+          setFullList(filteredFullList);
           setUserContacts(userListData);
         }
       } catch (error) {
