@@ -42,7 +42,10 @@ function Contacts() {
         const userListData = await userList.json();
 
         if (fullList.ok && userList.ok) {
-          setFullList(fullListData);
+          const filteredList = fullListData.filter(
+            (item) => item['id'] !== user.id,
+          );
+          setFullList(filteredList);
           setUserContacts(userListData);
         }
       } catch (error) {
