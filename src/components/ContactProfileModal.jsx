@@ -3,10 +3,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Avatar from '@mui/material/Avatar';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
+import IconButton from '@mui/material/IconButton';
 
 function ContactProfileModal({
   open,
@@ -14,6 +15,7 @@ function ContactProfileModal({
   selectedProfile,
   isLoading,
   isListTypeFull,
+  addContact,
 }) {
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'lg'}>
@@ -46,9 +48,22 @@ function ContactProfileModal({
             <DialogActions>
               <>
                 {isListTypeFull ? (
-                  <AddCircleOutlineIcon sx={{ width: 30, height: 30 }} />
+                  <IconButton
+                    aria-label='add contact'
+                    size='large'
+                    className='text-gray-700 bg-lime-400'
+                    onClick={addContact}
+                  >
+                    <PersonAddIcon sx={{ width: 30, height: 30 }} />
+                  </IconButton>
                 ) : (
-                  <RemoveCircleOutlineIcon sx={{ width: 30, height: 30 }} />
+                  <IconButton
+                    aria-label='remove contact'
+                    size='large'
+                    className='text-gray-700 bg-lime-400'
+                  >
+                    <PersonRemoveIcon sx={{ width: 30, height: 30 }} />
+                  </IconButton>
                 )}
               </>
             </DialogActions>
