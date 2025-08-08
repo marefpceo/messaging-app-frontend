@@ -8,7 +8,13 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
 
-function ContactProfileModal({ open, close, selectedProfile, isLoading }) {
+function ContactProfileModal({
+  open,
+  close,
+  selectedProfile,
+  isLoading,
+  isListTypeFull,
+}) {
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'lg'}>
       {isLoading ? (
@@ -38,8 +44,13 @@ function ContactProfileModal({ open, close, selectedProfile, isLoading }) {
               <p>{selectedProfile.bio}</p>
             </DialogContent>
             <DialogActions>
-              <AddCircleOutlineIcon sx={{ width: 30, height: 30 }} />
-              <RemoveCircleOutlineIcon sx={{ width: 30, height: 30 }} />
+              <>
+                {isListTypeFull ? (
+                  <AddCircleOutlineIcon sx={{ width: 30, height: 30 }} />
+                ) : (
+                  <RemoveCircleOutlineIcon sx={{ width: 30, height: 30 }} />
+                )}
+              </>
             </DialogActions>
           </div>
         </>

@@ -114,12 +114,20 @@ function Contacts() {
                 <p className='mt-24'>No saved contacts</p>
               </div>
             ) : (
-              <ContactList list={userContacts} currentView={currentView} />
+              <ContactList
+                list={userContacts}
+                currentView={currentView}
+                isListTypeFull={false}
+              />
             )}
           </ContactTabPanel>
 
           <ContactTabPanel value={value} index={1}>
-            <ContactList list={fullList} currentView={currentView} />
+            <ContactList
+              list={fullList}
+              currentView={currentView}
+              isListTypeFull={true}
+            />
           </ContactTabPanel>
         </section>
       )}
