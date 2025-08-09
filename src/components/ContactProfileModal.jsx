@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,6 +9,7 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
+import { AuthContext } from '../contexts/AuthContext';
 
 function ContactProfileModal({
   open,
@@ -15,8 +17,32 @@ function ContactProfileModal({
   selectedProfile,
   isLoading,
   isListTypeFull,
-  addContact,
 }) {
+  const { user } = useContext(AuthContext);
+
+  console.log(user);
+  async function addContact() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/contact/add`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            currentUser: user.username,
+            addUser: selectedProfile.username,
+          }),
+        },
+      );
+
+      if (response.status === 200) {
+        close();
+      }
+    } catch (error) {}
+  }
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'lg'}>
       {isLoading ? (

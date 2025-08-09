@@ -54,11 +54,6 @@ function ContactList({ list, currentView, isListTypeFull }) {
     setUserId(null);
   }
 
-  function addContact() {
-    setOpen(false);
-    setUserId(null);
-  }
-
   return (
     <>
       <ContactProfileModal
@@ -67,7 +62,6 @@ function ContactList({ list, currentView, isListTypeFull }) {
         selectedProfile={selectedProfile}
         isLoading={isLoading}
         isListTypeFull={isListTypeFull}
-        addContact={addContact}
       />
       <div
         className={`contact-list mt-8 ${currentView === 'list' ? 'ml-2' : 'grid grid-cols-2 gap-4'}`}
