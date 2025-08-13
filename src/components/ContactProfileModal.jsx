@@ -47,6 +47,33 @@ function ContactProfileModal({
       setShouldReload(true);
     }
   }
+
+  async function removeContact() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/contact/${user.username}/delete`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contactToRemove: selectedProfile.username,
+          }),
+        },
+      );
+
+      if (response.status === 200) {
+        close();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setShouldReload(true);
+    }
+  }
+
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'lg'}>
       {isLoading ? (
@@ -91,6 +118,7 @@ function ContactProfileModal({
                     aria-label='remove contact'
                     size='medium'
                     className='text-red-500 border border-gray-400'
+                    onClick={removeContact}
                   >
                     <PersonRemoveIcon sx={{ width: 30, height: 30 }} />
                   </IconButton>
