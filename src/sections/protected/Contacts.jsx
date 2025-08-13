@@ -21,7 +21,7 @@ const apiHeader = {
 
 function Contacts() {
   const { user } = useContext(AuthContext);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [fullList, setFullList] = useState([]);
   const [userContacts, setUserContacts] = useState();
@@ -57,6 +57,7 @@ function Contacts() {
                 ),
             );
             setFullList(filteredFullWithUserList);
+            setValue(0);
           } else {
             setFullList(filteredFullList);
           }
