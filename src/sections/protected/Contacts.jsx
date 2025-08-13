@@ -26,6 +26,7 @@ function Contacts() {
   const [fullList, setFullList] = useState([]);
   const [userContacts, setUserContacts] = useState();
   const [currentView, setCurrentView] = useState('list');
+  const [shouldReload, setShouldReload] = useState(false);
 
   useEffect(() => {
     async function getContacts() {
@@ -65,10 +66,11 @@ function Contacts() {
         console.error(error);
       } finally {
         setIsLoading(false);
+        setShouldReload(false);
       }
     }
     getContacts();
-  }, [user.id]);
+  }, [user.id, shouldReload]);
 
   function handleChange(e, newValue) {
     setValue(newValue);
@@ -130,6 +132,7 @@ function Contacts() {
                 list={userContacts}
                 currentView={currentView}
                 isListTypeFull={false}
+                setShouldReload={setShouldReload}
               />
             )}
           </ContactTabPanel>
@@ -139,6 +142,7 @@ function Contacts() {
               list={fullList}
               currentView={currentView}
               isListTypeFull={true}
+              setShouldReload={setShouldReload}
             />
           </ContactTabPanel>
         </section>

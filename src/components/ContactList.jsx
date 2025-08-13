@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import ContactProfileModal from './ContactProfileModal';
 
-function ContactList({ list, currentView, isListTypeFull }) {
+function ContactList({ list, currentView, isListTypeFull, setShouldReload }) {
   const listview = 'flex gap-8 items-center';
   const iconview = 'flex flex-col gap-3 items-center';
   const [open, setOpen] = useState(false);
@@ -62,6 +62,7 @@ function ContactList({ list, currentView, isListTypeFull }) {
         selectedProfile={selectedProfile}
         isLoading={isLoading}
         isListTypeFull={isListTypeFull}
+        setShouldReload={setShouldReload}
       />
       <div
         className={`contact-list mt-8 ${currentView === 'list' ? 'ml-2' : 'grid grid-cols-2 gap-4'}`}

@@ -17,6 +17,7 @@ function ContactProfileModal({
   selectedProfile,
   isLoading,
   isListTypeFull,
+  setShouldReload,
 }) {
   const { user } = useContext(AuthContext);
 
@@ -42,6 +43,8 @@ function ContactProfileModal({
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setShouldReload(true);
     }
   }
   return (
