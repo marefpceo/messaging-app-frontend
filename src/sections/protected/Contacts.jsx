@@ -24,7 +24,7 @@ function Contacts() {
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fullList, setFullList] = useState([]);
-  const [userContacts, setUserContacts] = useState([]);
+  const [userContacts, setUserContacts] = useState();
   const [currentView, setCurrentView] = useState('list');
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function Contacts() {
         const [fullList, userList] = await Promise.all([
           fetch(`${import.meta.env.VITE_API_BASE_URL}/contact`, apiHeader),
           fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/contact/${user.id}/contact_list`,
+            `${import.meta.env.VITE_API_BASE_URL}/contact/${user.username}/contact_list`,
             apiHeader,
           ),
         ]);
@@ -43,11 +43,17 @@ function Contacts() {
 
         if (fullList.ok && userList.ok) {
           const filteredFullList = fullListData.filter(
-            (item) =>
-              item['id'] !== user.id &&
-              ((item) => !userListData.includes(item)),
+            (item) => item['id'] !== user.id,
           );
-          setFullList(filteredFullList);
+
+          if (userListData.length > 0) {
+            const filteredFullWithUserList = filteredFullList.filter(
+              (item) => !userListData.includes(item),
+            );
+            setFullList(filteredFullWithUserList);
+          } else {
+            setFullList(filteredFullList);
+          }
           setUserContacts(userListData);
         }
       } catch (error) {
@@ -58,6 +64,9 @@ function Contacts() {
     }
     getContacts();
   }, [user.id]);
+
+  console.log(userContacts);
+  console.log(fullList);
 
   function handleChange(e, newValue) {
     setValue(newValue);
@@ -109,7 +118,7 @@ function Contacts() {
           </div>
 
           <ContactTabPanel value={value} index={0}>
-            {typeof userContacts === 'object' ? (
+            {typeof userContacts !== 'object' ? (
               <div className='flex justify-center'>
                 <p className='mt-24'>No saved contacts</p>
               </div>
