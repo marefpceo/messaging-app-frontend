@@ -89,8 +89,8 @@ function ContactProfileModal({
                 ) : (
                   <IconButton
                     aria-label='remove contact'
-                    size='large'
-                    className='text-gray-700 bg-lime-400'
+                    size='medium'
+                    className='text-red-500 border border-gray-400'
                   >
                     <PersonRemoveIcon sx={{ width: 30, height: 30 }} />
                   </IconButton>
