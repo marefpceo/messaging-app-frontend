@@ -89,7 +89,8 @@ function Contacts() {
         </div>
       ) : (
         <section
-          className={`flex flex-1 flex-col p-2 ${user.settings.background} ${user.settings.color} ${user.settings.font}`}
+          className={`flex flex-1 flex-col p-2 ${user.settings.background} ${user.settings.color} 
+            ${user.settings.font}`}
         >
           <InterfaceHeader title={'Contacts'} user={user} />
 
