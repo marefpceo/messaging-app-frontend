@@ -20,7 +20,6 @@ function ContactProfileModal({
 }) {
   const { user } = useContext(AuthContext);
 
-  console.log(user);
   async function addContact() {
     try {
       const response = await fetch(
@@ -41,7 +40,9 @@ function ContactProfileModal({
       if (response.status === 200) {
         close();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'lg'}>

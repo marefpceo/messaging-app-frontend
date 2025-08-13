@@ -42,13 +42,18 @@ function Contacts() {
         const userListData = await userList.json();
 
         if (fullList.ok && userList.ok) {
+          // Removes current user from All contacts list
           const filteredFullList = fullListData.filter(
             (item) => item['id'] !== user.id,
           );
 
+          // Removes contacts of the current user
           if (userListData.length > 0) {
             const filteredFullWithUserList = filteredFullList.filter(
-              (item) => !userListData.includes(item),
+              (fullFiltered) =>
+                !userListData.some(
+                  (userObjects) => userObjects.id === fullFiltered.id,
+                ),
             );
             setFullList(filteredFullWithUserList);
           } else {
@@ -64,9 +69,6 @@ function Contacts() {
     }
     getContacts();
   }, [user.id]);
-
-  console.log(userContacts);
-  console.log(fullList);
 
   function handleChange(e, newValue) {
     setValue(newValue);
