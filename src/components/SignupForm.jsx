@@ -16,6 +16,12 @@ function SignupForm({
     (value) => typeof value === 'string' && value === '',
   );
 
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
+  }
+
   return (
     <Box
       component='div'
@@ -40,6 +46,7 @@ function SignupForm({
             value={userSignUp.firstname}
             onChange={handleChange}
             error={errorStatuses.firstname || false}
+            onKeyDown={handleKeyDown}
           />
           <TextField
             fullWidth
@@ -52,6 +59,7 @@ function SignupForm({
             color='success'
             value={userSignUp.lastname}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             error={errorStatuses.lastname || false}
           />
           <TextField
@@ -66,6 +74,7 @@ function SignupForm({
             color='success'
             value={userSignUp.email}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             error={errorStatuses.email || false}
           />
           <DatePicker
@@ -102,6 +111,7 @@ function SignupForm({
             color='success'
             value={userSignUp.username}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             error={errorStatuses.username || false}
           />
           <TextField
@@ -116,6 +126,7 @@ function SignupForm({
             color='success'
             value={userSignUp.password}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             error={errorStatuses.password || false}
           />
           <TextField
@@ -130,6 +141,7 @@ function SignupForm({
             color='success'
             value={userSignUp.confirmPassword}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             error={errorStatuses.confirmPassword || false}
           />
         </div>
@@ -139,6 +151,7 @@ function SignupForm({
             color='primary'
             disabled={hasEmptyString}
             onClick={handleClick}
+            onKeyDown={handleKeyDown}
           >
             Sign up
           </Button>

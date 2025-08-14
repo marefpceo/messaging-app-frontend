@@ -5,6 +5,12 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
 function LoginForm({ userInput, handleChange, handleClick, loginError }) {
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
+  }
+
   return (
     <Box
       component='div'
@@ -31,6 +37,7 @@ function LoginForm({ userInput, handleChange, handleClick, loginError }) {
             value={userInput.email}
             onChange={handleChange}
             error={loginError === true ? true : false}
+            onKeyDown={handleKeyDown}
           />
           <TextField
             fullWidth
@@ -46,6 +53,7 @@ function LoginForm({ userInput, handleChange, handleClick, loginError }) {
             value={userInput.password}
             onChange={handleChange}
             error={loginError === true ? true : false}
+            onKeyDown={handleKeyDown}
           />
         </div>
 
@@ -58,7 +66,12 @@ function LoginForm({ userInput, handleChange, handleClick, loginError }) {
         )}
 
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
-          <Button variant='contained' color='primary' onClick={handleClick}>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+          >
             Login
           </Button>
         </div>
