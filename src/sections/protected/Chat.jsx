@@ -44,6 +44,10 @@ function Chat() {
     getMessages();
   }, []);
 
+  function handleCreateNewMessage() {
+    console.log('New Message');
+  }
+
   return (
     <>
       <div className='flex flex-col flex-1 p-2 bg-slate-100'>
@@ -68,7 +72,9 @@ function Chat() {
       {matches ? (
         <IconButton
           aria-label='create new message'
-          className='absolute right-4 bottom-20 text-gray-700 border border-gray-200 text-md shadow-lg shadow-gray-600'
+          className='absolute right-4 bottom-20 text-gray-700 border border-gray-200 text-md 
+            shadow-lg shadow-gray-600'
+          onClick={handleCreateNewMessage}
         >
           <ChatBubbleIcon className='text-lime-600 text-2xl' />
         </IconButton>
@@ -76,7 +82,9 @@ function Chat() {
         <Button
           variant='outlined'
           startIcon={<ChatBubbleIcon className='text-lime-600 text-2xl' />}
-          className='absolute right-4 bottom-20 text-gray-700 border-gray-300 text-md shadow shadow-gray-600'
+          className='absolute right-4 bottom-20 text-gray-700 border-gray-300 text-md shadow 
+            shadow-gray-600'
+          onClick={handleCreateNewMessage}
         >
           New Chat
         </Button>
