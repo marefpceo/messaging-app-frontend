@@ -18,7 +18,31 @@ const apiHeader = {
 function Chat() {
   const { user } = useContext(AuthContext);
   const matches = useMediaQuery('(max-width:600px)');
+  const [isLoading, setIsLoading] = useState(true);
   const [messageList, setMessageList] = useState(null);
+
+  useEffect(() => {
+    async function getMessages() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/conversations`,
+          apiHeader,
+        );
+
+        const responseData = await response.json();
+
+        if (response.ok) {
+          setMessageList(responseData);
+          console.log(responseData);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getMessages();
+  }, []);
 
   return (
     <>
@@ -26,7 +50,7 @@ function Chat() {
         <InterfaceHeader title={'Chat'} user={user} />
 
         <div className='homeBody min-h-full flex flex-col justify-center items-center'>
-          {messageList === null ? <p>No Messages</p> : <p>Message List</p>}
+          {messageList.length === 0 ? <p>No Messages</p> : <p>Message List</p>}
         </div>
       </div>
 
