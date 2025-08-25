@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -19,7 +19,7 @@ function Chat() {
   const { user } = useContext(AuthContext);
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
-  const [messageList, setMessageList] = useState(null);
+  const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
     async function getMessages() {
@@ -49,9 +49,20 @@ function Chat() {
       <div className='flex flex-col flex-1 p-2 bg-slate-100'>
         <InterfaceHeader title={'Chat'} user={user} />
 
-        <div className='homeBody min-h-full flex flex-col justify-center items-center'>
-          {messageList.length === 0 ? <p>No Messages</p> : <p>Message List</p>}
-        </div>
+        {isLoading ? (
+          <div className='flex flex-col flex-1 justify-center items-center'>
+            <CircularProgress />
+            <p>Loading</p>
+          </div>
+        ) : (
+          <div className='homeBody min-h-full flex flex-col justify-center items-center'>
+            {messageList.length === 0 ? (
+              <p>No Messages</p>
+            ) : (
+              <p>Message List</p>
+            )}
+          </div>
+        )}
       </div>
 
       {matches ? (
