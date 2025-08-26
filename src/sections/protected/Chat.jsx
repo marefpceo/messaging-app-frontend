@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
+import CreateMessageModal from '../../components/CreateMessageModal';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';
@@ -20,6 +21,7 @@ function Chat() {
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
   const [messageList, setMessageList] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     async function getMessages() {
@@ -45,11 +47,12 @@ function Chat() {
   }, []);
 
   function handleCreateNewMessage() {
-    console.log('New Message');
+    setOpen(true);
   }
 
   return (
     <>
+      <CreateMessageModal open={open} setOpen={setOpen} />
       <div className='flex flex-col flex-1 p-2 bg-slate-100'>
         <InterfaceHeader title={'Chat'} user={user} />
 
