@@ -74,7 +74,6 @@ function Chat() {
 
       {matches ? (
         <IconButton
-          aria-label='create new message'
           className='absolute right-4 bottom-20 text-gray-700 border border-gray-200 text-md 
             shadow-lg shadow-gray-600'
           onClick={handleCreateNewMessage}
