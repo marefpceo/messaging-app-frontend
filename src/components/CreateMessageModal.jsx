@@ -97,6 +97,10 @@ function CreateMessageModal({ open, setOpen }) {
     setSelectedUser(e.target.value);
   }
 
+  function handleSubjectChange(e) {
+    setSubjectLine(e.target.value);
+  }
+
   function handleMessageChange(e) {
     setMessageDraft(e.target.value);
   }
@@ -112,7 +116,7 @@ function CreateMessageModal({ open, setOpen }) {
         <DialogTitle component={'h2'} marginTop={'20%'}>
           New Message
         </DialogTitle>
-        <DialogContent className='flex flex-col gap-10'>
+        <DialogContent className='flex flex-col gap-5'>
           <div>
             <InputLabel id='contact-select-label'>To:</InputLabel>
             <Select
@@ -121,6 +125,8 @@ function CreateMessageModal({ open, setOpen }) {
               value={selectedUser}
               onChange={handleSelectChange}
               fullWidth={true}
+              size='small'
+              required={true}
             >
               <MenuItem disabled value=''>
                 <em>Choose a contact</em>
@@ -138,6 +144,17 @@ function CreateMessageModal({ open, setOpen }) {
           </div>
 
           <div>
+            <InputLabel id='subject-input-label'>Subject:</InputLabel>
+            <TextField
+              id='subject-input'
+              fullWidth={true}
+              size='small'
+              required={true}
+              onChange={handleSubjectChange}
+            />
+          </div>
+
+          <div className='mt-8'>
             <InputLabel id='message-input-label'>Message:</InputLabel>
             <TextField
               id='message-input'
@@ -162,6 +179,7 @@ function CreateMessageModal({ open, setOpen }) {
               startIcon={<SendRoundedIcon />}
               className='bg-lime-500'
               disabled={messageDraft.length === 0 ? true : false}
+              onClick={createMessage}
             >
               Send
             </Button>
