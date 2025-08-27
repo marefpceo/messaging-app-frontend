@@ -11,12 +11,23 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+
+const apiHeader = {
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
 function CreateMessageModal({ open, setOpen }) {
   const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userContacts, setUserContacts] = useState();
   const [selectedUser, setSelectedUser] = useState('');
+  const [subjectLine, setSubjectLine] = useState('');
+  const [messageDraft, setMessageDraft] = useState('');
+  const [newMessageResponse, setNewMessageResponse] = useState('');
 
   useEffect(() => {
     if (open === false) {
@@ -38,7 +49,6 @@ function CreateMessageModal({ open, setOpen }) {
 
         if (response.ok) {
           setUserContacts(responseData);
-          console.log(userContacts);
         }
       } catch (error) {
         console.log(error);
@@ -49,12 +59,46 @@ function CreateMessageModal({ open, setOpen }) {
     getContacts();
   }, [open]);
 
+  async function createMessage() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/create_message`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            subject: subjectLine,
+            context: messageDraft,
+            senderId: `${user.id}`,
+            recipientId: `${selectedUser}`,
+          }),
+        },
+      );
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        setNewMessageResponse(responseData.message);
+        handleClose();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function handleClose() {
     setOpen(false);
   }
 
   function handleSelectChange(e) {
     setSelectedUser(e.target.value);
+  }
+
+  function handleMessageChange(e) {
+    setMessageDraft(e.target.value);
   }
 
   return (
@@ -100,14 +144,24 @@ function CreateMessageModal({ open, setOpen }) {
               multiline
               fullWidth={true}
               minRows={6}
+              onChange={handleMessageChange}
             />
           </div>
 
-          <DialogActions>
+          <DialogActions className='flex gap-4'>
+            <Button
+              variant='contained'
+              startIcon={<CancelRoundedIcon />}
+              color='error'
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
             <Button
               variant='contained'
               startIcon={<SendRoundedIcon />}
               className='bg-lime-500'
+              disabled={messageDraft.length === 0 ? true : false}
             >
               Send
             </Button>
