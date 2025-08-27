@@ -2,13 +2,10 @@ import { Navigate } from 'react-router';
 import SignupForm from '../components/SignupForm';
 import SignupErrorModal from '../components/SignupErrorModal';
 import { useState, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
 import { AuthContext } from '../contexts/AuthContext';
 
 function Signup() {
-  const { user, setUser } = useContext(UserContext);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-  console.log(user);
   const [userSignUp, setUserSignUp] = useState({
     firstname: '',
     lastname: '',
