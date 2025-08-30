@@ -112,6 +112,7 @@ function CreateMessageModal({ open, setOpen }) {
         onClose={handleClose}
         fullWidth={true}
         fullScreen={true}
+        disableRestoreFocus={true}
       >
         <DialogTitle component={'h2'} marginTop={'20%'}>
           New Message

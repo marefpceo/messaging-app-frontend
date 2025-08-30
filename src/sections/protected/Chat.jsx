@@ -3,6 +3,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import CreateMessageModal from '../../components/CreateMessageModal';
+import ConversationList from '../../components/ConversationList';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';
@@ -20,7 +21,7 @@ function Chat() {
   const { user } = useContext(AuthContext);
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
-  const [messageList, setMessageList] = useState([]);
+  const [conversationList, setConversationList] = useState([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function Chat() {
         const responseData = await response.json();
 
         if (response.ok) {
-          setMessageList(responseData);
+          setConversationList(responseData);
           console.log(responseData);
         }
       } catch (error) {
@@ -63,10 +64,12 @@ function Chat() {
           </div>
         ) : (
           <div className='homeBody min-h-full flex flex-col justify-center items-center'>
-            {messageList.length === 0 ? (
+            {conversationList.length === 0 ? (
               <p>No Messages</p>
             ) : (
-              <p>Message List</p>
+              <div className='min-w-full'>
+                <ConversationList conversationList={conversationList} />
+              </div>
             )}
           </div>
         )}
