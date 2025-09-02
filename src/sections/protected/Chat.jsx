@@ -3,7 +3,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import CreateMessageModal from '../../components/CreateMessageModal';
-import ConversationList from '../../components/ConversationList';
+import MessageList from '../../components/MessageList';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';
@@ -21,21 +21,21 @@ function Chat() {
   const { user } = useContext(AuthContext);
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
-  const [conversationList, setConversationList] = useState([]);
+  const [messageList, setMessageList] = useState([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     async function getMessages() {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/conversations`,
+          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages`,
           apiHeader,
         );
 
         const responseData = await response.json();
 
         if (response.ok) {
-          setConversationList(responseData);
+          setMessageList(responseData);
           console.log(responseData);
         }
       } catch (error) {
@@ -54,7 +54,7 @@ function Chat() {
   return (
     <>
       <CreateMessageModal open={open} setOpen={setOpen} />
-      <div className='flex flex-col flex-1 p-2 bg-slate-100'>
+      <div className='flex flex-col flex-1 py-2 bg-slate-100'>
         <InterfaceHeader title={'Chat'} user={user} />
 
         {isLoading ? (
@@ -63,12 +63,12 @@ function Chat() {
             <p>Loading</p>
           </div>
         ) : (
-          <div className='homeBody min-h-full flex flex-col justify-center items-center'>
-            {conversationList.length === 0 ? (
+          <div className='homeBody mt-8 min-h-full flex flex-col justify-start  items-center'>
+            {messageList.length === 0 ? (
               <p>No Messages</p>
             ) : (
               <div className='min-w-full'>
-                <ConversationList conversationList={conversationList} />
+                <MessageList messageList={messageList} />
               </div>
             )}
           </div>
