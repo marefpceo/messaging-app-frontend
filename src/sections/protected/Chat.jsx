@@ -4,11 +4,14 @@ import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import CreateMessageModal from '../../components/CreateMessageModal';
 import MessageList from '../../components/MessageList';
+import TabPanel from '../../components/TabPanel';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 const apiHeader = {
   credentials: 'include',
@@ -21,22 +24,32 @@ function Chat() {
   const { user } = useContext(AuthContext);
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
-  const [messageList, setMessageList] = useState([]);
+  const [messageReceivedList, setMessageReceivedList] = useState([]);
+  const [messageSentList, setMessageSentList] = useState([]);
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     async function getMessages() {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages`,
-          apiHeader,
-        );
+        const [receivedList, sentList] = await Promise.all([
+          fetch(
+            `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_received`,
+            apiHeader,
+          ),
+          fetch(
+            `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_sent`,
+            apiHeader,
+          ),
+        ]);
 
-        const responseData = await response.json();
+        const receivedListData = await receivedList.json();
+        const sentListData = await sentList.json();
 
-        if (response.ok) {
-          setMessageList(responseData);
-          console.log(responseData);
+        if (receivedList.ok && sentList.ok) {
+          setMessageReceivedList(receivedListData);
+          setMessageSentList(sentListData);
+          console.log(messageReceivedList);
         }
       } catch (error) {
         console.log(error);
@@ -49,6 +62,10 @@ function Chat() {
 
   function handleCreateNewMessage() {
     setOpen(true);
+  }
+
+  function handleChange(e, newValue) {
+    setValue(newValue);
   }
 
   return (
@@ -64,11 +81,30 @@ function Chat() {
           </div>
         ) : (
           <div className='homeBody mt-8 min-h-full flex flex-col justify-start  items-center'>
-            {messageList.length === 0 ? (
+            {messageReceivedList.length === 0 ? (
               <p>No Messages</p>
             ) : (
               <div className='min-w-full'>
-                <MessageList messageList={messageList} />
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label='message tabs'
+                >
+                  <Tab label='Received' />
+                  <Tab label='Sent' />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                  <MessageList
+                    messageList={messageReceivedList}
+                    isReceivedList={true}
+                  />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  <MessageList
+                    messageList={messageSentList}
+                    isReceivedList={false}
+                  />
+                </TabPanel>
               </div>
             )}
           </div>
