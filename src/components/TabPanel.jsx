@@ -1,4 +1,4 @@
-function ContactTabPanel({ children, value, index }) {
+function TabPanel({ children, value, index }) {
   return (
     <div
       role='tabpanel'
@@ -11,4 +11,4 @@ function ContactTabPanel({ children, value, index }) {
   );
 }
 
-export default ContactTabPanel;
+export default TabPanel;

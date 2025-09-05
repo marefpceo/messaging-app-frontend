@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
-import ContactTabPanel from '../../components/ContactTabPanel';
+import TabPanel from '../../components/TabPanel';
 import ContactList from '../../components/ContactList';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -123,7 +123,7 @@ function Contacts() {
             </Tabs>
           </div>
 
-          <ContactTabPanel value={value} index={0}>
+          <TabPanel value={value} index={0}>
             {typeof userContacts !== 'object' ? (
               <div className='flex justify-center'>
                 <p className='mt-24'>No saved contacts</p>
@@ -136,16 +136,16 @@ function Contacts() {
                 setShouldReload={setShouldReload}
               />
             )}
-          </ContactTabPanel>
+          </TabPanel>
 
-          <ContactTabPanel value={value} index={1}>
+          <TabPanel value={value} index={1}>
             <ContactList
               list={fullList}
               currentView={currentView}
               isListTypeFull={true}
               setShouldReload={setShouldReload}
             />
-          </ContactTabPanel>
+          </TabPanel>
         </section>
       )}
       <HomeNav />
