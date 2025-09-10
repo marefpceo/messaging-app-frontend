@@ -26,7 +26,8 @@ function Chat() {
   const [isLoading, setIsLoading] = useState(true);
   const [messageReceivedList, setMessageReceivedList] = useState([]);
   const [messageSentList, setMessageSentList] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+  const [isDisplayModalOpen, setIsDisplayModalOpen] = useState(false);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -61,7 +62,7 @@ function Chat() {
   }, []);
 
   function handleCreateNewMessage() {
-    setOpen(true);
+    setIsMessageModalOpen(true);
   }
 
   function handleChange(e, newValue) {
@@ -70,7 +71,10 @@ function Chat() {
 
   return (
     <>
-      <CreateMessageModal open={open} setOpen={setOpen} />
+      <CreateMessageModal
+        open={isMessageModalOpen}
+        setOpen={setIsMessageModalOpen}
+      />
       <div className='flex flex-col flex-1 py-2 bg-slate-100'>
         <InterfaceHeader title={'Chat'} user={user} />
 
