@@ -50,7 +50,6 @@ function Chat() {
         if (receivedList.ok && sentList.ok) {
           setMessageReceivedList(receivedListData);
           setMessageSentList(sentListData);
-          console.log(messageReceivedList);
         }
       } catch (error) {
         console.log(error);
@@ -85,32 +84,36 @@ function Chat() {
           </div>
         ) : (
           <div className='homeBody mt-8 min-h-full flex flex-col justify-start  items-center'>
-            {messageReceivedList.length === 0 ? (
-              <p>No Messages</p>
-            ) : (
-              <div className='min-w-full'>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label='message tabs'
-                >
-                  <Tab label='Received' />
-                  <Tab label='Sent' />
-                </Tabs>
-                <TabPanel value={value} index={0}>
+            <div className='min-w-full'>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label='message tabs'
+              >
+                <Tab label='Received' />
+                <Tab label='Sent' />
+              </Tabs>
+              <TabPanel value={value} index={0}>
+                {messageReceivedList.length === 0 ? (
+                  <p>No Messages</p>
+                ) : (
                   <MessageList
                     messageList={messageReceivedList}
                     isReceivedList={true}
                   />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
+                )}
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                {messageSentList.length === 0 ? (
+                  <p>No Messages</p>
+                ) : (
                   <MessageList
                     messageList={messageSentList}
                     isReceivedList={false}
                   />
-                </TabPanel>
-              </div>
-            )}
+                )}
+              </TabPanel>
+            </div>
           </div>
         )}
       </div>
