@@ -3,6 +3,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import CreateMessageModal from '../../components/CreateMessageModal';
+import DisplayMessageModal from '../../components/DisplayMessageModal';
 import MessageList from '../../components/MessageList';
 import TabPanel from '../../components/TabPanel';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -28,6 +29,8 @@ function Chat() {
   const [messageSentList, setMessageSentList] = useState([]);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isDisplayModalOpen, setIsDisplayModalOpen] = useState(false);
+  const [selectedMessageId, setSelectedMessageId] = useState('');
+  const [selectedMessage, setSelectedMessage] = useState(null);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -60,6 +63,29 @@ function Chat() {
     getMessages();
   }, []);
 
+  useEffect(() => {
+    async function getSelectedMessage() {
+      if (isDisplayModalOpen === false) {
+        return;
+      }
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/message/${selectedMessageId}`,
+          apiHeader,
+        );
+
+        const responseData = await response.json();
+
+        if (response.ok) {
+          setSelectedMessage(responseData);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getSelectedMessage();
+  }, [selectedMessageId]);
+
   function handleCreateNewMessage() {
     setIsMessageModalOpen(true);
   }
@@ -68,12 +94,24 @@ function Chat() {
     setValue(newValue);
   }
 
+  function handleMessageListClick() {
+    setIsDisplayModalOpen(true);
+  }
+
   return (
     <>
       <CreateMessageModal
         open={isMessageModalOpen}
         setOpen={setIsMessageModalOpen}
       />
+
+      <DisplayMessageModal
+        open={isDisplayModalOpen}
+        setOpen={setIsDisplayModalOpen}
+        selectedMessage={selectedMessage}
+        setSelectedMessage={setSelectedMessage}
+      />
+
       <div className='flex flex-col flex-1 py-2 bg-slate-100'>
         <InterfaceHeader title={'Chat'} user={user} />
 
@@ -100,6 +138,8 @@ function Chat() {
                   <MessageList
                     messageList={messageReceivedList}
                     isReceivedList={true}
+                    displayMessage={handleMessageListClick}
+                    setSelectedMessageId={setSelectedMessageId}
                   />
                 )}
               </TabPanel>
@@ -110,6 +150,8 @@ function Chat() {
                   <MessageList
                     messageList={messageSentList}
                     isReceivedList={false}
+                    displayMessage={handleMessageListClick}
+                    setSelectedMessageId={setSelectedMessageId}
                   />
                 )}
               </TabPanel>
