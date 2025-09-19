@@ -10,7 +10,12 @@ import ReplyIcon from '@mui/icons-material/Reply';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 
-function DisplayMessageModal({ open, setOpen, selectedMessage }) {
+function DisplayMessageModal({
+  open,
+  setOpen,
+  handleReplyClick,
+  selectedMessage,
+}) {
   const { user } = useContext(AuthContext);
   console.log(selectedMessage);
 
@@ -44,7 +49,7 @@ function DisplayMessageModal({ open, setOpen, selectedMessage }) {
         </DialogContent>
         <Divider variant='middle' aria-hidden='true' />
         <DialogActions className='py-4 justify-center'>
-          <IconButton aria-label='reply'>
+          <IconButton aria-label='reply' onClick={handleReplyClick}>
             <ReplyIcon className='text-lime-500' />
           </IconButton>
           <IconButton aria-label='delete'>

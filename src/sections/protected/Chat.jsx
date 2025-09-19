@@ -4,6 +4,7 @@ import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import CreateMessageModal from '../../components/CreateMessageModal';
 import DisplayMessageModal from '../../components/DisplayMessageModal';
+import ReplyMessageModal from '../../components/ReplyMessageModal';
 import MessageList from '../../components/MessageList';
 import TabPanel from '../../components/TabPanel';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -29,6 +30,7 @@ function Chat() {
   const [messageSentList, setMessageSentList] = useState([]);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isDisplayModalOpen, setIsDisplayModalOpen] = useState(false);
+  const [isReplyMessageModalOpen, setIsReplyMessageModalOpen] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [value, setValue] = useState(0);
@@ -98,6 +100,11 @@ function Chat() {
     setIsDisplayModalOpen(true);
   }
 
+  function handleReplyClick() {
+    setIsReplyMessageModalOpen(true);
+    setIsDisplayModalOpen(false);
+  }
+
   return (
     <>
       <CreateMessageModal
@@ -108,8 +115,15 @@ function Chat() {
       <DisplayMessageModal
         open={isDisplayModalOpen}
         setOpen={setIsDisplayModalOpen}
+        handleReplyClick={handleReplyClick}
         selectedMessage={selectedMessage}
         setSelectedMessage={setSelectedMessage}
+      />
+
+      <ReplyMessageModal
+        open={isReplyMessageModalOpen}
+        setIsReplyMessageModalOpen={setIsReplyMessageModalOpen}
+        selectedMessage={selectedMessage}
       />
 
       <div className='flex flex-col flex-1 py-2 bg-slate-100'>
