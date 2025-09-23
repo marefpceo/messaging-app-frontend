@@ -17,7 +17,6 @@ function DisplayMessageModal({
   selectedMessage,
 }) {
   const { user } = useContext(AuthContext);
-  console.log(selectedMessage);
 
   function handleClose(e, reason) {
     if (reason === 'backdropClick') {

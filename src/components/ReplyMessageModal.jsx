@@ -48,6 +48,7 @@ function ReplyMessageModal({
       const responseData = await response.json();
 
       if (response.ok) {
+        console.log(responseData);
         handleClose();
       }
     } catch (error) {
@@ -62,8 +63,6 @@ function ReplyMessageModal({
   function handleMessageChange(e) {
     setMessageDraft(e.target.value);
   }
-
-  console.log(selectedMessage);
 
   return (
     <>
@@ -112,7 +111,7 @@ function ReplyMessageModal({
               startIcon={<SendRoundedIcon />}
               className='bg-lime-500'
               disabled={messageDraft.length === 0 ? true : false}
-              // onClick={updateConversation}
+              onClick={createReply}
             >
               Send
             </Button>
