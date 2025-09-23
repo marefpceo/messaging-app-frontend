@@ -38,8 +38,8 @@ function ReplyMessageModal({
           },
           body: JSON.stringify({
             newConversationId: selectedMessage.conversationId,
-            senderId: selectedMessage.senderId,
-            recipientId: selectedMessage.recipientId,
+            senderId: selectedMessage.recipientId,
+            recipientId: selectedMessage.senderId,
             context: messageDraft,
           }),
         },
