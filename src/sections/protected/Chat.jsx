@@ -1,11 +1,13 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import CreateMessageModal from '../../components/CreateMessageModal';
 import DisplayMessageModal from '../../components/DisplayMessageModal';
 import ReplyMessageModal from '../../components/ReplyMessageModal';
 import MessageList from '../../components/MessageList';
+import ConversationList from '../../components/ConversationList';
 import TabPanel from '../../components/TabPanel';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
@@ -23,38 +25,35 @@ const apiHeader = {
 };
 
 function Chat() {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const currentPath = location.pathname;
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
+  const [converstionList, setConversationList] = useState([]);
   const [messageReceivedList, setMessageReceivedList] = useState([]);
   const [messageSentList, setMessageSentList] = useState([]);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isDisplayModalOpen, setIsDisplayModalOpen] = useState(false);
   const [isReplyMessageModalOpen, setIsReplyMessageModalOpen] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState('');
+  const [selectedConversationId, setSelectedConversationId] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [selectedConversation, setSelectedConversation] = useState(null);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    async function getMessages() {
+    async function getConversations() {
       try {
-        const [receivedList, sentList] = await Promise.all([
-          fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_received`,
-            apiHeader,
-          ),
-          fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_sent`,
-            apiHeader,
-          ),
-        ]);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/conversations`,
+          apiHeader,
+        );
 
-        const receivedListData = await receivedList.json();
-        const sentListData = await sentList.json();
-
-        if (receivedList.ok && sentList.ok) {
-          setMessageReceivedList(receivedListData);
-          setMessageSentList(sentListData);
+        if (response.ok) {
+          const responseData = await response.json();
+          setConversationList(responseData);
         }
       } catch (error) {
         console.log(error);
@@ -62,31 +61,64 @@ function Chat() {
         setIsLoading(false);
       }
     }
-    getMessages();
+    getConversations();
   }, []);
 
+  // useEffect(() => {
+  //   async function getMessages() {
+  //     try {
+  //       const [receivedList, sentList] = await Promise.all([
+  //         fetch(
+  //           `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_received`,
+  //           apiHeader,
+  //         ),
+  //         fetch(
+  //           `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_sent`,
+  //           apiHeader,
+  //         ),
+  //       ]);
+
+  //       const receivedListData = await receivedList.json();
+  //       const sentListData = await sentList.json();
+
+  //       if (receivedList.ok && sentList.ok) {
+  //         setMessageReceivedList(receivedListData);
+  //         setMessageSentList(sentListData);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   getMessages();
+  // }, []);
+
+  console.log(converstionList);
+  console.log(selectedConversation);
+  console.log(selectedConversationId);
+
   useEffect(() => {
-    async function getSelectedMessage() {
-      if (isDisplayModalOpen === false) {
+    async function getSelectedConversation() {
+      if (selectedConversationId === '') {
         return;
       }
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/message/${selectedMessageId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/conversation/${selectedConversationId}`,
           apiHeader,
         );
 
-        const responseData = await response.json();
-
         if (response.ok) {
-          setSelectedMessage(responseData);
+          const responseData = await response.json();
+          setSelectedConversation(responseData);
         }
       } catch (error) {
         console.error(error);
       }
     }
-    getSelectedMessage();
-  }, [selectedMessageId]);
+    getSelectedConversation();
+  }, [selectedConversationId]);
 
   function handleCreateNewMessage() {
     setIsMessageModalOpen(true);
@@ -96,8 +128,8 @@ function Chat() {
     setValue(newValue);
   }
 
-  function handleMessageListClick() {
-    setIsDisplayModalOpen(true);
+  function handleConversationListClick() {
+    navigate('/user/chat/messages');
   }
 
   function handleReplyClick() {
@@ -112,13 +144,14 @@ function Chat() {
         setOpen={setIsMessageModalOpen}
       />
 
-      <DisplayMessageModal
+      {/* Remove DisplayMessageModal component if no longer needed */}
+      {/* <DisplayMessageModal
         open={isDisplayModalOpen}
         setOpen={setIsDisplayModalOpen}
         handleReplyClick={handleReplyClick}
         selectedMessage={selectedMessage}
         setSelectedMessage={setSelectedMessage}
-      />
+      /> */}
 
       <ReplyMessageModal
         open={isReplyMessageModalOpen}
@@ -134,43 +167,20 @@ function Chat() {
             <CircularProgress />
             <p>Loading</p>
           </div>
-        ) : (
+        ) : currentPath !== '/user/chat/messages' ? (
           <div className='homeBody mt-8 min-h-full flex flex-col justify-start  items-center'>
             <div className='min-w-full'>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label='message tabs'
-              >
-                <Tab label='Received' />
-                <Tab label='Sent' />
-              </Tabs>
-              <TabPanel value={value} index={0}>
-                {messageReceivedList.length === 0 ? (
-                  <p>No Messages</p>
-                ) : (
-                  <MessageList
-                    messageList={messageReceivedList}
-                    isReceivedList={true}
-                    displayMessage={handleMessageListClick}
-                    setSelectedMessageId={setSelectedMessageId}
-                  />
-                )}
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                {messageSentList.length === 0 ? (
-                  <p>No Messages</p>
-                ) : (
-                  <MessageList
-                    messageList={messageSentList}
-                    isReceivedList={false}
-                    displayMessage={handleMessageListClick}
-                    setSelectedMessageId={setSelectedMessageId}
-                  />
-                )}
-              </TabPanel>
+              <ConversationList
+                conversationList={converstionList}
+                displayConversationMessages={handleConversationListClick}
+                setSelectedConversationId={setSelectedConversationId}
+              />
             </div>
           </div>
+        ) : (
+          <Outlet
+            context={[selectedConversationId, setSelectedConversationId]}
+          />
         )}
       </div>
 
@@ -179,6 +189,7 @@ function Chat() {
           className='absolute right-4 bottom-20 text-gray-700 border border-gray-200 text-md 
             shadow-lg shadow-gray-600'
           onClick={handleCreateNewMessage}
+          hidden={currentPath === '/user/chat/messages' ? true : false}
         >
           <ChatBubbleIcon className='text-lime-600 text-2xl' />
         </IconButton>
@@ -189,6 +200,7 @@ function Chat() {
           className='absolute right-4 bottom-20 text-gray-700 border-gray-300 text-md shadow 
             shadow-gray-600'
           onClick={handleCreateNewMessage}
+          hidden={currentPath === '/user/chat/messages' ? true : false}
         >
           New Chat
         </Button>
