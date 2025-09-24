@@ -7,6 +7,7 @@ import Home from '../sections/protected/Home';
 import Contacts from '../sections/protected/Contacts';
 import Chat from '../sections/protected/Chat';
 import Settings from '../sections/protected/Settings';
+import Messages from '../sections/protected/Messages';
 
 function Router() {
   const router = createBrowserRouter([
@@ -29,7 +30,11 @@ function Router() {
           children: [
             { index: true, element: <Home /> },
             { path: 'contacts', element: <Contacts /> },
-            { path: 'chat', element: <Chat /> },
+            {
+              path: 'chat',
+              element: <Chat />,
+              children: [{ path: 'messages', element: <Messages /> }],
+            },
             { path: 'settings', element: <Settings /> },
           ],
         },
