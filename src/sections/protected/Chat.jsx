@@ -112,6 +112,7 @@ function Chat() {
         if (response.ok) {
           const responseData = await response.json();
           setSelectedConversation(responseData);
+          console.log(selectedConversation);
         }
       } catch (error) {
         console.error(error);
@@ -179,7 +180,12 @@ function Chat() {
           </div>
         ) : (
           <Outlet
-            context={[selectedConversationId, setSelectedConversationId]}
+            context={[
+              selectedConversationId,
+              setSelectedConversationId,
+              selectedConversation,
+              setSelectedConversation,
+            ]}
           />
         )}
       </div>
