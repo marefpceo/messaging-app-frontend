@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router';
+import Avatar from '@mui/material/Avatar';
 
 function Messages() {
   const [
@@ -7,15 +8,27 @@ function Messages() {
     setSelectedConversationId,
     selectedConversation,
     setSelectedConversation,
+    user,
   ] = useOutletContext();
+  const senderStyle = 'self-start ';
+  const recipientStyle = 'self-end flex-row-reverse';
 
-  console.log(selectedConversation.messages);
+  console.log(selectedConversation);
   return (
-    <>
-      {selectedConversation.messages.map((message) => (
-        <p>{message.context}</p>
-      ))}
-    </>
+    <div className='mt-10 flex flex-col'>
+      {selectedConversation &&
+        selectedConversation.messages.map((message) => (
+          <div
+            key={message.id}
+            className={`my-2 mx-4 p-4 w-3/4 flex gap-5 items-center 
+            ${user.id === message.senderId ? senderStyle : recipientStyle} border border-black 
+            rounded-lg `}
+          >
+            <Avatar>L</Avatar>
+            <p>{message.context}</p>
+          </div>
+        ))}
+    </div>
   );
 }
 

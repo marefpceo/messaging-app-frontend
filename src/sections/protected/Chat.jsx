@@ -31,7 +31,7 @@ function Chat() {
   const currentPath = location.pathname;
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
-  const [converstionList, setConversationList] = useState([]);
+  const [conversationList, setConversationList] = useState([]);
   const [messageReceivedList, setMessageReceivedList] = useState([]);
   const [messageSentList, setMessageSentList] = useState([]);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
@@ -56,7 +56,7 @@ function Chat() {
           setConversationList(responseData);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -94,9 +94,9 @@ function Chat() {
   //   getMessages();
   // }, []);
 
-  console.log(converstionList);
-  console.log(selectedConversation);
-  console.log(selectedConversationId);
+  // console.log(conversationList);
+  // console.log(selectedConversation);
+  // console.log(selectedConversationId);
 
   useEffect(() => {
     async function getSelectedConversation() {
@@ -112,7 +112,6 @@ function Chat() {
         if (response.ok) {
           const responseData = await response.json();
           setSelectedConversation(responseData);
-          console.log(selectedConversation);
         }
       } catch (error) {
         console.error(error);
@@ -172,7 +171,7 @@ function Chat() {
           <div className='homeBody mt-8 min-h-full flex flex-col justify-start  items-center'>
             <div className='min-w-full'>
               <ConversationList
-                conversationList={converstionList}
+                conversationList={conversationList}
                 displayConversationMessages={handleConversationListClick}
                 setSelectedConversationId={setSelectedConversationId}
               />
@@ -185,6 +184,7 @@ function Chat() {
               setSelectedConversationId,
               selectedConversation,
               setSelectedConversation,
+              user,
             ]}
           />
         )}
