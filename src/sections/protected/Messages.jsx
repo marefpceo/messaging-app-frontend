@@ -20,7 +20,7 @@ function Messages() {
         selectedConversation.messages.map((message) => (
           <div
             key={message.id}
-            className={`my-2 mx-4 p-4 w-3/4 flex gap-5 items-center 
+            className={`my-2 mx-4 p-4 max-w-3/4 flex gap-5 items-center 
             ${user.id === message.senderId ? senderStyle : recipientStyle} border border-black 
             rounded-lg `}
           >
