@@ -4,18 +4,13 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import CreateMessageModal from '../../components/CreateMessageModal';
-import DisplayMessageModal from '../../components/DisplayMessageModal';
 import ReplyMessageModal from '../../components/ReplyMessageModal';
-import MessageList from '../../components/MessageList';
 import ConversationList from '../../components/ConversationList';
-import TabPanel from '../../components/TabPanel';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 
 const apiHeader = {
   credentials: 'include',
@@ -32,16 +27,12 @@ function Chat() {
   const matches = useMediaQuery('(max-width:600px)');
   const [isLoading, setIsLoading] = useState(true);
   const [conversationList, setConversationList] = useState([]);
-  const [messageReceivedList, setMessageReceivedList] = useState([]);
-  const [messageSentList, setMessageSentList] = useState([]);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
-  const [isDisplayModalOpen, setIsDisplayModalOpen] = useState(false);
   const [isReplyMessageModalOpen, setIsReplyMessageModalOpen] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState('');
   const [selectedConversationId, setSelectedConversationId] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [value, setValue] = useState(0);
 
   useEffect(() => {
     async function getConversations() {
@@ -64,40 +55,6 @@ function Chat() {
     getConversations();
   }, []);
 
-  // useEffect(() => {
-  //   async function getMessages() {
-  //     try {
-  //       const [receivedList, sentList] = await Promise.all([
-  //         fetch(
-  //           `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_received`,
-  //           apiHeader,
-  //         ),
-  //         fetch(
-  //           `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/messages_sent`,
-  //           apiHeader,
-  //         ),
-  //       ]);
-
-  //       const receivedListData = await receivedList.json();
-  //       const sentListData = await sentList.json();
-
-  //       if (receivedList.ok && sentList.ok) {
-  //         setMessageReceivedList(receivedListData);
-  //         setMessageSentList(sentListData);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }
-  //   getMessages();
-  // }, []);
-
-  // console.log(conversationList);
-  // console.log(selectedConversation);
-  // console.log(selectedConversationId);
-
   useEffect(() => {
     async function getSelectedConversation() {
       if (selectedConversationId === '') {
@@ -111,7 +68,13 @@ function Chat() {
 
         if (response.ok) {
           const responseData = await response.json();
-          setSelectedConversation(responseData);
+          const sortedResponse = [...responseData.messages].sort(
+            (a, b) => a.createdAt - b.createdAt,
+          );
+          setSelectedConversation({
+            ...responseData,
+            messages: sortedResponse,
+          });
         }
       } catch (error) {
         console.error(error);
@@ -143,15 +106,6 @@ function Chat() {
         open={isMessageModalOpen}
         setOpen={setIsMessageModalOpen}
       />
-
-      {/* Remove DisplayMessageModal component if no longer needed */}
-      {/* <DisplayMessageModal
-        open={isDisplayModalOpen}
-        setOpen={setIsDisplayModalOpen}
-        handleReplyClick={handleReplyClick}
-        selectedMessage={selectedMessage}
-        setSelectedMessage={setSelectedMessage}
-      /> */}
 
       <ReplyMessageModal
         open={isReplyMessageModalOpen}
