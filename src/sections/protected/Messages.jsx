@@ -13,6 +13,10 @@ function Messages() {
   const senderStyle = 'self-start ';
   const recipientStyle = 'self-end flex-row-reverse';
 
+  function getAvatarLetter(usernameInput) {
+    const firstInitial = usernameInput[0].capitalize;
+  }
+
   console.log(selectedConversation);
   return (
     <div className='mt-10 flex flex-col'>
@@ -24,7 +28,7 @@ function Messages() {
             ${user.id === message.senderId ? senderStyle : recipientStyle} border border-black 
             rounded-lg `}
           >
-            <Avatar>L</Avatar>
+            <Avatar>{`${message.recipient.username[0].toUpperCase()}`}</Avatar>
             <p>{message.context}</p>
           </div>
         ))}
