@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router';
+import { useOutletContext, useNavigate } from 'react-router';
 import Avatar from '@mui/material/Avatar';
 import ReplyIcon from '@mui/icons-material/Reply';
 import IconButton from '@mui/material/IconButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 function Messages() {
+  const navigate = useNavigate();
   const [
-    selectedConversationId,
+    handleReplyClick,
     setSelectedConversationId,
     selectedConversation,
-    setSelectedConversation,
     user,
   ] = useOutletContext();
   const senderStyle = 'self-start ';
@@ -20,7 +20,6 @@ function Messages() {
     const firstInitial = usernameInput[0].capitalize;
   }
 
-  console.log(selectedConversation);
   return (
     <>
       <div className='mt-10 flex flex-col'>
@@ -37,19 +36,25 @@ function Messages() {
             </div>
           ))}
       </div>
-      <IconButton
-        className='absolute right-4 bottom-20 text-gray-700 border border-gray-200 text-md 
-          shadow-lg shadow-gray-600'
-      >
-        <NavigateBeforeIcon />
-      </IconButton>
-
-      <IconButton
-        className='absolute right-4 bottom-20 text-gray-700 border border-gray-200 text-md 
-          shadow-lg shadow-gray-600'
-      >
-        <ReplyIcon className='text-lime-600 text-2xl' />
-      </IconButton>
+      <div className='absolute bottom-20 flex self-center gap-8'>
+        <IconButton
+          className='text-gray-700 border border-gray-200 text-md
+            shadow-lg shadow-gray-600'
+          onClick={() => navigate(-1)}
+        >
+          <NavigateBeforeIcon className='text-lime-600 text-2xl' />
+        </IconButton>
+        <IconButton
+          className='text-gray-700 border border-gray-200 text-md
+            shadow-lg shadow-gray-600'
+          onClick={() => {
+            setSelectedConversationId(selectedConversation.id);
+            handleReplyClick();
+          }}
+        >
+          <ReplyIcon className='text-lime-600 text-2xl' />
+        </IconButton>
+      </div>
     </>
   );
 }

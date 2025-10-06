@@ -21,7 +21,8 @@ const apiHeader = {
 function ReplyMessageModal({
   open,
   setIsReplyMessageModalOpen,
-  selectedMessage,
+  selectedConversation,
+  setRefreshList,
 }) {
   const { user } = useContext(AuthContext);
   const [messageDraft, setMessageDraft] = useState('');
@@ -37,9 +38,9 @@ function ReplyMessageModal({
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            newConversationId: selectedMessage.conversationId,
-            senderId: selectedMessage.recipientId,
-            recipientId: selectedMessage.senderId,
+            conversationId: selectedConversation.id,
+            senderId: user.id,
+            recipientId: selectedConversation.messages[0].recipientId,
             context: messageDraft,
           }),
         },
@@ -49,6 +50,7 @@ function ReplyMessageModal({
 
       if (response.ok) {
         console.log(responseData);
+        setRefreshList(true);
         handleClose();
       }
     } catch (error) {
@@ -79,9 +81,10 @@ function ReplyMessageModal({
           marginTop={'20%'}
           className='flex justify-between items-center'
         >
-          <span>{`RE: ${selectedMessage && selectedMessage.conversation.subject}`}</span>
+          <span>{`RE: ${selectedConversation && selectedConversation.subject}`}</span>
           <span className='italic font-bold text-lg'>
-            {selectedMessage && selectedMessage.recipient.username}
+            {selectedConversation &&
+              selectedConversation.messages[0].recipient.username}
           </span>
         </DialogTitle>
         <Divider variant='middle' />

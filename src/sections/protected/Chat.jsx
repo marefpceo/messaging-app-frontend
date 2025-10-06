@@ -29,10 +29,9 @@ function Chat() {
   const [conversationList, setConversationList] = useState([]);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isReplyMessageModalOpen, setIsReplyMessageModalOpen] = useState(false);
-  const [selectedMessageId, setSelectedMessageId] = useState('');
   const [selectedConversationId, setSelectedConversationId] = useState('');
-  const [selectedMessage, setSelectedMessage] = useState(null);
   const [selectedConversation, setSelectedConversation] = useState(null);
+  const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
     async function getConversations() {
@@ -59,6 +58,8 @@ function Chat() {
     async function getSelectedConversation() {
       if (selectedConversationId === '') {
         return;
+      } else if (refreshList) {
+        setRefreshList(false);
       }
       try {
         const response = await fetch(
@@ -81,7 +82,7 @@ function Chat() {
       }
     }
     getSelectedConversation();
-  }, [selectedConversationId]);
+  }, [selectedConversationId, refreshList]);
 
   function handleCreateNewMessage() {
     setIsMessageModalOpen(true);
@@ -110,7 +111,8 @@ function Chat() {
       <ReplyMessageModal
         open={isReplyMessageModalOpen}
         setIsReplyMessageModalOpen={setIsReplyMessageModalOpen}
-        selectedMessage={selectedMessage}
+        selectedConversation={selectedConversation}
+        setRefreshList={setRefreshList}
       />
 
       <div className='flex flex-col flex-1 py-2 bg-slate-100'>
@@ -134,10 +136,11 @@ function Chat() {
         ) : (
           <Outlet
             context={[
-              selectedConversationId,
+              handleReplyClick,
               setSelectedConversationId,
               selectedConversation,
-              setSelectedConversation,
+              refreshList,
+              setRefreshList,
               user,
             ]}
           />
