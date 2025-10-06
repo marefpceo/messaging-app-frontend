@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router';
 import Avatar from '@mui/material/Avatar';
 import ReplyIcon from '@mui/icons-material/Reply';
 import IconButton from '@mui/material/IconButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function Messages() {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [
-    handleReplyClick,
-    setSelectedConversationId,
-    selectedConversation,
-    user,
-  ] = useOutletContext();
+  const [handleReplyClick, setSelectedConversationId, selectedConversation] =
+    useOutletContext();
   const senderStyle = 'self-start ';
   const recipientStyle = 'self-end flex-row-reverse';
 
