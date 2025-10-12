@@ -19,6 +19,7 @@ function Messages() {
   const senderStyle = 'justify-start ';
   const recipientStyle = 'just-end flex-row-reverse';
   const [showDeleteButtons, setShowDeleteButtons] = useState(false);
+  const [messageIdList, setMessageIdList] = useState([]);
 
   function getAvatarLetter(usernameInput) {
     const firstInitial = usernameInput[0].capitalize;
@@ -34,6 +35,16 @@ function Messages() {
 
   function handleCancelDelete() {
     setShowDeleteButtons(false);
+  }
+
+  function handleChange(e) {
+    const isChecked = e.target.checked;
+
+    if (!isChecked) {
+      setMessageIdList(messageIdList.filter((a) => a !== e.target.value));
+    } else {
+      setMessageIdList([...messageIdList, e.target.value]);
+    }
   }
 
   return (
@@ -61,6 +72,7 @@ function Messages() {
                   value={message.id}
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<RadioButtonCheckedIcon color='error' />}
+                  onChange={handleChange}
                 />
               </div>
             </div>
