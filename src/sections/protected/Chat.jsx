@@ -52,13 +52,15 @@ function Chat() {
       }
     }
     getConversations();
-  }, []);
+  }, [refreshList]);
 
   useEffect(() => {
     async function getSelectedConversation() {
       if (selectedConversationId === '') {
         return;
-      } else if (refreshList) {
+      }
+
+      if (refreshList) {
         setRefreshList(false);
       }
       try {
@@ -69,9 +71,8 @@ function Chat() {
 
         if (response.ok) {
           const responseData = await response.json();
-          const sortedResponse = [...responseData.messages].filter(
-            (message) =>
-              message.recipientId !== null && message.senderId !== null,
+          const sortedResponse = [...responseData.messages].sort(
+            (a, b) => a.createdAt - b.createdAt,
           );
           setSelectedConversation({
             ...responseData,
@@ -136,14 +137,14 @@ function Chat() {
           </div>
         ) : (
           <Outlet
-            context={[
+            context={{
               handleReplyClick,
               setSelectedConversationId,
               selectedConversation,
               refreshList,
               setRefreshList,
               user,
-            ]}
+            }}
           />
         )}
       </div>

@@ -14,16 +14,17 @@ import { AuthContext } from '../../contexts/AuthContext';
 function Messages() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [
+  const {
     handleReplyClick,
     setSelectedConversationId,
     selectedConversation,
     setRefreshList,
-  ] = useOutletContext();
+  } = useOutletContext();
   const senderStyle = 'justify-start ';
   const recipientStyle = 'just-end flex-row-reverse';
   const [showDeleteButtons, setShowDeleteButtons] = useState(false);
   const [messageIdList, setMessageIdList] = useState([]);
+  const [checkedState, setCheckedState] = useState();
 
   function getAvatarLetter(usernameInput) {
     const firstInitial = usernameInput[0].capitalize;
@@ -66,6 +67,12 @@ function Messages() {
   }
 
   function handleCancelDelete() {
+    const updatedCheckedState = {};
+
+    Object.keys(checkedState).forEach((key) => {
+      updatedCheckedState[key] = false;
+    });
+    setCheckedState(updatedCheckedState);
     setShowDeleteButtons(false);
   }
 
@@ -74,10 +81,20 @@ function Messages() {
 
     if (!isChecked) {
       setMessageIdList(messageIdList.filter((a) => a.id !== e.target.value));
+      setCheckedState({
+        ...checkedState,
+        [e.target.value]: isChecked,
+      });
     } else {
       setMessageIdList([...messageIdList, e.target.value]);
+      setCheckedState({
+        ...checkedState,
+        [e.target.value]: isChecked,
+      });
     }
   }
+
+  console.log(checkedState);
 
   return (
     <>
@@ -105,6 +122,7 @@ function Messages() {
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<RadioButtonCheckedIcon color='error' />}
                   onChange={handleChange}
+                  // checked={check}
                 />
               </div>
             </div>
