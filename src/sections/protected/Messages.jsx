@@ -14,8 +14,12 @@ import { AuthContext } from '../../contexts/AuthContext';
 function Messages() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [handleReplyClick, setSelectedConversationId, selectedConversation] =
-    useOutletContext();
+  const [
+    handleReplyClick,
+    setSelectedConversationId,
+    selectedConversation,
+    setRefreshList,
+  ] = useOutletContext();
   const senderStyle = 'justify-start ';
   const recipientStyle = 'just-end flex-row-reverse';
   const [showDeleteButtons, setShowDeleteButtons] = useState(false);
@@ -25,10 +29,38 @@ function Messages() {
     const firstInitial = usernameInput[0].capitalize;
   }
 
+  async function deleteMessage() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/message/delete`,
+        {
+          method: 'PUT',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            conversationId: selectedConversation.id,
+            messageIdList,
+            userId: `${user.id}`,
+          }),
+        },
+      );
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   function handleDeleteClick() {
     if (showDeleteButtons === false) {
       setShowDeleteButtons(true);
     } else {
+      deleteMessage();
       console.log('delete messages');
     }
   }
@@ -41,7 +73,7 @@ function Messages() {
     const isChecked = e.target.checked;
 
     if (!isChecked) {
-      setMessageIdList(messageIdList.filter((a) => a !== e.target.value));
+      setMessageIdList(messageIdList.filter((a) => a.id !== e.target.value));
     } else {
       setMessageIdList([...messageIdList, e.target.value]);
     }

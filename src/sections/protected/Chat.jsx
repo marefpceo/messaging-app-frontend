@@ -69,8 +69,9 @@ function Chat() {
 
         if (response.ok) {
           const responseData = await response.json();
-          const sortedResponse = [...responseData.messages].sort(
-            (a, b) => a.createdAt - b.createdAt,
+          const sortedResponse = [...responseData.messages].filter(
+            (message) =>
+              message.recipientId !== null && message.senderId !== null,
           );
           setSelectedConversation({
             ...responseData,
