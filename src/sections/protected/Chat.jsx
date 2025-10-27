@@ -125,19 +125,12 @@ function Chat() {
             <CircularProgress />
             <p>Loading</p>
           </div>
-        ) : currentPath !== '/user/chat/messages' ? (
-          <div className='homeBody mt-8 min-h-full flex flex-col justify-start  items-center'>
-            <div className='min-w-full'>
-              <ConversationList
-                conversationList={conversationList}
-                displayConversationMessages={handleConversationListClick}
-                setSelectedConversationId={setSelectedConversationId}
-              />
-            </div>
-          </div>
         ) : (
           <Outlet
             context={{
+              conversationList,
+              handleConversationListClick,
+              setSelectedConversationId,
               handleReplyClick,
               setSelectedConversationId,
               selectedConversation,
