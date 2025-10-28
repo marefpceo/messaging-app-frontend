@@ -86,6 +86,13 @@ function Chat() {
     getSelectedConversation();
   }, [selectedConversationId, refreshList]);
 
+  useEffect(() => {
+    sessionStorage.setItem(
+      'selectedConversation',
+      JSON.stringify(selectedConversation),
+    );
+  }, [selectedConversation]);
+
   function handleCreateNewMessage() {
     setIsMessageModalOpen(true);
   }

@@ -26,6 +26,10 @@ function Messages() {
   const [messageIdList, setMessageIdList] = useState([]);
   const [checkedState, setCheckedState] = useState();
 
+  const selection = sessionStorage.getItem('selectedConversation');
+
+  console.log(selection);
+
   function getAvatarLetter(usernameInput) {
     const firstInitial = usernameInput[0].capitalize;
   }
