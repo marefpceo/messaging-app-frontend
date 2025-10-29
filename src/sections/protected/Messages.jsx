@@ -25,14 +25,19 @@ function Messages() {
   const [showDeleteButtons, setShowDeleteButtons] = useState(false);
   const [messageIdList, setMessageIdList] = useState([]);
   const [checkedState, setCheckedState] = useState();
+  const [currentConversation, setCurrentConversation] = useState();
 
-  const selection = sessionStorage.getItem('selectedConversation');
+  const selection = JSON.parse(sessionStorage.getItem('selectedConversation'));
 
   console.log(selection);
 
-  function getAvatarLetter(usernameInput) {
-    const firstInitial = usernameInput[0].capitalize;
-  }
+  useEffect(() => {
+    if (selectedConversation === null) {
+      setCurrentConversation(selection);
+    } else {
+      setCurrentConversation(selectedConversation);
+    }
+  }, []);
 
   async function deleteMessage() {
     try {
@@ -45,7 +50,7 @@ function Messages() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            conversationId: selectedConversation.id,
+            conversationId: currentConversation.id,
             messageIdList,
             userId: `${user.id}`,
           }),
@@ -103,8 +108,8 @@ function Messages() {
   return (
     <>
       <div className='message-div mt-10 flex flex-col'>
-        {selectedConversation &&
-          selectedConversation.messages.map((message) => (
+        {currentConversation &&
+          currentConversation.messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${user.id === message.senderId ? senderStyle : recipientStyle} 
@@ -144,7 +149,7 @@ function Messages() {
           className={`text-gray-700 border border-gray-200 text-md
             shadow-lg shadow-gray-600 ${showDeleteButtons ? 'hidden' : ''}`}
           onClick={() => {
-            setSelectedConversationId(selectedConversation.id);
+            setSelectedConversationId(currentConversation.id);
             handleReplyClick();
           }}
         >

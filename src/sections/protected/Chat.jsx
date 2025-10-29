@@ -87,6 +87,9 @@ function Chat() {
   }, [selectedConversationId, refreshList]);
 
   useEffect(() => {
+    if (selectedConversation === null) {
+      return;
+    }
     sessionStorage.setItem(
       'selectedConversation',
       JSON.stringify(selectedConversation),
@@ -139,7 +142,6 @@ function Chat() {
               handleConversationListClick,
               setSelectedConversationId,
               handleReplyClick,
-              setSelectedConversationId,
               selectedConversation,
               refreshList,
               setRefreshList,
