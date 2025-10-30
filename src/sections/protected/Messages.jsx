@@ -29,8 +29,6 @@ function Messages() {
 
   const selection = JSON.parse(sessionStorage.getItem('selectedConversation'));
 
-  console.log(selection);
-
   useEffect(() => {
     if (selectedConversation === null) {
       createCheckboxStateList(selection);
@@ -112,8 +110,6 @@ function Messages() {
       });
     }
   }
-
-  console.log(checkedState);
 
   return (
     <>
