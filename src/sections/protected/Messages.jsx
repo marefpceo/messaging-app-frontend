@@ -33,11 +33,21 @@ function Messages() {
 
   useEffect(() => {
     if (selectedConversation === null) {
+      createCheckboxStateList(selection);
       setCurrentConversation(selection);
     } else {
+      createCheckboxStateList(selectedConversation);
       setCurrentConversation(selectedConversation);
     }
   }, []);
+
+  function createCheckboxStateList(messageInput) {
+    const checkboxStateList = {};
+    messageInput.messages.forEach((message) => {
+      checkboxStateList[message.id] = false;
+    });
+    setCheckedState(checkboxStateList);
+  }
 
   async function deleteMessage() {
     try {
@@ -131,7 +141,7 @@ function Messages() {
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<RadioButtonCheckedIcon color='error' />}
                   onChange={handleChange}
-                  // checked={check}
+                  checked={checkedState[message.id]}
                 />
               </div>
             </div>
