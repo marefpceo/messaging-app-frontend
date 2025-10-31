@@ -28,8 +28,12 @@ function Messages() {
   const [currentConversation, setCurrentConversation] = useState();
 
   const selection = JSON.parse(sessionStorage.getItem('selectedConversation'));
+  console.log(selection);
 
   useEffect(() => {
+    if (selectedConversation === null && selection === null) {
+      return;
+    }
     if (selectedConversation === null) {
       createCheckboxStateList(selection);
       setCurrentConversation(selection);
