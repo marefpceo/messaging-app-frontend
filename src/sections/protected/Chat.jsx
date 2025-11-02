@@ -44,6 +44,7 @@ function Chat() {
         if (response.ok) {
           const responseData = await response.json();
           setConversationList(responseData);
+          setRefreshList(false);
         }
       } catch (error) {
         console.error(error);
@@ -64,6 +65,7 @@ function Chat() {
         setRefreshList(false);
       }
       try {
+        setIsLoading(true);
         const response = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/conversation/${selectedConversationId}`,
           apiHeader,
@@ -81,6 +83,8 @@ function Chat() {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
     getSelectedConversation();
@@ -105,7 +109,7 @@ function Chat() {
   }
 
   function handleConversationListClick() {
-    navigate('/user/chat/messages');
+    navigate('/user/chat/messages', { replace: true });
   }
 
   function handleReplyClick() {
@@ -146,6 +150,7 @@ function Chat() {
               refreshList,
               setRefreshList,
               user,
+              isLoading,
             }}
           />
         )}

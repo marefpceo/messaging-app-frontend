@@ -19,6 +19,7 @@ function Messages() {
     setSelectedConversationId,
     selectedConversation,
     setRefreshList,
+    isLoading,
   } = useOutletContext();
   const senderStyle = 'justify-start ';
   const recipientStyle = 'just-end flex-row-reverse';
@@ -71,6 +72,7 @@ function Messages() {
 
       if (response.ok) {
         const responseData = await response.json();
+        setRefreshList(true);
         console.log(responseData);
       }
     } catch (error) {
@@ -83,6 +85,8 @@ function Messages() {
       setShowDeleteButtons(true);
     } else {
       deleteMessage();
+      setShowDeleteButtons(false);
+      navigate('/user/chat', { replace: true });
       console.log('delete messages');
     }
   }
@@ -117,69 +121,78 @@ function Messages() {
 
   return (
     <>
-      <div className='message-div mt-10 flex flex-col'>
-        {currentConversation &&
-          currentConversation.messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${user.id === message.senderId ? senderStyle : recipientStyle} 
-               ${user.id !== message.senderId && showDeleteButtons ? 'mr-12' : ''}`}
+      {isLoading ? (
+        <p>Loading</p>
+      ) : (
+        <>
+          <div className='message-div mt-10 flex flex-col'>
+            {currentConversation &&
+              currentConversation.messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${user.id === message.senderId ? senderStyle : recipientStyle} 
+                    ${user.id !== message.senderId && showDeleteButtons ? 'mr-12' : ''}`}
+                >
+                  <div
+                    className={`my-2 mx-4 p-4 max-w-3/4 flex gap-5 items-center 
+                      border border-black ${user.id === message.senderId ? 'flex-row' : 'flex-row-reverse'}
+                      rounded-lg `}
+                  >
+                    <Avatar>{`${message.recipient.username[0].toUpperCase()}`}</Avatar>
+                    <p>{message.context}</p>
+                  </div>
+                  <div
+                    className={`${!showDeleteButtons ? 'hidden' : ''} self-center absolute right-4`}
+                  >
+                    <Checkbox
+                      value={message.id}
+                      icon={<RadioButtonUncheckedIcon />}
+                      checkedIcon={<RadioButtonCheckedIcon color='error' />}
+                      onChange={handleChange}
+                      checked={checkedState[message.id]}
+                    />
+                  </div>
+                </div>
+              ))}
+          </div>
+          <div className='absolute bottom-20 flex self-center gap-8'>
+            <IconButton
+              className={`text-gray-700 border border-gray-200 text-md
+                  shadow-lg shadow-gray-600 ${showDeleteButtons ? 'hidden' : ''}`}
+              onClick={() => {
+                navigate('/user/chat', { replace: true });
+                sessionStorage.clear();
+              }}
             >
-              <div
-                className={`my-2 mx-4 p-4 max-w-3/4 flex gap-5 items-center 
-                 border border-black ${user.id === message.senderId ? 'flex-row' : 'flex-row-reverse'}
-                rounded-lg `}
-              >
-                <Avatar>{`${message.recipient.username[0].toUpperCase()}`}</Avatar>
-                <p>{message.context}</p>
-              </div>
-              <div
-                className={`${!showDeleteButtons ? 'hidden' : ''} self-center absolute right-4`}
-              >
-                <Checkbox
-                  value={message.id}
-                  icon={<RadioButtonUncheckedIcon />}
-                  checkedIcon={<RadioButtonCheckedIcon color='error' />}
-                  onChange={handleChange}
-                  checked={checkedState[message.id]}
-                />
-              </div>
-            </div>
-          ))}
-      </div>
-      <div className='absolute bottom-20 flex self-center gap-8'>
-        <IconButton
-          className={`text-gray-700 border border-gray-200 text-md
-            shadow-lg shadow-gray-600 ${showDeleteButtons ? 'hidden' : ''}`}
-          onClick={() => navigate(-1)}
-        >
-          <NavigateBeforeIcon className='text-lime-600 text-2xl' />
-        </IconButton>
-        <IconButton
-          className={`text-gray-700 border border-gray-200 text-md
-            shadow-lg shadow-gray-600 ${showDeleteButtons ? 'hidden' : ''}`}
-          onClick={() => {
-            setSelectedConversationId(currentConversation.id);
-            handleReplyClick();
-          }}
-        >
-          <ReplyIcon className='text-lime-600 text-2xl' />
-        </IconButton>
-        <IconButton
-          className='text-gray-700 border border-gray-200 text-md
-            shadow-lg shadow-gray-600'
-          onClick={handleDeleteClick}
-        >
-          <DeleteIcon color='error' />
-        </IconButton>
-        <IconButton
-          className={`text-gray-700 border border-gray-200 text-md
-            shadow-lg shadow-gray-600 ${showDeleteButtons ? '' : 'hidden'}`}
-          onClick={handleCancelDelete}
-        >
-          <ClearIcon />
-        </IconButton>
-      </div>
+              <NavigateBeforeIcon className='text-lime-600 text-2xl' />
+            </IconButton>
+            <IconButton
+              className={`text-gray-700 border border-gray-200 text-md
+                  shadow-lg shadow-gray-600 ${showDeleteButtons ? 'hidden' : ''}`}
+              onClick={() => {
+                setSelectedConversationId(currentConversation.id);
+                handleReplyClick();
+              }}
+            >
+              <ReplyIcon className='text-lime-600 text-2xl' />
+            </IconButton>
+            <IconButton
+              className='text-gray-700 border border-gray-200 text-md
+                  shadow-lg shadow-gray-600'
+              onClick={handleDeleteClick}
+            >
+              <DeleteIcon color='error' />
+            </IconButton>
+            <IconButton
+              className={`text-gray-700 border border-gray-200 text-md
+                  shadow-lg shadow-gray-600 ${showDeleteButtons ? '' : 'hidden'}`}
+              onClick={handleCancelDelete}
+            >
+              <ClearIcon />
+            </IconButton>
+          </div>
+        </>
+      )}
     </>
   );
 }
