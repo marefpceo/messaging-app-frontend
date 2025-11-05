@@ -1,4 +1,10 @@
-import { Navigate, replace, useNavigate } from 'react-router';
+import {
+  Navigate,
+  replace,
+  useNavigate,
+  replace,
+  useNavigate,
+} from 'react-router';
 import LoginForm from '../components/LoginForm';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
@@ -29,13 +35,16 @@ function Login() {
         },
       );
 
+      if (response.ok) {
+        setIsAuthenticated(true);
+      }
       if (response.status === 401) {
         setLoginError(true);
       }
 
       if (response.status === 200) {
         setIsAuthenticated(true);
-        navigate('/user');
+        navigate('/user', { replace: true });
         console.log(isAuthenticated);
         console.log(user);
       } else {

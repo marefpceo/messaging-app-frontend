@@ -1,10 +1,11 @@
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import SignupForm from '../components/SignupForm';
 import SignupErrorModal from '../components/SignupErrorModal';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 
 function Signup() {
+  const navigate = useNavigate();
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [userSignUp, setUserSignUp] = useState({
     firstname: '',
@@ -47,7 +48,7 @@ function Signup() {
       );
 
       const responseData = await response.json();
-
+      console.log(response.status);
       if (response.status === 400) {
         setNewUserReturnData(responseData);
         setFormErrors(responseData.errors);
@@ -55,13 +56,8 @@ function Signup() {
         getErrorStatues(responseData.errors);
       }
       if (response.status === 200) {
-        setUser({
-          id: responseData.id,
-          email: responseData.email,
-          username: responseData.username,
-        });
         setIsAuthenticated(true);
-        console.log(user);
+        navigate('/user', { replace: true });
       }
     } catch (error) {
       console.error(error);
