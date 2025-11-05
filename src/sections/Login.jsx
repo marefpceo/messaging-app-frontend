@@ -29,13 +29,16 @@ function Login() {
         },
       );
 
+      if (response.ok) {
+        setIsAuthenticated(true);
+      }
       if (response.status === 401) {
         setLoginError(true);
       }
 
       if (response.status === 200) {
         setIsAuthenticated(true);
-        navigate('/user', replace);
+        navigate('/user', { replace: true });
         console.log(isAuthenticated);
         console.log(user);
       } else {
