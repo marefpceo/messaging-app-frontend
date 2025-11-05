@@ -35,7 +35,7 @@ function Login() {
 
       if (response.status === 200) {
         setIsAuthenticated(true);
-        navigate('/user', replace);
+        navigate('/user');
         console.log(isAuthenticated);
         console.log(user);
       } else {
