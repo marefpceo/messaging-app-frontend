@@ -1,10 +1,4 @@
-import {
-  Navigate,
-  replace,
-  useNavigate,
-  replace,
-  useNavigate,
-} from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import LoginForm from '../components/LoginForm';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
