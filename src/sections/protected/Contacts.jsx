@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import HomeNav from '../../components/HomeNav';
-import InterfaceHeader from '../../components/InterfaceHeader';
-import TabPanel from '../../components/TabPanel';
-import ContactList from '../../components/ContactList';
+import HomeNav from '../../components/global_components/HomeNav';
+import InterfaceHeader from '../../components/global_components/InterfaceHeader';
+import TabPanel from '../../components/contacts_components/TabPanel';
+import ContactList from '../../components/contacts_components/ContactList';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CircularProgress from '@mui/material/CircularProgress';

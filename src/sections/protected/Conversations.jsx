@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router';
 
-import ConversationList from '../../components/ConversationList';
+import ConversationList from '../../components/conversations_components/ConversationList';
 
 function Conversations() {
   const {

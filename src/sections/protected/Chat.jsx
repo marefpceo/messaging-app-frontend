@@ -1,11 +1,10 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import HomeNav from '../../components/HomeNav';
-import InterfaceHeader from '../../components/InterfaceHeader';
-import CreateMessageModal from '../../components/CreateMessageModal';
-import ReplyMessageModal from '../../components/ReplyMessageModal';
-import ConversationList from '../../components/ConversationList';
+import HomeNav from '../../components/global_components/HomeNav';
+import InterfaceHeader from '../../components/global_components/InterfaceHeader';
+import CreateMessageModal from '../../components/chat_components/CreateMessageModal';
+import ReplyMessageModal from '../../components/chat_components/ReplyMessageModal';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';

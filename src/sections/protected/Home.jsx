@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import HomeNav from '../../components/HomeNav';
-import InterfaceHeader from '../../components/InterfaceHeader';
+import HomeNav from '../../components/global_components/HomeNav';
+import InterfaceHeader from '../../components/global_components/InterfaceHeader';
 
 function Home() {
   const { user, isAuthenticated } = useContext(AuthContext);

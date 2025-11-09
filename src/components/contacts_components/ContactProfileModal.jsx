@@ -9,7 +9,7 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function ContactProfileModal({
   open,
