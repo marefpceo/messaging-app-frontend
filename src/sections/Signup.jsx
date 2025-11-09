@@ -3,6 +3,7 @@ import SignupForm from '../components/signup_components/SignupForm';
 import SignupErrorModal from '../components/signup_components/SignupErrorModal';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { signupService } from '../api/apiAuthServices/authServices';
 
 function Signup() {
   const navigate = useNavigate();
@@ -27,25 +28,7 @@ function Signup() {
 
   async function createNewUser() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/signup`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            firstname: userSignUp.firstname,
-            lastname: userSignUp.lastname,
-            email: userSignUp.email,
-            date_of_birth: userSignUp.date_of_birth,
-            username: userSignUp.username,
-            password: userSignUp.password,
-            confirmPassword: userSignUp.confirmPassword,
-          }),
-        },
-      );
+      const response = await signupService({ userSignUp });
 
       const responseData = await response.json();
       console.log(response.status);

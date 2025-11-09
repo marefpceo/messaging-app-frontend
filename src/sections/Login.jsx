@@ -2,6 +2,7 @@ import { Navigate, useNavigate } from 'react-router';
 import LoginForm from '../components/login_components/LoginForm';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { loginService } from '../api/apiAuthServices/authServices';
 
 function Login() {
   const navigate = useNavigate();
@@ -14,20 +15,7 @@ function Login() {
 
   async function login() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/login`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: userInput.email,
-            password: userInput.password,
-          }),
-        },
-      );
+      const response = await loginService(userInput.email, userInput.password);
 
       if (response.ok) {
         setIsAuthenticated(true);
