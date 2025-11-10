@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { createReplyService } from '../../api/apiChatServices/messagesServices';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -10,13 +11,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-
-const apiHeader = {
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
 
 function ReplyMessageModal({
   open,
@@ -29,21 +23,11 @@ function ReplyMessageModal({
 
   async function createReply() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/create_message`,
-        {
-          method: 'PUT',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            conversationId: selectedConversation.id,
-            senderId: user.id,
-            recipientId: selectedConversation.messages[0].recipientId,
-            context: messageDraft,
-          }),
-        },
+      const response = await createReplyService(
+        user.username,
+        user.id,
+        selectedConversation.id,
+        selectedConversation.messages[0].recipientId,
       );
 
       const responseData = await response.json();

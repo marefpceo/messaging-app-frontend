@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router';
+import { deleteMessageService } from '../../api/apiChatServices/messagesServices';
 import Avatar from '@mui/material/Avatar';
 import ReplyIcon from '@mui/icons-material/Reply';
 import IconButton from '@mui/material/IconButton';
@@ -54,20 +55,11 @@ function Messages() {
 
   async function deleteMessage() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/message/delete`,
-        {
-          method: 'PUT',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            conversationId: currentConversation.id,
-            messageIdList,
-            userId: `${user.id}`,
-          }),
-        },
+      const response = await deleteMessageService(
+        user.username,
+        currentConversation.id,
+        messageIdList,
+        user.id,
       );
 
       if (response.ok) {

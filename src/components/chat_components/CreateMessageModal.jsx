@@ -1,5 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import {
+  getContactsService,
+  createMessageService,
+} from '../../api/apiChatServices/messagesServices';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -35,15 +39,7 @@ function CreateMessageModal({ open, setOpen }) {
     }
     async function getContacts() {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/create_message`,
-          {
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
+        const response = await getContactsService(user.username);
 
         const responseData = await response.json();
 
@@ -61,21 +57,12 @@ function CreateMessageModal({ open, setOpen }) {
 
   async function createMessage() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/create_message`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            subject: subjectLine,
-            context: messageDraft,
-            senderId: `${user.id}`,
-            recipientId: `${selectedUser}`,
-          }),
-        },
+      const response = await createMessageService(
+        user.username,
+        subjectLine,
+        messageDraft,
+        user.id,
+        selectedUser,
       );
 
       const responseData = await response.json();

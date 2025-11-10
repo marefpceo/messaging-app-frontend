@@ -1,6 +1,10 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Outlet, useLocation, useNavigate } from 'react-router';
+import {
+  conversationsService,
+  selectedConversationService,
+} from '../../api/apiChatServices/chatServices';
 import HomeNav from '../../components/global_components/HomeNav';
 import InterfaceHeader from '../../components/global_components/InterfaceHeader';
 import CreateMessageModal from '../../components/chat_components/CreateMessageModal';
@@ -10,13 +14,6 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
-const apiHeader = {
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
 
 function Chat() {
   const navigate = useNavigate();
@@ -35,10 +32,7 @@ function Chat() {
   useEffect(() => {
     async function getConversations() {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/conversations`,
-          apiHeader,
-        );
+        const response = await conversationsService(user.username);
 
         if (response.ok) {
           const responseData = await response.json();
@@ -65,9 +59,9 @@ function Chat() {
       }
       try {
         setIsLoading(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/message/${user.username}/conversation/${selectedConversationId}`,
-          apiHeader,
+        const response = await selectedConversationService(
+          user.username,
+          selectedConversationId,
         );
 
         if (response.ok) {
