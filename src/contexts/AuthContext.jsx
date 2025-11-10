@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import { logoutService } from '../api/apiAuthServices/authServices';
 
 const AuthContext = createContext(false);
 
@@ -42,16 +43,8 @@ function AuthProvider({ children }) {
 
   async function logout() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/logout`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await logoutService();
+
       if (response.status === 200) {
         setIsAuthenticated(false);
       }
