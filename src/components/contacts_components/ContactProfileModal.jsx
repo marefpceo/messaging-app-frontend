@@ -1,4 +1,8 @@
 import { useContext } from 'react';
+import {
+  addContactService,
+  removeContactService,
+} from '../../api/apiContactServices/contactServices';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -23,19 +27,9 @@ function ContactProfileModal({
 
   async function addContact() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/contact/add`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            currentUser: user.username,
-            addUser: selectedProfile.username,
-          }),
-        },
+      const response = await addContactService(
+        user.username,
+        selectedProfile.username,
       );
 
       if (response.status === 200) {
@@ -50,18 +44,9 @@ function ContactProfileModal({
 
   async function removeContact() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/contact/${user.username}/delete`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contactToRemove: selectedProfile.username,
-          }),
-        },
+      const response = await removeContactService(
+        user.username,
+        selectedProfile.username,
       );
 
       if (response.status === 200) {

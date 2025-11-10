@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { profileInfoService } from '../../api/apiContactServices/contactServices';
 import Avatar from '@mui/material/Avatar';
 import ContactProfileModal from './ContactProfileModal';
 
@@ -16,12 +17,7 @@ function ContactList({ list, currentView, isListTypeFull, setShouldReload }) {
         return;
       }
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/user/${userId}/edit_profile`,
-          {
-            credentials: 'include',
-          },
-        );
+        const response = await profileInfoService(userId);
 
         const responseData = await response.json();
 

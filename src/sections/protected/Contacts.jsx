@@ -1,5 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import {
+  fullListService,
+  userListService,
+} from '../../api/apiContactServices/contactServices';
 import HomeNav from '../../components/global_components/HomeNav';
 import InterfaceHeader from '../../components/global_components/InterfaceHeader';
 import TabPanel from '../../components/contacts_components/TabPanel';
@@ -32,11 +36,8 @@ function Contacts() {
     async function getContacts() {
       try {
         const [fullList, userList] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/contact`, apiHeader),
-          fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/contact/${user.username}/contact_list`,
-            apiHeader,
-          ),
+          fullListService(),
+          userListService(user.username),
         ]);
 
         const fullListData = await fullList.json();
