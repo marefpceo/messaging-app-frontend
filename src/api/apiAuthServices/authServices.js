@@ -46,4 +46,23 @@ export async function signupService({ userSignUp }) {
   }
 }
 
-export default { loginService, signupService };
+export async function logoutService() {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/logout`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error fetching logout', error);
+    throw error;
+  }
+}
+
+export default { loginService, signupService, logoutService };
