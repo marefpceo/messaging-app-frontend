@@ -1,5 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { profileInfoService } from '../../api/apiContactServices/contactServices';
+import { updateProfileService } from '../../api/apiSettingsServices/settingServices';
 import HomeNav from '../../components/global_components/HomeNav';
 import InterfaceHeader from '../../components/global_components/InterfaceHeader';
 import Divider from '@mui/material/Divider';
@@ -26,12 +28,7 @@ function Settings() {
   useEffect(() => {
     async function getUserInfo() {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/user/${user.id}/edit_profile`,
-          {
-            credentials: 'include',
-          },
-        );
+        const response = await profileInfoService(user.id);
 
         const responseData = await response.json();
 
@@ -60,51 +57,20 @@ function Settings() {
     setCurrentBio(e.target.value);
   }
 
-  async function updateBio() {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/user/${user.id}/edit_profile`,
-        {
-          credentials: 'include',
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            bio: currentBio,
-          }),
-        },
-      );
-
-      if (response.status === 200) {
-        setOpen(false);
-        setUpdated(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   async function updateSettings() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/user/${user.id}/edit_profile`,
-        {
-          credentials: 'include',
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            bio: currentBio,
-            background: selectedColor,
-            font: selectedFontSize,
-            color: selectedFontColor,
-          }),
-        },
+      const response = await updateProfileService(
+        user.id,
+        currentBio,
+        selectedColor,
+        selectedFontSize,
+        selectedFontColor,
       );
 
       if (response.status === 200) {
+        if (open) {
+          setOpen(false);
+        }
         setUpdated(true);
         setSettingsChange(false);
       }
@@ -128,7 +94,7 @@ function Settings() {
             currentBio={currentBio}
             open={open}
             setOpen={setOpen}
-            updateBio={updateBio}
+            updateBio={updateSettings}
             handleChange={handleChange}
           />
           <InterfaceHeader title={'Settings'} user={user} />
