@@ -1,5 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
-import { logoutService } from '../api/apiAuthServices/authServices';
+import {
+  logoutService,
+  verifySessionService,
+} from '../api/apiAuthServices/authServices';
 
 const AuthContext = createContext(false);
 
@@ -11,12 +14,7 @@ function AuthProvider({ children }) {
   useEffect(() => {
     async function verifySession() {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/session-status`,
-          {
-            credentials: 'include',
-          },
-        );
+        const response = await verifySessionService();
 
         const responseData = await response.json();
 

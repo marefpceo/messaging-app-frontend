@@ -1,3 +1,18 @@
+export async function verifySessionService() {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/session-status`,
+      {
+        credentials: 'include',
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error validating current session', error);
+    throw error;
+  }
+}
+
 export async function loginService(emailInput, passwordInput) {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login`, {
@@ -65,4 +80,9 @@ export async function logoutService() {
   }
 }
 
-export default { loginService, signupService, logoutService };
+export default {
+  verifySessionService,
+  loginService,
+  signupService,
+  logoutService,
+};
