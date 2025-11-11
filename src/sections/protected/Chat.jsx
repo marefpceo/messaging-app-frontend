@@ -107,7 +107,6 @@ function Chat() {
 
   function handleReplyClick() {
     setIsReplyMessageModalOpen(true);
-    setIsDisplayModalOpen(false);
   }
 
   return (

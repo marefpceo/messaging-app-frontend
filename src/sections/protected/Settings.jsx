@@ -143,7 +143,6 @@ function Settings() {
           </div>
 
           <Button
-            aria-hidden='false'
             variant='contained'
             fullWidth='false'
             className={`w-1/3 self-end mt-4 ${settingsChange === false ? '' : 'bg-green-600'}`}

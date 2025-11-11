@@ -16,13 +16,6 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import GridView from '@mui/icons-material/GridView';
 
-const apiHeader = {
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
-
 function Contacts() {
   const { user } = useContext(AuthContext);
   const [value, setValue] = useState(1);
