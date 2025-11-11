@@ -33,7 +33,6 @@ function ReplyMessageModal({
       const responseData = await response.json();
 
       if (response.ok) {
-        console.log(responseData);
         setRefreshList(true);
         handleClose();
       }

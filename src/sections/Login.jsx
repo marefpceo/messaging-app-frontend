@@ -27,8 +27,6 @@ function Login() {
       if (response.status === 200) {
         setIsAuthenticated(true);
         navigate('/user', { replace: true });
-        console.log(isAuthenticated);
-        console.log(user);
       } else {
         setIsAuthenticated(false);
       }

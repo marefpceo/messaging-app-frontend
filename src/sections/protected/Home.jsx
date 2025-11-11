@@ -5,8 +5,6 @@ import InterfaceHeader from '../../components/global_components/InterfaceHeader'
 
 function Home() {
   const { user, isAuthenticated } = useContext(AuthContext);
-  console.log(isAuthenticated);
-  console.log(user);
 
   return (
     <>

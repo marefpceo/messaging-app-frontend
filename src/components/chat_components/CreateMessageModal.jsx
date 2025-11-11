@@ -47,7 +47,7 @@ function CreateMessageModal({ open, setOpen }) {
           setUserContacts(responseData);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -72,7 +72,7 @@ function CreateMessageModal({ open, setOpen }) {
         handleClose();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

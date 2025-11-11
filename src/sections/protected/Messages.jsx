@@ -30,7 +30,6 @@ function Messages() {
   const [currentConversation, setCurrentConversation] = useState();
 
   const selection = JSON.parse(sessionStorage.getItem('selectedConversation'));
-  console.log(selection);
 
   useEffect(() => {
     if (selectedConversation === null && selection === null) {
@@ -65,7 +64,6 @@ function Messages() {
       if (response.ok) {
         const responseData = await response.json();
         setRefreshList(true);
-        console.log(responseData);
       }
     } catch (error) {
       console.error(error);
@@ -79,7 +77,6 @@ function Messages() {
       deleteMessage();
       setShowDeleteButtons(false);
       navigate('/user/chat', { replace: true });
-      console.log('delete messages');
     }
   }
 

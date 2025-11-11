@@ -31,7 +31,6 @@ function Signup() {
       const response = await signupService({ userSignUp });
 
       const responseData = await response.json();
-      console.log(response.status);
       if (response.status === 400) {
         setNewUserReturnData(responseData);
         setFormErrors(responseData.errors);

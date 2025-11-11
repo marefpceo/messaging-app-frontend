@@ -71,7 +71,7 @@ export async function addContactService(currentUserInput, addUserInput) {
     );
     return response;
   } catch (error) {
-    console.log('Error adding new contact', error);
+    console.error('Error adding new contact', error);
     throw error;
   }
 }
