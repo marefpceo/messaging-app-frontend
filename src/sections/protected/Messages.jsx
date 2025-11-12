@@ -144,7 +144,7 @@ function Messages() {
                 </div>
               ))}
           </div>
-          <div className='absolute bottom-20 flex self-center gap-8'>
+          <div className='absolute bottom-20 right-25 flex gap-8'>
             <IconButton
               className={`text-gray-700 border border-gray-200 text-md
                   shadow-lg shadow-gray-600 ${showDeleteButtons ? 'hidden' : ''}`}

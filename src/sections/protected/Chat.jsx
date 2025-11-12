@@ -126,26 +126,30 @@ function Chat() {
       <div className='flex flex-col flex-1 py-2 bg-slate-100'>
         <InterfaceHeader title={'Chat'} user={user} />
 
-        {isLoading ? (
-          <div className='flex flex-col flex-1 justify-center items-center'>
-            <CircularProgress />
-            <p>Loading</p>
-          </div>
-        ) : (
-          <Outlet
-            context={{
-              conversationList,
-              handleConversationListClick,
-              setSelectedConversationId,
-              handleReplyClick,
-              selectedConversation,
-              refreshList,
-              setRefreshList,
-              user,
-              isLoading,
-            }}
-          />
-        )}
+        <div
+          className={`h-full ${user.settings.background} ${user.settings.font} ${user.settings.color}`}
+        >
+          {isLoading ? (
+            <div className='flex flex-col flex-1 justify-center items-center'>
+              <CircularProgress />
+              <p>Loading</p>
+            </div>
+          ) : (
+            <Outlet
+              context={{
+                conversationList,
+                handleConversationListClick,
+                setSelectedConversationId,
+                handleReplyClick,
+                selectedConversation,
+                refreshList,
+                setRefreshList,
+                user,
+                isLoading,
+              }}
+            />
+          )}
+        </div>
       </div>
 
       {matches ? (
