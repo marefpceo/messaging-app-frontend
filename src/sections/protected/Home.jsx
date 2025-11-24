@@ -11,7 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 function Home() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [userSettings, setUserSettings] = useState();
+  const [userSettings, setUserSettings] = useState(null);
 
   useEffect(() => {
     if (localStorage.length === 0) {
@@ -23,47 +23,61 @@ function Home() {
 
   return (
     <>
-      <section className={`flex flex-1 flex-col p-2 `}>
-        <InterfaceHeader title={'Home'} message={'Welcome back '} user={user} />
+      {!userSettings ? (
+        <p>Loading. . . </p>
+      ) : (
+        <section className={`flex flex-1 flex-col p-2 `}>
+          <InterfaceHeader
+            title={'Home'}
+            message={'Welcome back '}
+            user={user}
+          />
 
-        <div
-          className={`homeBody h-full flex flex-col justify-evenly items-center ${user.settings.background} ${user.settings.color} ${user.settings.font}`}
-        >
-          <div className='flex flex-wrap gap-8 justify-center'>
-            <NavIconButton
-              text={'Contacts'}
-              icon={
-                <GroupIcon className={'text-gray-600'} sx={{ fontSize: 60 }} />
-              }
-              handleClick={() => navigate('/user/contacts')}
-            />
-            <NavIconButton
-              text={'Chat'}
-              icon={
-                <ChatIcon className={'text-gray-600'} sx={{ fontSize: 60 }} />
-              }
-              handleClick={() => navigate('/user/chat')}
-            />
-            <NavIconButton
-              text={'Settings'}
-              icon={
-                <SettingsIcon
-                  className={'text-gray-600'}
-                  sx={{ fontSize: 60 }}
-                />
-              }
-              handleClick={() => navigate('/user/settings')}
-            />
-            <NavIconButton
-              text={'Logout'}
-              icon={
-                <LogoutIcon className={'text-gray-600'} sx={{ fontSize: 60 }} />
-              }
-              handleClick={logout}
-            />
+          <div
+            className={`homeBody h-full flex flex-col justify-evenly items-center ${userSettings.background} ${userSettings.color} ${userSettings.font}`}
+          >
+            <div className='flex flex-wrap gap-8 justify-center'>
+              <NavIconButton
+                text={'Contacts'}
+                icon={
+                  <GroupIcon
+                    className={'text-gray-600'}
+                    sx={{ fontSize: 60 }}
+                  />
+                }
+                handleClick={() => navigate('/user/contacts')}
+              />
+              <NavIconButton
+                text={'Chat'}
+                icon={
+                  <ChatIcon className={'text-gray-600'} sx={{ fontSize: 60 }} />
+                }
+                handleClick={() => navigate('/user/chat')}
+              />
+              <NavIconButton
+                text={'Settings'}
+                icon={
+                  <SettingsIcon
+                    className={'text-gray-600'}
+                    sx={{ fontSize: 60 }}
+                  />
+                }
+                handleClick={() => navigate('/user/settings')}
+              />
+              <NavIconButton
+                text={'Logout'}
+                icon={
+                  <LogoutIcon
+                    className={'text-gray-600'}
+                    sx={{ fontSize: 60 }}
+                  />
+                }
+                handleClick={logout}
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }

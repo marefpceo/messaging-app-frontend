@@ -45,6 +45,7 @@ function AuthProvider({ children }) {
 
       if (response.status === 200) {
         setIsAuthenticated(false);
+        localStorage.clear();
       }
     } catch (error) {
       console.error(error);
