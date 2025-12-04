@@ -88,7 +88,7 @@ function Settings() {
         </div>
       ) : (
         <section
-          className={`flex flex-1 flex-col p-2 ${selectedColor} ${selectedFontColor} ${selectedFontSize}`}
+          className={`flex flex-1 flex-col overflow-scroll p-2 ${selectedColor} ${selectedFontColor} ${selectedFontSize}`}
         >
           <EditBioModal
             currentBio={currentBio}
