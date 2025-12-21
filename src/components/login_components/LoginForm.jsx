@@ -14,7 +14,7 @@ function LoginForm({ userInput, handleChange, handleClick, loginError }) {
   return (
     <Box
       component='div'
-      className='flex flex-col p-6'
+      className='flex flex-col p-6 sm:w-1/2 md:w-2/5 xl:w-1/4'
       borderRadius={3}
       boxShadow={4}
       sx={{ width: '90%' }}

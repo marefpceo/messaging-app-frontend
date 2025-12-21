@@ -30,6 +30,7 @@ function Home() {
           <InterfaceHeader
             title={'Home'}
             message={'Welcome back '}
+            c
             user={user}
           />
 
