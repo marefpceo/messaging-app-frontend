@@ -11,7 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 function Home() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [userSettings, setUserSettings] = useState(null);
+  const [userSettings, setUserSettings] = useState();
 
   useEffect(() => {
     if (localStorage.length === 0) {
@@ -23,6 +23,7 @@ function Home() {
 
   return (
     <>
+      {/* TODO stuck on loading after creating new user */}
       {!userSettings ? (
         <p>Loading. . . </p>
       ) : (

@@ -8,7 +8,8 @@ import Contacts from '../sections/protected/Contacts';
 import Chat from '../sections/protected/Chat';
 import Settings from '../sections/protected/Settings';
 import Messages from '../sections/protected/Messages';
-import Conversations from '../sections/protected/Conversations';
+// TODO remove unused imports
+// import Conversations from '../sections/protected/Conversations';
 
 function Router() {
   const router = createBrowserRouter([
@@ -35,8 +36,9 @@ function Router() {
               path: 'chat',
               element: <Chat />,
               children: [
-                { index: true, element: <Conversations /> },
-                { path: 'messages', element: <Messages /> },
+                // TODO need default view for displaying messages
+                // { index: true, element: <Conversations /> },
+                // { path: 'messages', element: <Messages /> },
               ],
             },
             { path: 'settings', element: <Settings /> },

@@ -1,8 +1,27 @@
+// API call to get all messages for the current user
+export async function getMessagesService(username) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/messages`,
+      {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error fetching user messages', error);
+    throw error;
+  }
+}
+
 // API call to get list of user's contacts
 export async function getContactsService(username) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/create_message`,
+      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/create-message`,
       {
         credentials: 'include',
         headers: {
@@ -27,7 +46,7 @@ export async function createMessageService(
 ) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/create_message`,
+      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/create-message`,
       {
         method: 'POST',
         credentials: 'include',
@@ -45,38 +64,6 @@ export async function createMessageService(
     return response;
   } catch (error) {
     console.error('Error creating new message', error);
-    throw error;
-  }
-}
-
-// API call to create a reply to existing conversation
-export async function createReplyService(
-  username,
-  userIdInput,
-  conversationIdInput,
-  recipientIdInput,
-  messageDraft,
-) {
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/create_message`,
-      {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          conversationId: conversationIdInput,
-          senderId: userIdInput,
-          recipientId: recipientIdInput,
-          context: messageDraft,
-        }),
-      },
-    );
-    return response;
-  } catch (error) {
-    console.error('Error creating reply', error);
     throw error;
   }
 }
@@ -114,6 +101,5 @@ export async function deleteMessageService(
 export default {
   getContactsService,
   createMessageService,
-  createReplyService,
   deleteMessageService,
 };

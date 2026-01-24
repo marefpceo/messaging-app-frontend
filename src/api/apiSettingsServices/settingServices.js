@@ -8,7 +8,7 @@ export async function updateProfileService(
 ) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/user/${userId}/edit_profile`,
+      `${import.meta.env.VITE_API_BASE_URL}/user/${userId}/edit-profile`,
       {
         credentials: 'include',
         method: 'PUT',

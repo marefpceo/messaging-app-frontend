@@ -1,6 +1,6 @@
 function InterfaceHeader({ title, message, user }) {
   return (
-    <div className='inteface-header flex justify-between items-end'>
+    <div className='interface-header flex justify-between items-end'>
       <h2 className='text-2xl font'>{title}</h2>
       <p>
         <i>
