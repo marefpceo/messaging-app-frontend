@@ -18,6 +18,23 @@ function Contacts() {
   const [shouldReload, setShouldReload] = useState(false);
   const [isListTypeFull, setIsListTypeFull] = useState(false);
 
+  useEffect(() => {
+    if (shouldReload === true) {
+      if (userContacts.length > 0) {
+        const filteredFullWithUserList = fullList.filter(
+          (fullFiltered) =>
+            !userContacts.some(
+              (userObjects) => userObjects.id === fullFiltered.id,
+            ),
+        );
+        setFullList(filteredFullWithUserList);
+      }
+      setShouldReload(false);
+    } else {
+      return;
+    }
+  }, [shouldReload]);
+
   // Get list of user contacts
   useEffect(() => {
     async function getUserContacts() {
@@ -50,6 +67,7 @@ function Contacts() {
         getGlobalContactList();
       }
     }
+    setShouldReload(true);
   }
 
   // Return global contact list
@@ -102,11 +120,9 @@ function Contacts() {
           >
             {isListTypeFull === true ? 'My Contacts' : 'Add Contacts'}
           </Button>
-          <div
-            className={`${isListTypeFull === true ? 'hidden' : 'flex flex-col flex-1 justify-center items-center'}`}
-          >
+          <div className={`${isListTypeFull === true ? 'hidden' : ''}`}>
             {userContacts.length === 0 ? (
-              <div className=''>
+              <div className='mt-44 flex justify-center'>
                 <p>Add contacts to start chatting</p>
               </div>
             ) : (
@@ -115,6 +131,7 @@ function Contacts() {
                 currentView={'list'}
                 isListTypeFull={false}
                 setShouldReload={setShouldReload}
+                key={shouldReload}
               />
             )}
           </div>
@@ -124,6 +141,7 @@ function Contacts() {
               currentView={'list'}
               isListTypeFull={true}
               setShouldReload={setShouldReload}
+              key={shouldReload}
             />
           </div>
         </section>

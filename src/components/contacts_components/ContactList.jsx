@@ -3,9 +3,7 @@ import { profileInfoService } from '../../api/apiContactServices/contactServices
 import Avatar from '@mui/material/Avatar';
 import ContactProfileModal from './ContactProfileModal';
 
-function ContactList({ list, currentView, isListTypeFull, setShouldReload }) {
-  const listview = 'flex gap-8 items-center';
-  const iconview = 'flex flex-col gap-3 items-center';
+function ContactList({ list, isListTypeFull, setShouldReload }) {
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState(null);
   const [selectedProfile, setSelectedProfile] = useState({});
@@ -60,14 +58,12 @@ function ContactList({ list, currentView, isListTypeFull, setShouldReload }) {
         isListTypeFull={isListTypeFull}
         setShouldReload={setShouldReload}
       />
-      <div
-        className={`contact-list mt-8 ${currentView === 'list' ? 'ml-2' : 'grid grid-cols-2 gap-4'}`}
-      >
+      <div className={`contact-list mt-8 ml-2`}>
         {list &&
           list.map((contact) => (
             <div
               key={contact.id}
-              className={`my-4 mx-2 ${currentView === 'list' ? listview : iconview}`}
+              className={`my-4 mx-2 flex gap-8 items-center overflow-scroll`}
               onClick={displayContact}
               id={contact.id}
             >
