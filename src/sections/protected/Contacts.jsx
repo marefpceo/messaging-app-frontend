@@ -97,13 +97,13 @@ function Contacts() {
         >
           <InterfaceHeader title={'Contacts'} user={user} />
           <Button
-            settings={`mt-2 p-1 w-1/3 rounded self-center bg-${isListTypeFull === false ? 'lime-500' : 'gray-300'}`}
+            settings={`mt-2 p-1 w-1/3 rounded self-center bg-${isListTypeFull === true ? 'lime-500' : 'gray-300'}`}
             onClick={handleClick}
           >
-            {isListTypeFull === false ? 'My Contacts' : 'Add Contacts'}
+            {isListTypeFull === true ? 'My Contacts' : 'Add Contacts'}
           </Button>
           <div
-            className={`${isListTypeFull === false ? 'hidden' : 'flex flex-col flex-1 justify-center items-center'}`}
+            className={`${isListTypeFull === true ? 'hidden' : 'flex flex-col flex-1 justify-center items-center'}`}
           >
             {userContacts.length === 0 ? (
               <div className=''>
@@ -118,11 +118,11 @@ function Contacts() {
               />
             )}
           </div>
-          <div className={`${isListTypeFull === true ? 'hidden' : ''}`}>
+          <div className={`${isListTypeFull === true ? '' : 'hidden'}`}>
             <ContactList
               list={fullList}
               currentView={'list'}
-              isListTypeFull={false}
+              isListTypeFull={true}
               setShouldReload={setShouldReload}
             />
           </div>
