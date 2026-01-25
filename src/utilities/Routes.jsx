@@ -7,9 +7,7 @@ import Home from '../sections/protected/Home';
 import Contacts from '../sections/protected/Contacts';
 import Chat from '../sections/protected/Chat';
 import Settings from '../sections/protected/Settings';
-import Messages from '../sections/protected/Messages';
-// TODO remove unused imports
-// import Conversations from '../sections/protected/Conversations';
+import ChatBox from '../sections/protected/ChatBox';
 
 function Router() {
   const router = createBrowserRouter([
@@ -36,9 +34,7 @@ function Router() {
               path: 'chat',
               element: <Chat />,
               children: [
-                // TODO need default view for displaying messages
-                // { index: true, element: <Conversations /> },
-                // { path: 'messages', element: <Messages /> },
+                { path: '/user/chat/:username', element: <ChatBox /> },
               ],
             },
             { path: 'settings', element: <Settings /> },
