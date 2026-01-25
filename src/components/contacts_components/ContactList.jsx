@@ -71,7 +71,7 @@ function ContactList({ list, currentView, isListTypeFull, setShouldReload }) {
               onClick={displayContact}
               id={contact.id}
             >
-              <Avatar sx={{ width: 65, height: 65 }} />
+              <Avatar sx={{ width: 44, height: 44 }} />
               <p>
                 {contact.firstname} {contact.lastname}
               </p>
