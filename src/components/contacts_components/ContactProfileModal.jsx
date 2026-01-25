@@ -55,7 +55,7 @@ function ContactProfileModal({
     } catch (error) {
       console.error(error);
     } finally {
-      setShouldReload(true);
+      // setShouldReload(true);
     }
   }
 
