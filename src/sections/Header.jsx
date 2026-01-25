@@ -1,4 +1,4 @@
-import logoNameVertical from '../assets/mchat-name-vertical-160.png';
+import logoNameVertical from '../assets/mchat-name-vertical-160.webp';
 
 function Header() {
   return (
