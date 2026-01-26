@@ -1,10 +1,10 @@
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import HomeIcon from '@mui/icons-material/Home';
-import GroupIcon from '@mui/icons-material/Group';
-import ChatIcon from '@mui/icons-material/Chat';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
+import homeIcon from '../../assets/homeIcon.png';
+import contactsIcon from '../../assets/contactsIcon.png';
+import commentsSolidFull from '../../assets/commentsSolidFull.png';
+import settingsIcon from '../../assets/settingsIcon.png';
+import logoutIcon from '../../assets/logoutIcon.png';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -14,26 +14,30 @@ function HomeNav() {
   return (
     <>
       <BottomNavigation showLabels sx={{ bgcolor: 'transparent' }}>
-        <BottomNavigationAction href='/user' label='Home' icon={<HomeIcon />} />
+        <BottomNavigationAction
+          href='/user'
+          label='Home'
+          icon={<img src={homeIcon} alt='Home icon' width={24} />}
+        />
         <BottomNavigationAction
           href='/user/contacts'
           label='Contacts'
-          icon={<GroupIcon />}
+          icon={<img src={contactsIcon} alt='Home icon' width={24} />}
         />
         <BottomNavigationAction
           href='/user/chat'
           label='Chat'
-          icon={<ChatIcon />}
+          icon={<img src={commentsSolidFull} alt='Home icon' width={24} />}
         />
         <BottomNavigationAction
           href='/user/settings'
           label='Settings'
-          icon={<SettingsIcon />}
+          icon={<img src={settingsIcon} alt='Home icon' width={24} />}
         />
         <BottomNavigationAction
           onClick={logout}
           label='Logout'
-          icon={<LogoutIcon />}
+          icon={<img src={logoutIcon} alt='Home icon' width={24} />}
         />
       </BottomNavigation>
     </>
