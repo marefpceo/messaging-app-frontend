@@ -4,7 +4,6 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 import HomeNav from '../../components/global_components/HomeNav';
 import InterfaceHeader from '../../components/global_components/InterfaceHeader';
 import CircularProgress from '@mui/material/CircularProgress';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 function Chat() {
   const navigate = useNavigate();
@@ -20,9 +19,12 @@ function Chat() {
     setValue(newValue);
   }
 
+  // TODO Starter idea for layout would be to have the user's favorites as icons and once clicked,
+  // it will send them to the chat page. In a div under the favorites, a dropdown can be used to
+  // a message to any user from the global list
   return (
     <>
-      <div className='flex flex-col flex-1 py-2 bg-slate-100'>
+      <div className='flex flex-col flex-1'>
         <InterfaceHeader title={'Chat'} user={user} />
 
         <div
