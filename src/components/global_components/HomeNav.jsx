@@ -1,5 +1,3 @@
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import homeIcon from '../../assets/homeIcon.png';
 import contactsIcon from '../../assets/contactsIcon.png';
 import commentsSolidFull from '../../assets/commentsSolidFull.png';
@@ -12,35 +10,27 @@ function HomeNav() {
   const { logout } = useContext(AuthContext);
 
   return (
-    <>
-      <BottomNavigation showLabels sx={{ bgcolor: 'transparent' }}>
-        <BottomNavigationAction
-          href='/user'
-          label='Home'
-          icon={<img src={homeIcon} alt='Home icon' width={24} />}
-        />
-        <BottomNavigationAction
-          href='/user/contacts'
-          label='Contacts'
-          icon={<img src={contactsIcon} alt='Home icon' width={24} />}
-        />
-        <BottomNavigationAction
-          href='/user/chat'
-          label='Chat'
-          icon={<img src={commentsSolidFull} alt='Home icon' width={24} />}
-        />
-        <BottomNavigationAction
-          href='/user/settings'
-          label='Settings'
-          icon={<img src={settingsIcon} alt='Home icon' width={24} />}
-        />
-        <BottomNavigationAction
-          onClick={logout}
-          label='Logout'
-          icon={<img src={logoutIcon} alt='Home icon' width={24} />}
-        />
-      </BottomNavigation>
-    </>
+    <nav className='h-14 px-1 pt-2 flex justify-between *:flex-col *:justify-evenly *:items-center *:text-sm *:w-1/5'>
+      <div className='homeBtn flex'>
+        <img src={homeIcon} alt='Home icon' width={27} />
+      </div>
+
+      <div className='contactBtn flex '>
+        <img src={contactsIcon} alt='Contacts icon' width={27} />
+      </div>
+
+      <div className='chatBtn flex'>
+        <img src={commentsSolidFull} alt='Chat icon' width={27} />
+      </div>
+
+      <div className='settingBtn flex'>
+        <img src={settingsIcon} alt='Settings icon' width={27} />
+      </div>
+
+      <div className='logoutBtn flex'>
+        <img src={logoutIcon} alt='Logout icon' width={27} />
+      </div>
+    </nav>
   );
 }
 
