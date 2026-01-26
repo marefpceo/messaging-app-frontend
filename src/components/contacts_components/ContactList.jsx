@@ -1,76 +1,92 @@
-import { useState, useEffect } from 'react';
-import { profileInfoService } from '../../api/apiContactServices/contactServices';
-import Avatar from '@mui/material/Avatar';
-import ContactProfileModal from './ContactProfileModal';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+import {
+  addContactService,
+  removeContactService,
+} from '../../api/apiContactServices/contactServices';
+import { Link } from 'react-router';
+import Avatar from '../global_components/Avatar';
+import userPlusSolid from '../../assets/userPlusSolid.png';
+import userMinusSolid from '../../assets/userMinusSolid.png';
 
 function ContactList({ list, isListTypeFull, setShouldReload }) {
-  const [open, setOpen] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [selectedProfile, setSelectedProfile] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    async function getUserInfo() {
-      if (userId === null) {
-        return;
+  // Add a contact to the user's favorites
+  async function addContact(contactUsername) {
+    try {
+      const addResponse = await addContactService(
+        user.username,
+        contactUsername,
+      );
+
+      if (addResponse.status === 200) {
+        setShouldReload(true);
       }
-      try {
-        const response = await profileInfoService(userId);
-
-        const responseData = await response.json();
-
-        if (response.status === 200) {
-          setSelectedProfile({
-            id: responseData.id,
-            username: responseData.username,
-            firstname: responseData.firstname,
-            lastname: responseData.lastname,
-            bio: responseData.bio,
-          });
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+    } catch (error) {
+      console.error(error);
     }
-    getUserInfo();
-  }, [userId]);
-
-  function displayContact(e) {
-    const value = e.currentTarget.id;
-    setUserId(value);
-    setOpen(true);
   }
 
-  function handleClose() {
-    setOpen(false);
-    setUserId(null);
+  // Remove a contact from the user's favorites
+  async function removeContact(contactUsername) {
+    try {
+      const removeResponse = await removeContactService(
+        user.username,
+        contactUsername,
+      );
+
+      if (removeResponse.status === 200) {
+        setShouldReload(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
     <>
-      <ContactProfileModal
-        open={open}
-        close={handleClose}
-        selectedProfile={selectedProfile}
-        isLoading={isLoading}
-        isListTypeFull={isListTypeFull}
-        setShouldReload={setShouldReload}
-      />
       <div className={`contact-list mt-8 ml-2`}>
         {list &&
           list.map((contact) => (
             <div
               key={contact.id}
-              className={`my-4 mx-2 flex gap-8 items-center overflow-scroll`}
-              onClick={displayContact}
+              className={`my-4 mx-2 grid grid-cols-2 overflow-scroll`}
               id={contact.id}
             >
-              <Avatar sx={{ width: 38, height: 38 }} />
-              <p>
-                {contact.firstname} {contact.lastname}
-              </p>
+              <Link to={`/user/chat/${contact.username}`}>
+                <div className='flex gap-8 items-center'>
+                  <Avatar />
+                  <p>
+                    {contact.firstname} {contact.lastname}
+                  </p>
+                </div>
+              </Link>
+              <div className='ml-auto pr-2 z-40'>
+                {isListTypeFull ? (
+                  <div className='p-4'>
+                    <img
+                      src={userPlusSolid}
+                      alt='Add user icon'
+                      width={24}
+                      onClick={() => {
+                        addContact(contact.username);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className='p-4'>
+                    <img
+                      src={userMinusSolid}
+                      alt='Remove user icon'
+                      width={24}
+                      onClick={() => {
+                        removeContact(contact.username);
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           ))}
       </div>

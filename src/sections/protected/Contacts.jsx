@@ -131,6 +131,7 @@ function Contacts() {
                 currentView={'list'}
                 isListTypeFull={false}
                 setShouldReload={setShouldReload}
+                setIsListTypeFull={setIsListTypeFull}
                 key={shouldReload}
               />
             )}
