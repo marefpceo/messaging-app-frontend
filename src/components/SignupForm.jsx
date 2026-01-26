@@ -14,6 +14,8 @@ function SignupForm({
     (value) => typeof value === 'string' && value === '',
   );
 
+  console.log(hasEmptyString);
+
   const inputStyle =
     'border w-full h-10 p-2 rounded-sm border-gray-400 focus:outline-0 focus:border-lime-500 focus:border-2';
   function handleKeyDown(e) {
@@ -36,17 +38,16 @@ function SignupForm({
   }
 
   function handleBlur() {
-    if (!date) {
+    if (userSignUp.date_of_birth === '') {
       setInputType('text');
     }
   }
 
-  console.log(userSignUp);
   return (
     <div className='flex flex-col w-11/12 p-6 rounded-2xl shadow-gray-400/50 shadow-[0_0_8px_0px]'>
       <h1 className='text-2xl'>Sign up</h1>
 
-      <form action=''>
+      <form>
         <div className='inputDiv mt-4 flex flex-col gap-2'>
           <input
             type='text'
@@ -112,17 +113,19 @@ function SignupForm({
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder='Password'
+            autoComplete='off'
             className={`${inputStyle}`}
           />
 
           <input
-            type='confirmPassword'
+            type='password'
             name='confirmPassword'
             id='confirmPassword'
             value={userSignUp.confirmPassword}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder='Confirm Password'
+            autoComplete='off'
             className={`${inputStyle}`}
           />
         </div>
@@ -132,6 +135,7 @@ function SignupForm({
             onClick={handleClick}
             onKeyDown={handleKeyDown}
             settings={'w-full h-8 bg-gray-300 rounded-sm'}
+            type={'button'}
           >
             SIGN UP
           </Button>

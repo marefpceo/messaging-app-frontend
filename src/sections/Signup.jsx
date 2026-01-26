@@ -30,6 +30,7 @@ function Signup() {
     try {
       const response = await signupService({ userSignUp });
 
+      console.log(response.status);
       const responseData = await response.json();
       if (response.status === 400) {
         setNewUserReturnData(responseData);
