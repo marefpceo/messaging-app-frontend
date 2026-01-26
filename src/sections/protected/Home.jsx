@@ -3,13 +3,10 @@ import { useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 import InterfaceHeader from '../../components/global_components/InterfaceHeader';
 import NavIconButton from '../../components/global_components/NavIconButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faAddressBook,
-  faComments,
-  faGear,
-  faArrowRightFromBracket,
-} from '@fortawesome/free-solid-svg-icons';
+import addressBookSolidFull from '../../assets/addressBookSolidFull.png';
+import arrowRightSolidFull from '../../assets/arrowRightSolidFull.png';
+import commentsSolidFull from '../../assets/commentsSolidFull.png';
+import gearSolidFull from '../../assets/gearSolidFull.png';
 
 function Home() {
   const { user, logout } = useContext(AuthContext);
@@ -41,10 +38,10 @@ function Home() {
             <NavIconButton
               text={'Contacts'}
               icon={
-                <FontAwesomeIcon
-                  icon={faAddressBook}
-                  className='text-gray-600'
-                  size='2x'
+                <img
+                  src={addressBookSolidFull}
+                  alt='Address book link'
+                  width={44}
                 />
               }
               handleClick={() => navigate('/user/contacts')}
@@ -52,10 +49,10 @@ function Home() {
             <NavIconButton
               text={'Chat'}
               icon={
-                <FontAwesomeIcon
-                  icon={faComments}
-                  className={'text-gray-600'}
-                  size='2x'
+                <img
+                  src={commentsSolidFull}
+                  alt='Address book link'
+                  width={44}
                 />
               }
               handleClick={() => navigate('/user/chat')}
@@ -63,21 +60,17 @@ function Home() {
             <NavIconButton
               text={'Settings'}
               icon={
-                <FontAwesomeIcon
-                  icon={faGear}
-                  className={'text-gray-600'}
-                  size='2x'
-                />
+                <img src={gearSolidFull} alt='Address book link' width={44} />
               }
               handleClick={() => navigate('/user/settings')}
             />
             <NavIconButton
               text={'Logout'}
               icon={
-                <FontAwesomeIcon
-                  icon={faArrowRightFromBracket}
-                  className={'text-gray-600'}
-                  size='2x'
+                <img
+                  src={arrowRightSolidFull}
+                  alt='Address book link'
+                  width={44}
                 />
               }
               handleClick={logout}
