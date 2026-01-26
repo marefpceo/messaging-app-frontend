@@ -1,4 +1,4 @@
-import userSolidFull from '../../assets/userSolidFull.png';
+import userSolidFull from '../assets/userSolidFull.png';
 
 function Avatar() {
   return (

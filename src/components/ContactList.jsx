@@ -1,13 +1,13 @@
 import { useState, useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 import {
   addContactService,
   removeContactService,
-} from '../../api/apiContactServices/contactServices';
+} from '../api/apiContactServices/contactServices';
 import { Link } from 'react-router';
-import Avatar from '../global_components/Avatar';
-import userPlusSolid from '../../assets/userPlusSolid.png';
-import userMinusSolid from '../../assets/userMinusSolid.png';
+import Avatar from './Avatar';
+import userPlusSolid from '../assets/userPlusSolid.png';
+import userMinusSolid from '../assets/userMinusSolid.png';
 
 function ContactList({ list, isListTypeFull, setShouldReload }) {
   const { user } = useContext(AuthContext);

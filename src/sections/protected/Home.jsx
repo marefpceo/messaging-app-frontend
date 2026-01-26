@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
-import InterfaceHeader from '../../components/global_components/InterfaceHeader';
-import NavIconButton from '../../components/global_components/NavIconButton';
+import InterfaceHeader from '../../components/InterfaceHeader';
+import NavIconButton from '../../components/NavIconButton';
 import addressBookSolidFull from '../../assets/addressBookSolidFull.png';
 import arrowRightSolidFull from '../../assets/arrowRightSolidFull.png';
 import commentsSolidFull from '../../assets/commentsSolidFull.png';

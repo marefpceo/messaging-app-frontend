@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import HomeNav from '../../components/global_components/HomeNav';
-import InterfaceHeader from '../../components/global_components/InterfaceHeader';
+import HomeNav from '../../components/HomeNav';
+import InterfaceHeader from '../../components/InterfaceHeader';
 import CircularProgress from '@mui/material/CircularProgress';
 
 function Chat() {

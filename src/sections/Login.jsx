@@ -1,5 +1,5 @@
 import { Navigate, useNavigate } from 'react-router';
-import LoginForm from '../components/login_components/LoginForm';
+import LoginForm from '../components/LoginForm';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { loginService } from '../api/apiAuthServices/authServices';

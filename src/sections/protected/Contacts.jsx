@@ -4,11 +4,11 @@ import {
   fullListService,
   userListService,
 } from '../../api/apiContactServices/contactServices';
-import HomeNav from '../../components/global_components/HomeNav';
-import InterfaceHeader from '../../components/global_components/InterfaceHeader';
-import ContactList from '../../components/contacts_components/ContactList';
+import HomeNav from '../../components/HomeNav';
+import InterfaceHeader from '../../components/InterfaceHeader';
+import ContactList from '../../components/ContactList';
 import CircularProgress from '@mui/material/CircularProgress';
-import Button from '../../components/global_components/Button';
+import Button from '../../components/Button';
 
 function Contacts() {
   const { user } = useContext(AuthContext);

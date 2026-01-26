@@ -2,15 +2,15 @@ import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { profileInfoService } from '../../api/apiContactServices/contactServices';
 import { updateProfileService } from '../../api/apiSettingsServices/settingServices';
-import HomeNav from '../../components/global_components/HomeNav';
-import InterfaceHeader from '../../components/global_components/InterfaceHeader';
+import HomeNav from '../../components/HomeNav';
+import InterfaceHeader from '../../components/InterfaceHeader';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import BackgroundColorSelector from '../../components/settings_components/BackgroundColorSelector';
-import FontColorSelector from '../../components/settings_components/FontColorSelector';
-import FontSizeSelector from '../../components/settings_components/FontSizeSelector';
-import EditBioModal from '../../components/settings_components/EditBioModal';
+import BackgroundColorSelector from '../../components/BackgroundColorSelector';
+import FontColorSelector from '../../components/FontColorSelector';
+import FontSizeSelector from '../../components/FontSizeSelector';
+import EditBioModal from '../../components/EditBioModal';
 import CircularProgress from '@mui/material/CircularProgress';
 
 function Settings() {

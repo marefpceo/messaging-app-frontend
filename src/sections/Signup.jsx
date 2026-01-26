@@ -1,6 +1,6 @@
 import { Navigate, useNavigate } from 'react-router';
-import SignupForm from '../components/signup_components/SignupForm';
-import SignupErrorModal from '../components/signup_components/SignupErrorModal';
+import SignupForm from '../components/SignupForm';
+import SignupErrorModal from '../components/SignupErrorModal';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { signupService } from '../api/apiAuthServices/authServices';
