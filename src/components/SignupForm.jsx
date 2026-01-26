@@ -1,9 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Button from './Button';
 
 function SignupForm({
   userSignUp,
@@ -12,153 +9,139 @@ function SignupForm({
   handleChange,
   handleClick,
 }) {
+  const [inputType, setInputType] = useState('text');
   const hasEmptyString = Object.values(userSignUp).some(
     (value) => typeof value === 'string' && value === '',
   );
 
+  const inputStyle =
+    'border w-full h-10 p-2 rounded-sm border-gray-400 focus:outline-0 focus:border-lime-500 focus:border-2';
   function handleKeyDown(e) {
     if (e.key === 'Enter') {
       handleClick();
     }
   }
 
+  function handleDate(e) {
+    const date = e.target.value;
+
+    setUserSignUp({
+      ...userSignUp,
+      date_of_birth: date,
+    });
+  }
+
+  function handleFocus() {
+    setInputType('date');
+  }
+
+  function handleBlur() {
+    if (!date) {
+      setInputType('text');
+    }
+  }
+
+  console.log(userSignUp);
   return (
-    <Box
-      component='div'
-      className='flex flex-col p-6'
-      borderRadius={3}
-      boxShadow={4}
-      sx={{ width: '90%' }}
-    >
+    <div className='flex flex-col w-11/12 p-6 rounded-2xl shadow-gray-400/50 shadow-[0_0_8px_0px]'>
       <h1 className='text-2xl'>Sign up</h1>
 
       <form action=''>
-        <div className='inputDiv mt-4'>
-          <TextField
-            fullWidth
-            id='firstname'
+        <div className='inputDiv mt-4 flex flex-col gap-2'>
+          <input
+            type='text'
             name='firstname'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='First Name'
-            color='success'
+            id='firstname'
             value={userSignUp.firstname}
             onChange={handleChange}
-            error={errorStatuses.firstname || false}
             onKeyDown={handleKeyDown}
+            placeholder='First Name'
+            className={`${inputStyle}`}
           />
-          <TextField
-            fullWidth
-            id='lastname'
+
+          <input
+            type='text'
             name='lastname'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Last Name'
-            color='success'
+            id='lastname'
             value={userSignUp.lastname}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            error={errorStatuses.lastname || false}
+            placeholder='Last Name'
+            className={`${inputStyle}`}
           />
-          <TextField
-            fullWidth
-            id='email'
-            name='email'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Email'
+
+          <input
             type='email'
-            color='success'
+            name='email'
+            id='email'
             value={userSignUp.email}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            error={errorStatuses.email || false}
+            placeholder='Email'
+            className={`${inputStyle}`}
           />
-          <DatePicker
-            format='yyyy-MM-dd'
-            value={userSignUp.date_of_birth}
-            onChange={(newValue) =>
-              setUserSignUp({
-                ...userSignUp,
-                date_of_birth: newValue,
-              })
-            }
+
+          <input
+            type={inputType}
             name='date_of_birth'
-            slotProps={{
-              textField: {
-                fullWidth: true,
-                required: true,
-                id: 'date_of_birth',
-                variant: 'outlined',
-                size: 'small',
-                margin: 'dense',
-                color: 'success',
-                error: errorStatuses.date_of_birth || false,
-              },
-            }}
+            id='date_of_birth'
+            value={userSignUp.date_of_birth}
+            onChange={handleDate}
+            className={`${inputStyle}`}
+            placeholder='Date of Birth'
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
-          <TextField
-            fullWidth
-            id='username'
+
+          <input
+            type='text'
             name='username'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Username'
-            color='success'
+            id='username'
             value={userSignUp.username}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            error={errorStatuses.username || false}
+            placeholder='Username'
+            className={`${inputStyle}`}
           />
-          <TextField
-            fullWidth
-            id='password'
-            name='password'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Password'
+
+          <input
             type='password'
-            color='success'
+            name='password'
+            id='password'
             value={userSignUp.password}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            error={errorStatuses.password || false}
+            placeholder='Password'
+            className={`${inputStyle}`}
           />
-          <TextField
-            fullWidth
-            id='confirmPassword'
+
+          <input
+            type='confirmPassword'
             name='confirmPassword'
-            variant='outlined'
-            size='small'
-            margin='dense'
-            label='Confirm Password'
-            type='password'
-            color='success'
+            id='confirmPassword'
             value={userSignUp.confirmPassword}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            error={errorStatuses.confirmPassword || false}
+            placeholder='Confirm Password'
+            className={`${inputStyle}`}
           />
         </div>
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
           <Button
-            variant='contained'
-            color='primary'
             disabled={hasEmptyString}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
+            settings={'w-full h-8 bg-gray-300 rounded-sm'}
           >
-            Sign up
+            SIGN UP
           </Button>
         </div>
       </form>
 
-      <Divider>or</Divider>
+      <span className='flex justify-between items-center text-gray-300'>
+        <hr className='w-1/2' /> <p className='mx-3 text-black'>or</p>{' '}
+        <hr className='w-1/2' />
+      </span>
 
       <div className='mt-8 text-center'>
         <p>
@@ -168,7 +151,7 @@ function SignupForm({
           </Link>
         </p>
       </div>
-    </Box>
+    </div>
   );
 }
 

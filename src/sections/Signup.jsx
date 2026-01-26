@@ -12,7 +12,7 @@ function Signup() {
     firstname: '',
     lastname: '',
     email: '',
-    date_of_birth: null,
+    date_of_birth: '',
     username: '',
     password: '',
     confirmPassword: '',
