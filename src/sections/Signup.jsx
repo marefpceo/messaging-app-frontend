@@ -36,14 +36,15 @@ function Signup() {
         setNewUserReturnData(responseData);
         setFormErrors(responseData.errors);
         setIsErrorModalOpen(true);
-        getErrorStatues(responseData.errors);
+        // getErrorStatues(responseData.errors);
+        console.log(responseData);
       }
       if (response.status === 200) {
         setIsAuthenticated(true);
         navigate('/user', { replace: true });
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
 

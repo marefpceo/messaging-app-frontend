@@ -14,16 +14,22 @@ function SignupForm({
     (value) => typeof value === 'string' && value === '',
   );
 
-  console.log(hasEmptyString);
-
+  // Styling variable for inputs to reduce repeat code
   const inputStyle =
-    'border w-full h-10 p-2 rounded-sm border-gray-400 focus:outline-0 focus:border-lime-500 focus:border-2';
+    'border w-full h-10 p-2 rounded-sm focus:outline-0 focus:border-lime-500 focus:border-2';
+  // Error border
+  const errorBorder = 'border-red-500';
+  // Normal border
+  const normalBorder = 'border-gray-400';
+
+  // Allows the user to use the enter key to activate the Sign Up button
   function handleKeyDown(e) {
     if (e.key === 'Enter') {
       handleClick();
     }
   }
 
+  // Sets the date based on the user calendar selection
   function handleDate(e) {
     const date = e.target.value;
 
@@ -33,10 +39,12 @@ function SignupForm({
     });
   }
 
+  // Changes the Date of Birth input to type='Date' when in focus
   function handleFocus() {
     setInputType('date');
   }
 
+  // Changes the Date of Birth input back to type='Text' if no date was selected
   function handleBlur() {
     if (userSignUp.date_of_birth === '') {
       setInputType('text');
@@ -48,7 +56,7 @@ function SignupForm({
       <h1 className='text-2xl'>Sign up</h1>
 
       <form>
-        <div className='inputDiv mt-4 flex flex-col gap-2'>
+        <div className='inputDiv mt-4 flex flex-col gap-3'>
           <input
             type='text'
             name='firstname'
@@ -134,7 +142,7 @@ function SignupForm({
             disabled={hasEmptyString}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
-            settings={'w-full h-8 bg-gray-300 rounded-sm'}
+            settings={`w-full h-8 rounded-sm text-white ${hasEmptyString ? 'bg-gray-300' : 'bg-green-500'}`}
             type={'button'}
           >
             SIGN UP
