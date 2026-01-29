@@ -2,10 +2,18 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import Button from './Button';
 
+// Form input base styling
+const inputStyle =
+  'border w-full h-10 p-2 rounded-sm focus:outline-0  focus:border-2';
+// Error border
+const errorBorder = 'border-red-500';
+// Normal border
+const normalBorder = 'border-gray-400 focus:border-lime-500';
+
 function SignupForm({
   userSignUp,
   setUserSignUp,
-  errorStatuses,
+  errorStatus,
   handleChange,
   handleClick,
 }) {
@@ -13,14 +21,6 @@ function SignupForm({
   const hasEmptyString = Object.values(userSignUp).some(
     (value) => typeof value === 'string' && value === '',
   );
-
-  // Styling variable for inputs to reduce repeat code
-  const inputStyle =
-    'border w-full h-10 p-2 rounded-sm focus:outline-0 focus:border-lime-500 focus:border-2';
-  // Error border
-  const errorBorder = 'border-red-500';
-  // Normal border
-  const normalBorder = 'border-gray-400';
 
   // Allows the user to use the enter key to activate the Sign Up button
   function handleKeyDown(e) {
@@ -65,7 +65,7 @@ function SignupForm({
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder='First Name'
-            className={`${inputStyle}`}
+            className={`${inputStyle} ${errorStatus.firstname ? errorBorder : normalBorder}`}
           />
 
           <input
@@ -76,7 +76,7 @@ function SignupForm({
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder='Last Name'
-            className={`${inputStyle}`}
+            className={`${inputStyle} ${errorStatus.lastname ? errorBorder : normalBorder}`}
           />
 
           <input
@@ -87,7 +87,8 @@ function SignupForm({
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder='Email'
-            className={`${inputStyle}`}
+            className={`${inputStyle} ${errorStatus.email ? errorBorder : normalBorder}`}
+            autoComplete='off'
           />
 
           <input
@@ -96,7 +97,7 @@ function SignupForm({
             id='date_of_birth'
             value={userSignUp.date_of_birth}
             onChange={handleDate}
-            className={`${inputStyle}`}
+            className={`${inputStyle} ${errorStatus.date_of_birth ? errorBorder : normalBorder}`}
             placeholder='Date of Birth'
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -110,7 +111,7 @@ function SignupForm({
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             placeholder='Username'
-            className={`${inputStyle}`}
+            className={`${inputStyle} ${errorStatus.username ? errorBorder : normalBorder}`}
           />
 
           <input
@@ -122,7 +123,7 @@ function SignupForm({
             onKeyDown={handleKeyDown}
             placeholder='Password'
             autoComplete='off'
-            className={`${inputStyle}`}
+            className={`${inputStyle} ${errorStatus.password ? errorBorder : normalBorder}`}
           />
 
           <input
@@ -134,7 +135,7 @@ function SignupForm({
             onKeyDown={handleKeyDown}
             placeholder='Confirm Password'
             autoComplete='off'
-            className={`${inputStyle}`}
+            className={`${inputStyle} ${errorStatus.confirmPassword ? errorBorder : normalBorder}`}
           />
         </div>
         <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
