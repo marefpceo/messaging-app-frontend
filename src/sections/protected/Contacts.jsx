@@ -7,7 +7,6 @@ import {
 import HomeNav from '../../components/HomeNav';
 import InterfaceHeader from '../../components/InterfaceHeader';
 import ContactList from '../../components/ContactList';
-import CircularProgress from '@mui/material/CircularProgress';
 import Button from '../../components/Button';
 
 function Contacts() {
@@ -45,7 +44,6 @@ function Contacts() {
 
         if (userList.ok) {
           setUserContacts(userListData);
-          console.log(userContacts);
         }
       } catch (error) {
         console.error(error);
@@ -82,7 +80,6 @@ function Contacts() {
         const filteredFullList = fullListData.filter(
           (item) => item['id'] !== user.id,
         );
-        console.log(fullListData);
         // Removes contacts that are already on the user's contact list
         if (userContacts.length > 0) {
           const filteredFullWithUserList = filteredFullList.filter(
@@ -105,8 +102,7 @@ function Contacts() {
     <>
       {isLoading ? (
         <div className='flex flex-col flex-1 justify-center items-center'>
-          <CircularProgress />
-          <p>Loading</p>
+          <p>Loading...</p>
         </div>
       ) : (
         <section

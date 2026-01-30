@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import App from '../pages/App';
+import ProtectedInterface from '../pages/ProtectedInterface';
 import Signup from '../sections/Signup';
 import Login from '../sections/Login';
-import ProtectedInterface from '../pages/ProtectedInterface';
 import Home from '../sections/protected/Home';
 import Contacts from '../sections/protected/Contacts';
 import Chat from '../sections/protected/Chat';

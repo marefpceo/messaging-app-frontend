@@ -18,7 +18,7 @@ function LoginForm({ userInput, handleChange, handleClick, loginError }) {
 
   return (
     <div
-      className='flex flex-col p-6 w-11/12 rounded-md shadow-[0_0_5px_0] shadow-gray-400 sm:w-1/2 
+      className='flex flex-col p-6 w-11/12 rounded-md shadow-[0_0_5px_0] text-black shadow-gray-400 sm:w-1/2 
       md:w-2/5 xl:w-1/4'
     >
       <h1 className='text-2xl'>Login</h1>

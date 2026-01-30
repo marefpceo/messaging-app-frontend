@@ -1,11 +1,11 @@
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router';
 import homeIcon from '../assets/homeIcon.png';
 import contactsIcon from '../assets/contactsIcon.png';
 import commentsSolidFull from '../assets/commentsSolidFull.png';
 import settingsIcon from '../assets/settingsIcon.png';
 import logoutIcon from '../assets/logoutIcon.png';
-import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
 
 function HomeNav() {
   const { logout } = useContext(AuthContext);

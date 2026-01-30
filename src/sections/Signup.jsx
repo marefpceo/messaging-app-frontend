@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import { Navigate, useNavigate } from 'react-router';
+import { AuthContext } from '../contexts/AuthContext';
 import SignupForm from '../components/SignupForm';
 import SignupErrorModal from '../components/SignupErrorModal';
-import { AuthContext } from '../contexts/AuthContext';
 import { signupService } from '../api/apiAuthServices/authServices';
 
 const newUserObject = {
@@ -68,7 +68,6 @@ function Signup() {
     try {
       const response = await signupService({ userSignUp });
 
-      console.log(response.status);
       const responseData = await response.json();
       if (response.status === 400) {
         // setErrorStatus(initializeErrorStatus);
@@ -82,7 +81,7 @@ function Signup() {
         navigate('/user', { replace: true });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 import InterfaceHeader from '../../components/InterfaceHeader';
@@ -11,15 +11,6 @@ import gearSolidFull from '../../assets/gearSolidFull.png';
 function Home() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [userSettings, setUserSettings] = useState();
-
-  useEffect(() => {
-    if (localStorage.length === 0) {
-      return;
-    }
-    setUserSettings({ ...JSON.parse(localStorage.getItem('settings')) });
-    console.log(userSettings);
-  }, [user]);
 
   return (
     <>
