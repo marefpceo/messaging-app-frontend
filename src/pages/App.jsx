@@ -5,8 +5,8 @@ import Header from '../sections/Header';
 function App() {
   return (
     <div className='flex flex-col h-svh overflow-auto'>
+      <Header />
       <AuthProvider>
-        <Header />
         <Outlet />
       </AuthProvider>
     </div>
