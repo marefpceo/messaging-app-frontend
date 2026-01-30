@@ -1,6 +1,10 @@
 @layer theme, base, mui, components, utilities;
 @import 'tailwindcss';
 
+@theme {
+  --color-customGreen: #f5fff5;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
