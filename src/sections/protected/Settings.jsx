@@ -1,26 +1,17 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { profileInfoService } from '../../api/apiContactServices/contactServices';
 import { updateProfileService } from '../../api/apiSettingsServices/settingServices';
 import HomeNav from '../../components/HomeNav';
+import Button from '../../components/Button';
 import InterfaceHeader from '../../components/InterfaceHeader';
-import Divider from '@mui/material/Divider';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import BackgroundColorSelector from '../../components/BackgroundColorSelector';
-import FontColorSelector from '../../components/FontColorSelector';
-import FontSizeSelector from '../../components/FontSizeSelector';
-import EditBioModal from '../../components/EditBioModal';
-import CircularProgress from '@mui/material/CircularProgress';
+import userSolidFull from '../../assets/userSolidFull.png';
 
 function Settings() {
+  const inputRef = useRef(null);
   const { user } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedFontColor, setSelectedFontColor] = useState('');
-  const [selectedFontSize, setSelectedFontSize] = useState('');
-  const [settingsChange, setSettingsChange] = useState(false);
   const [currentBio, setCurrentBio] = useState('');
   const [open, setOpen] = useState(false);
   const [updated, setUpdated] = useState(false);
@@ -34,9 +25,6 @@ function Settings() {
 
         if (response.status === 200) {
           setUserInfo(responseData);
-          setSelectedColor(responseData.background);
-          setSelectedFontColor(responseData.color);
-          setSelectedFontSize(responseData.font);
           setCurrentBio(responseData.bio);
         }
       } catch (error) {
@@ -49,8 +37,19 @@ function Settings() {
     getUserInfo();
   }, [updated]);
 
+  useEffect(() => {
+    // Verifies the modal is open then apply focus on the input
+    if (open && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [open]);
+
   function handleOpen() {
-    setOpen(true);
+    if (!open) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
   }
 
   function handleChange(e) {
@@ -59,20 +58,14 @@ function Settings() {
 
   async function updateSettings() {
     try {
-      const response = await updateProfileService(
-        user.id,
-        currentBio,
-        selectedColor,
-        selectedFontSize,
-        selectedFontColor,
-      );
+      handleOpen();
+      const response = await updateProfileService(user.id, currentBio);
 
       if (response.status === 200) {
         if (open) {
           setOpen(false);
         }
         setUpdated(true);
-        setSettingsChange(false);
       }
     } catch (error) {
       console.error(error);
@@ -83,70 +76,44 @@ function Settings() {
     <>
       {isLoading ? (
         <div className='flex flex-col flex-1 justify-center items-center self-center'>
-          <CircularProgress />
           <p>. . . Loading</p>
         </div>
       ) : (
-        <section
-          className={`flex flex-1 flex-col overflow-scroll p-2 ${selectedColor} ${selectedFontColor} ${selectedFontSize}`}
-        >
-          <EditBioModal
-            currentBio={currentBio}
-            open={open}
-            setOpen={setOpen}
-            updateBio={updateSettings}
-            handleChange={handleChange}
-          />
+        <section className={`flex flex-1 flex-col overflow-scroll p-2`}>
           <InterfaceHeader title={'Settings'} user={user} />
 
           <div className='user-profile flex flex-col justify-center'>
-            <div className='flex justify-between items-center'>
-              <Avatar sx={{ width: 100, height: 100 }} />
+            <div className='mt-12 flex justify-between items-center'>
+              <div className='p-5 bg-lime-400 rounded-full'>
+                <img src={userSolidFull} alt='Profile avatar' width={44} />
+              </div>
               <p className='mr-16 text-2xl'>
                 {userInfo.firstname} {userInfo.lastname}
               </p>
             </div>
-            <div className='bio my-8'>
-              <p>{userInfo.bio}</p>
+            <div className='bio my-8 bg-gray-50'>
+              <input
+                ref={inputRef}
+                type='text'
+                name='bio'
+                id='bio'
+                className='min-w-full p-2 focus:bg-white'
+                value={currentBio}
+                onChange={handleChange}
+                disabled={open === true ? false : true}
+              />
             </div>
           </div>
           <Button
-            variant='contained'
-            fullWidth='false'
-            className='w-1/3 self-end bg-green-600'
+            type={'button'}
+            settings={`w-36 p-2 self-end bg-green-600 text-white rounded-lg ${open ? 'hidden' : 'block'}`}
             onClick={handleOpen}
           >
-            Edit Bio
+            Edit Status
           </Button>
-
-          <Divider className='my-6 bg-slate-500' />
-
-          <div className='user-settings flex flex-col justify-between gap-4'>
-            <BackgroundColorSelector
-              selectedColor={selectedColor}
-              setSelectedColor={setSelectedColor}
-              setSettingsChange={setSettingsChange}
-              settingsChange={settingsChange}
-            />
-            <FontColorSelector
-              selectedFontColor={selectedFontColor}
-              setSelectedFontColor={setSelectedFontColor}
-              setSettingsChange={setSettingsChange}
-              settingsChange={settingsChange}
-            />
-            <FontSizeSelector
-              selectedFontSize={selectedFontSize}
-              setSelectedFontSize={setSelectedFontSize}
-              setSettingsChange={setSettingsChange}
-              settingsChange={settingsChange}
-            />
-          </div>
-
           <Button
-            variant='contained'
-            fullWidth='false'
-            className={`w-1/3 self-end mt-4 ${settingsChange === false ? '' : 'bg-green-600'}`}
-            disabled={settingsChange === false ? true : false}
+            type={'button'}
+            settings={`w-36 p-2 self-end bg-green-600 text-white rounded-lg ${open ? 'block' : 'hidden'}`}
             onClick={updateSettings}
           >
             Save
