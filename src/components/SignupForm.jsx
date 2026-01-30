@@ -1,0 +1,171 @@
+import { useState } from 'react';
+import { Link } from 'react-router';
+import Button from './Button';
+
+// Form input base styling
+const inputStyle =
+  'border w-full h-10 p-2 rounded-sm focus:outline-0  focus:border-2';
+// Error border
+const errorBorder = 'border-red-500';
+// Normal border
+const normalBorder = 'border-gray-400 focus:border-lime-500';
+
+function SignupForm({
+  userSignUp,
+  setUserSignUp,
+  errorStatus,
+  handleChange,
+  handleClick,
+}) {
+  const [inputType, setInputType] = useState('text');
+  const hasEmptyString = Object.values(userSignUp).some(
+    (value) => typeof value === 'string' && value === '',
+  );
+
+  // Allows the user to use the enter key to activate the Sign Up button
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
+  }
+
+  // Sets the date based on the user calendar selection
+  function handleDate(e) {
+    const date = e.target.value;
+
+    setUserSignUp({
+      ...userSignUp,
+      date_of_birth: date,
+    });
+  }
+
+  // Changes the Date of Birth input to type='Date' when in focus
+  function handleFocus() {
+    setInputType('date');
+  }
+
+  // Changes the Date of Birth input back to type='Text' if no date was selected
+  function handleBlur() {
+    if (userSignUp.date_of_birth === '') {
+      setInputType('text');
+    }
+  }
+
+  return (
+    <div className='flex flex-col w-11/12 p-6 rounded-2xl shadow-gray-400/50 shadow-[0_0_8px_0px]'>
+      <h1 className='text-2xl'>Sign up</h1>
+
+      <form>
+        <div className='inputDiv mt-4 flex flex-col gap-3'>
+          <input
+            type='text'
+            name='firstname'
+            id='firstname'
+            value={userSignUp.firstname}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder='First Name'
+            className={`${inputStyle} ${errorStatus.firstname ? errorBorder : normalBorder}`}
+          />
+
+          <input
+            type='text'
+            name='lastname'
+            id='lastname'
+            value={userSignUp.lastname}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder='Last Name'
+            className={`${inputStyle} ${errorStatus.lastname ? errorBorder : normalBorder}`}
+          />
+
+          <input
+            type='email'
+            name='email'
+            id='email'
+            value={userSignUp.email}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder='Email'
+            className={`${inputStyle} ${errorStatus.email ? errorBorder : normalBorder}`}
+            autoComplete='off'
+          />
+
+          <input
+            type={inputType}
+            name='date_of_birth'
+            id='date_of_birth'
+            value={userSignUp.date_of_birth}
+            onChange={handleDate}
+            className={`${inputStyle} ${errorStatus.date_of_birth ? errorBorder : normalBorder}`}
+            placeholder='Date of Birth'
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+          />
+
+          <input
+            type='text'
+            name='username'
+            id='username'
+            value={userSignUp.username}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder='Username'
+            className={`${inputStyle} ${errorStatus.username ? errorBorder : normalBorder}`}
+          />
+
+          <input
+            type='password'
+            name='password'
+            id='password'
+            value={userSignUp.password}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder='Password'
+            autoComplete='off'
+            className={`${inputStyle} ${errorStatus.password ? errorBorder : normalBorder}`}
+          />
+
+          <input
+            type='password'
+            name='confirmPassword'
+            id='confirmPassword'
+            value={userSignUp.confirmPassword}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder='Confirm Password'
+            autoComplete='off'
+            className={`${inputStyle} ${errorStatus.confirmPassword ? errorBorder : normalBorder}`}
+          />
+        </div>
+        <div className='buttonDiv mt-12 mb-6 flex flex-col justify-evenly'>
+          <Button
+            disabled={hasEmptyString}
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            settings={`w-full h-8 rounded-sm text-white ${hasEmptyString ? 'bg-gray-300' : 'bg-green-500'}`}
+            type={'button'}
+          >
+            SIGN UP
+          </Button>
+        </div>
+      </form>
+
+      <span className='flex justify-between items-center text-gray-300'>
+        <hr className='w-1/2' /> <p className='mx-3 text-black'>or</p>{' '}
+        <hr className='w-1/2' />
+      </span>
+
+      <div className='mt-8 text-center'>
+        <p>
+          Already have an account? &nbsp;
+          <Link to='/login' className='underline text-blue-600'>
+            Login
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default SignupForm;

@@ -1,14 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import App from '../pages/App';
+import ProtectedInterface from '../pages/ProtectedInterface';
 import Signup from '../sections/Signup';
 import Login from '../sections/Login';
-import ProtectedInterface from '../pages/ProtectedInterface';
 import Home from '../sections/protected/Home';
 import Contacts from '../sections/protected/Contacts';
 import Chat from '../sections/protected/Chat';
 import Settings from '../sections/protected/Settings';
-import Messages from '../sections/protected/Messages';
-import Conversations from '../sections/protected/Conversations';
+import ChatBox from '../sections/protected/ChatBox';
 
 function Router() {
   const router = createBrowserRouter([
@@ -35,8 +34,7 @@ function Router() {
               path: 'chat',
               element: <Chat />,
               children: [
-                { index: true, element: <Conversations /> },
-                { path: 'messages', element: <Messages /> },
+                { path: '/user/chat/:username', element: <ChatBox /> },
               ],
             },
             { path: 'settings', element: <Settings /> },

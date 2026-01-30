@@ -1,12 +1,12 @@
-import { Navigate, useNavigate } from 'react-router';
-import LoginForm from '../components/login_components/LoginForm';
 import { useContext, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
+import LoginForm from '../components/LoginForm';
 import { loginService } from '../api/apiAuthServices/authServices';
 
 function Login() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [userInput, setUserInput] = useState({
     email: '',
     password: '',

@@ -1,13 +1,9 @@
-import logoNameVertical from '../assets/mchat-name-vertical-160.png';
+import logoNameVertical from '../assets/mchat-logo-small.png';
 
 function Header() {
   return (
     <header className='m-4'>
-      <img
-        src={logoNameVertical}
-        alt='mChat logo with name'
-        className='w-auto'
-      />
+      <img src={logoNameVertical} alt='mChat logo' width={160} />
     </header>
   );
 }

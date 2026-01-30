@@ -1,7 +1,6 @@
-import { Outlet, Navigate, useLocation } from 'react-router';
 import { useContext } from 'react';
+import { Outlet, Navigate, useLocation } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
-import CircularProgress from '@mui/material/CircularProgress';
 
 function ProtectedInterface() {
   const location = useLocation();
@@ -10,7 +9,6 @@ function ProtectedInterface() {
 
   return isLoading ? (
     <div className='flex flex-col flex-1 justify-center items-center'>
-      <CircularProgress />
       Loading. . .
     </div>
   ) : isAuthenticated ? (

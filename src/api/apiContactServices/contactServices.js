@@ -21,7 +21,7 @@ export async function fullListService() {
 export async function userListService(username) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/contact/${username}/contact_list`,
+      `${import.meta.env.VITE_API_BASE_URL}/contact/${username}/contact-list`,
       {
         credentials: 'include',
         headers: {
@@ -40,7 +40,7 @@ export async function userListService(username) {
 export async function profileInfoService(userId) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/user/${userId}/edit_profile`,
+      `${import.meta.env.VITE_API_BASE_URL}/user/${userId}/edit-profile`,
       {
         credentials: 'include',
       },

@@ -1,5 +1,9 @@
-@layer theme, base, mui, components, utilites;
+@layer theme, base, mui, components, utilities;
 @import 'tailwindcss';
+
+@theme {
+  --color-customGreen: #f5fff5;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -7,7 +11,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: black;
   background-color: #242424;
 
   font-synthesis: none;

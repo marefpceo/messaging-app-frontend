@@ -4,76 +4,97 @@ import {
   fullListService,
   userListService,
 } from '../../api/apiContactServices/contactServices';
-import HomeNav from '../../components/global_components/HomeNav';
-import InterfaceHeader from '../../components/global_components/InterfaceHeader';
-import TabPanel from '../../components/contacts_components/TabPanel';
-import ContactList from '../../components/contacts_components/ContactList';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import CircularProgress from '@mui/material/CircularProgress';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import ToggleButton from '@mui/material/ToggleButton';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import GridView from '@mui/icons-material/GridView';
+import HomeNav from '../../components/HomeNav';
+import InterfaceHeader from '../../components/InterfaceHeader';
+import ContactList from '../../components/ContactList';
+import Button from '../../components/Button';
 
 function Contacts() {
   const { user } = useContext(AuthContext);
-  const [value, setValue] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [fullList, setFullList] = useState([]);
-  const [userContacts, setUserContacts] = useState();
-  const [currentView, setCurrentView] = useState('list');
+  const [userContacts, setUserContacts] = useState({});
   const [shouldReload, setShouldReload] = useState(false);
+  const [isListTypeFull, setIsListTypeFull] = useState(false);
 
   useEffect(() => {
-    async function getContacts() {
-      try {
-        const [fullList, userList] = await Promise.all([
-          fullListService(),
-          userListService(user.username),
-        ]);
+    if (shouldReload === true) {
+      if (userContacts.length > 0) {
+        const filteredFullWithUserList = fullList.filter(
+          (fullFiltered) =>
+            !userContacts.some(
+              (userObjects) => userObjects.id === fullFiltered.id,
+            ),
+        );
+        setFullList(filteredFullWithUserList);
+      }
+      setShouldReload(false);
+    } else {
+      return;
+    }
+  }, [shouldReload]);
 
-        const fullListData = await fullList.json();
+  // Get list of user contacts
+  useEffect(() => {
+    async function getUserContacts() {
+      try {
+        const userList = await userListService(user.username);
+
         const userListData = await userList.json();
 
-        if (fullList.ok && userList.ok) {
-          // Removes current user from All contacts list
-          const filteredFullList = fullListData.filter(
-            (item) => item['id'] !== user.id,
-          );
-
-          // Removes contacts of the current user
-          if (userListData.length > 0) {
-            const filteredFullWithUserList = filteredFullList.filter(
-              (fullFiltered) =>
-                !userListData.some(
-                  (userObjects) => userObjects.id === fullFiltered.id,
-                ),
-            );
-            setFullList(filteredFullWithUserList);
-            setValue(0);
-          } else {
-            setFullList(filteredFullList);
-          }
+        if (userList.ok) {
           setUserContacts(userListData);
         }
       } catch (error) {
         console.error(error);
       } finally {
         setIsLoading(false);
-        setShouldReload(false);
       }
     }
-    getContacts();
+    getUserContacts();
   }, [user.id, shouldReload]);
 
-  function handleChange(e, newValue) {
-    setValue(newValue);
+  // Toggles list view from user list to global list
+  function handleClick() {
+    if (isListTypeFull === true) {
+      setIsListTypeFull(false);
+    } else {
+      setIsListTypeFull(true);
+      // Contact list is only fetched if fullList is empty
+      if (fullList.length === 0) {
+        getGlobalContactList();
+      }
+    }
+    setShouldReload(true);
   }
 
-  function handleView(e, newView) {
-    if (newView !== null) {
-      setCurrentView(newView);
+  // Return global contact list
+  async function getGlobalContactList() {
+    try {
+      const fullList = await fullListService();
+
+      if (fullList.ok) {
+        const fullListData = await fullList.json();
+
+        // Removes the current user from the list
+        const filteredFullList = fullListData.filter(
+          (item) => item['id'] !== user.id,
+        );
+        // Removes contacts that are already on the user's contact list
+        if (userContacts.length > 0) {
+          const filteredFullWithUserList = filteredFullList.filter(
+            (fullFiltered) =>
+              !userContacts.some(
+                (userObjects) => userObjects.id === fullFiltered.id,
+              ),
+          );
+          setFullList(filteredFullWithUserList);
+        } else {
+          setFullList(filteredFullList);
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -81,8 +102,7 @@ function Contacts() {
     <>
       {isLoading ? (
         <div className='flex flex-col flex-1 justify-center items-center'>
-          <CircularProgress />
-          <p>Loading</p>
+          <p>Loading...</p>
         </div>
       ) : (
         <section
@@ -90,56 +110,37 @@ function Contacts() {
             ${user.settings.font}`}
         >
           <InterfaceHeader title={'Contacts'} user={user} />
-
-          <ToggleButtonGroup
-            value={currentView}
-            exclusive
-            onChange={handleView}
-            aria-label='contact list view'
-            className='mt-2'
+          <Button
+            settings={`mt-2 p-1 w-1/3 rounded self-center bg-${isListTypeFull === true ? 'lime-500' : 'gray-300'}`}
+            onClick={handleClick}
           >
-            <ToggleButton value={'list'} aria-label='list view'>
-              <ViewListIcon />
-            </ToggleButton>
-            <ToggleButton value={'icon'} aria-label='icon view'>
-              <GridView />
-            </ToggleButton>
-          </ToggleButtonGroup>
-
-          <div className='contact-tabs mt-4 flex justify-center'>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label='contact tabs'
-            >
-              <Tab label='My Contacts' />
-              <Tab label='All' />
-            </Tabs>
-          </div>
-
-          <TabPanel value={value} index={0}>
-            {typeof userContacts !== 'object' ? (
-              <div className='flex justify-center'>
-                <p className='mt-24'>No saved contacts</p>
+            {isListTypeFull === true ? 'My Contacts' : 'Add Contacts'}
+          </Button>
+          <div className={`${isListTypeFull === true ? 'hidden' : ''}`}>
+            {userContacts.length === 0 ? (
+              <div className='mt-44 flex justify-center'>
+                <p>Add contacts to start chatting</p>
               </div>
             ) : (
               <ContactList
                 list={userContacts}
-                currentView={currentView}
+                currentView={'list'}
                 isListTypeFull={false}
                 setShouldReload={setShouldReload}
+                setIsListTypeFull={setIsListTypeFull}
+                key={shouldReload}
               />
             )}
-          </TabPanel>
-
-          <TabPanel value={value} index={1}>
+          </div>
+          <div className={`${isListTypeFull === true ? '' : 'hidden'}`}>
             <ContactList
               list={fullList}
-              currentView={currentView}
+              currentView={'list'}
               isListTypeFull={true}
               setShouldReload={setShouldReload}
+              key={shouldReload}
             />
-          </TabPanel>
+          </div>
         </section>
       )}
       <HomeNav />
