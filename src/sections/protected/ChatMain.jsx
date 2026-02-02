@@ -26,7 +26,6 @@ function ChatMain() {
     getUserList();
   }, [user.id]);
 
-  console.log(userList);
   return (
     <section className='h-full flex flex-col *:flex-1'>
       <div className='p-4'>

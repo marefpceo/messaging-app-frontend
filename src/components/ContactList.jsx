@@ -54,7 +54,13 @@ function ContactList({ list, isListTypeFull, setShouldReload }) {
               className={`my-4 mx-2 grid grid-cols-2 overflow-scroll`}
               id={contact.id}
             >
-              <Link to={`/user/chat/${contact.username}`}>
+              <Link
+                to={`/user/chat/${contact.username}`}
+                state={{
+                  contactId: contact.id,
+                  contactUsername: contact.username,
+                }}
+              >
                 <div className='flex gap-8 items-center'>
                   <Avatar />
                   <p>
