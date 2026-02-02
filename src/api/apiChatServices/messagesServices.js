@@ -39,7 +39,6 @@ export async function getContactsService(username) {
 // API call to create a new message
 export async function createMessageService(
   username,
-  subjectInput,
   messageDraftInput,
   userIdInput,
   recipientIdInput,
@@ -54,7 +53,6 @@ export async function createMessageService(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          subject: subjectInput,
           context: messageDraftInput,
           senderId: userIdInput,
           recipientId: recipientIdInput,
@@ -71,7 +69,6 @@ export async function createMessageService(
 // API call to delete message from current user's view
 export async function deleteMessageService(
   username,
-  conversationIdInput,
   messageIdList,
   userIdInput,
 ) {
@@ -85,7 +82,6 @@ export async function deleteMessageService(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          conversationId: conversationIdInput,
           messageIdList: messageIdList,
           userId: `${userIdInput}`,
         }),

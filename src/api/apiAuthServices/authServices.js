@@ -4,6 +4,9 @@ export async function verifySessionService() {
       `${import.meta.env.VITE_API_BASE_URL}/session-status`,
       {
         credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
     );
     return response;

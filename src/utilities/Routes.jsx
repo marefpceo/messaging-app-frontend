@@ -8,6 +8,7 @@ import Contacts from '../sections/protected/Contacts';
 import Chat from '../sections/protected/Chat';
 import Settings from '../sections/protected/Settings';
 import ChatBox from '../sections/protected/ChatBox';
+import ChatMain from '../sections/protected/ChatMain';
 
 function Router() {
   const router = createBrowserRouter([
@@ -34,6 +35,7 @@ function Router() {
               path: 'chat',
               element: <Chat />,
               children: [
+                { index: true, element: <ChatMain /> },
                 { path: '/user/chat/:username', element: <ChatBox /> },
               ],
             },
