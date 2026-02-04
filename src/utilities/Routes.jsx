@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
+import RootErrorBoundary from './RootErrorBoundary';
 import App from '../pages/App';
 import ProtectedInterface from '../pages/ProtectedInterface';
 import Signup from '../sections/Signup';
@@ -15,6 +16,7 @@ function Router() {
     {
       path: '/',
       element: <App />,
+      ErrorBoundary: RootErrorBoundary,
       children: [
         { index: true, Component: Login },
         {
