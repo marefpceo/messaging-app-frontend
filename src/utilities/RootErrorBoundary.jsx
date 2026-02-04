@@ -1,15 +1,36 @@
-import { isRouteErrorResponse, useRouteError } from 'react-router';
+import { isRouteErrorResponse, useRouteError, useNavigate } from 'react-router';
+import Button from '../components/Button';
+import mchatLogoLarge from '../assets/mchat-logo-large.png';
 
 function RootErrorBoundary() {
+  const navigate = useNavigate();
   const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {
     return (
       <>
-        <h1>
-          {error.status} {error.statusText}
-        </h1>
-        <p>{error.data}</p>
+        <div className='h-lvh flex flex-col flex-1 gap-8 justify-center items-center'>
+          <img
+            src={mchatLogoLarge}
+            alt='Mchat messaging logo'
+            width={299}
+            height={110}
+          />
+          <h1 className='text-3xl'>
+            {error.status} {error.statusText}
+          </h1>
+          <p>{error.data}</p>
+          <Button
+            type={'button'}
+            onClick={() => navigate(-1)}
+            disabled={false}
+            settings={
+              'w-24 p-3 rounded-md shadow-md shadow-black bg-customLimeAccent'
+            }
+          >
+            Return
+          </Button>
+        </div>
       </>
     );
   } else if (error instanceof Error) {
