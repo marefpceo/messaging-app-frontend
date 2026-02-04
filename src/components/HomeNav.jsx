@@ -7,6 +7,9 @@ import commentsSolidFull from '../assets/commentsSolidFull.png';
 import settingsIcon from '../assets/settingsIcon.png';
 import logoutIcon from '../assets/logoutIcon.png';
 
+const buttonStyle =
+  'flex rounded-full hover:cursor-pointer hover:bg-customLimeAccent/50 hover:scale-75';
+
 function HomeNav() {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -14,7 +17,7 @@ function HomeNav() {
   return (
     <nav className='h-14 px-1 pt-2 flex justify-between *:flex-col *:justify-evenly *:items-center *:text-sm *:w-1/5'>
       <div
-        className='homeBtn flex'
+        className={`homeBtn ${buttonStyle}`}
         onClick={() => {
           navigate('/user');
         }}
@@ -23,7 +26,7 @@ function HomeNav() {
       </div>
 
       <div
-        className='contactBtn flex'
+        className={`contactBtn ${buttonStyle}`}
         onClick={() => {
           navigate('/user/contacts');
         }}
@@ -32,7 +35,7 @@ function HomeNav() {
       </div>
 
       <div
-        className='chatBtn flex'
+        className={`chatBtn ${buttonStyle}`}
         onClick={() => {
           navigate('/user/chat');
         }}
@@ -41,7 +44,7 @@ function HomeNav() {
       </div>
 
       <div
-        className='settingBtn flex'
+        className={`settingBtn ${buttonStyle}`}
         onClick={() => {
           navigate('/user/settings');
         }}
@@ -49,7 +52,7 @@ function HomeNav() {
         <img src={settingsIcon} alt='Settings icon' width={27} />
       </div>
 
-      <div className='logoutBtn flex' onClick={logout}>
+      <div className={`logoutBtn ${buttonStyle}`} onClick={logout}>
         <img src={logoutIcon} alt='Logout icon' width={27} />
       </div>
     </nav>

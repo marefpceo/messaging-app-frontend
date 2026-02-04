@@ -51,7 +51,7 @@ function ContactList({ list, isListTypeFull, setShouldReload }) {
           list.map((contact) => (
             <div
               key={contact.id}
-              className={`my-4 mx-2 grid grid-cols-2 overflow-scroll`}
+              className={`my-4 mx-2 grid grid-cols-2`}
               id={contact.id}
             >
               <Link

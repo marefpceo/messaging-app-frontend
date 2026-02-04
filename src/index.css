@@ -2,6 +2,18 @@
 
 @theme {
   --color-customGreen: #f5fff5;
+  --color-customLimeAccent: #09e700;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 :root {
@@ -19,9 +31,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* root at 60% to prevent the layout from creating too much space on larger screens */
 #root {
-  width: 100%;
+  width: 60%;
   max-height: 100svh;
+  margin: auto;
 }
 
 body {
@@ -30,14 +44,23 @@ body {
   background-color: #f5fff5;
 }
 
+/* Display everything below 500px at full width */
+@media only screen and (max-width: 500px) {
+  #root {
+    width: 100%;
+  }
+}
+
+/* Display everything above 700px at half width */
 @media only screen and (min-width: 700px) {
-  body {
+  #root {
     width: 50%;
   }
 }
 
-@media only screen and (min-width: 701px) {
-  body {
-    width: 40%;
+/* Display everything above 1028px at 35% */
+@media only screen and (min-width: 1028px) {
+  #root {
+    width: 35%;
   }
 }

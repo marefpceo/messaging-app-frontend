@@ -98,7 +98,7 @@ function ChatBox() {
         className='h-full flex flex-col pb-4 shadow-[inset_0_0_8px_0] rounded-md shadow-gray-300 
         bg-gray-50'
       >
-        <div className='chatDiv h-full p-4 flex flex-col-reverse overflow-scroll *:rounded-md'>
+        <div className='chatDiv h-full p-4 flex flex-col-reverse overflow-scroll no-scrollbar *:rounded-md'>
           {
             // Iterate through the list of messages.
             messages.map((message) => (

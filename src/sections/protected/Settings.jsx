@@ -79,7 +79,9 @@ function Settings() {
           <p>. . . Loading</p>
         </div>
       ) : (
-        <section className={`flex flex-1 flex-col overflow-scroll p-2`}>
+        <section
+          className={`flex flex-1 flex-col overflow-scroll no-scrollbar p-2`}
+        >
           <InterfaceHeader title={'Settings'} user={user} />
 
           <div className='user-profile flex flex-col justify-center'>
