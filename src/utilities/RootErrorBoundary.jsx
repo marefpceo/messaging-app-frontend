@@ -6,6 +6,7 @@ function RootErrorBoundary() {
   const navigate = useNavigate();
   const error = useRouteError();
 
+  // Checks if the error is generated from a 4xx/5xx response thrown from an action loader or function
   if (isRouteErrorResponse(error)) {
     return (
       <>
@@ -33,17 +34,57 @@ function RootErrorBoundary() {
         </div>
       </>
     );
+    // Handles component rendering errors
   } else if (error instanceof Error) {
     return (
-      <div>
-        <h1>Error</h1>
+      <div className='h-lvh flex flex-col flex-1 gap-8 justify-center items-center'>
+        <img
+          src={mchatLogoLarge}
+          alt='Mchat messaging logo'
+          width={299}
+          height={110}
+        />
+        <h1 className='text-3xl'>Error</h1>
         <p>{error.message}</p>
+        <Button
+          type={'button'}
+          onClick={() => navigate(-1)}
+          disabled={false}
+          settings={
+            'w-24 p-3 rounded-md shadow-md shadow-black bg-customLimeAccent'
+          }
+        >
+          Return
+        </Button>
         <p>The stack trace is:</p>
         <pre>{error.stack}</pre>
       </div>
     );
   } else {
-    return <h1>Unknown Error</h1>;
+    return (
+      <div className='h-lvh flex flex-col flex-1 gap-8 justify-center items-center'>
+        <img
+          src={mchatLogoLarge}
+          alt='Mchat messaging logo'
+          width={299}
+          height={110}
+        />
+        <h1 className='text-3xl'>Unknown Error</h1>
+        <p>
+          Try again later or contact site administrator if problem persists.
+        </p>
+        <Button
+          type={'button'}
+          onClick={() => navigate(-1)}
+          disabled={false}
+          settings={
+            'w-24 p-3 rounded-md shadow-md shadow-black bg-customLimeAccent'
+          }
+        >
+          Return
+        </Button>
+      </div>
+    );
   }
 }
 
