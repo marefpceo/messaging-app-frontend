@@ -14,7 +14,7 @@ function Contacts() {
   const [isLoading, setIsLoading] = useState(true);
   const [fullList, setFullList] = useState([]);
   const [userContacts, setUserContacts] = useState({});
-  const [shouldReload, setShouldReload] = useState(false);
+  const [shouldReload, setShouldReload] = useState();
   const [isListTypeFull, setIsListTypeFull] = useState(false);
 
   useEffect(() => {

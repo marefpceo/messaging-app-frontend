@@ -20,7 +20,7 @@ function RootErrorBoundary() {
           <h1 className='text-3xl'>
             {error.status} {error.statusText}
           </h1>
-          <p>{error.data}</p>
+          <p>Check that the URL is correct.</p>
           <Button
             type={'button'}
             onClick={() => navigate(-1)}
@@ -45,7 +45,9 @@ function RootErrorBoundary() {
           height={110}
         />
         <h1 className='text-3xl'>Error</h1>
-        <p>{error.message}</p>
+        <p>
+          Try again later or contact site administrator if problem persists.
+        </p>
         <Button
           type={'button'}
           onClick={() => navigate(-1)}
@@ -56,8 +58,6 @@ function RootErrorBoundary() {
         >
           Return
         </Button>
-        <p>The stack trace is:</p>
-        <pre>{error.stack}</pre>
       </div>
     );
   } else {
