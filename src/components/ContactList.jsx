@@ -70,7 +70,7 @@ function ContactList({ list, isListTypeFull, setShouldReload }) {
               </Link>
               <div className='ml-auto pr-2 z-40'>
                 {isListTypeFull ? (
-                  <div className='p-4'>
+                  <div className='p-4 hover:cursor-pointer'>
                     <img
                       src={userPlusSolid}
                       alt='Add user icon'
@@ -81,7 +81,7 @@ function ContactList({ list, isListTypeFull, setShouldReload }) {
                     />
                   </div>
                 ) : (
-                  <div className='p-4'>
+                  <div className='p-4 hover:cursor-pointer'>
                     <img
                       src={userMinusSolid}
                       alt='Remove user icon'

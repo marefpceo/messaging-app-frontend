@@ -106,12 +106,11 @@ function Contacts() {
         </div>
       ) : (
         <section
-          className={`flex flex-1 flex-col p-2 ${user.settings.background} ${user.settings.color} 
-            ${user.settings.font}`}
+          className={`flex flex-1 flex-col p-2 overflow-scroll no-scrollbar`}
         >
           <InterfaceHeader title={'Contacts'} user={user} />
           <Button
-            settings={`mt-2 p-1 w-1/3 rounded self-center bg-${isListTypeFull === true ? 'lime-500' : 'gray-300'}`}
+            settings={`mt-2 p-1 w-1/3 rounded self-center ${isListTypeFull === true ? 'bg-customLimeAccent' : 'bg-gray-300'}`}
             onClick={handleClick}
           >
             {isListTypeFull === true ? 'My Contacts' : 'Add Contacts'}
