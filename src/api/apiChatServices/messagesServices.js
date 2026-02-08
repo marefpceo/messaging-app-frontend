@@ -1,0 +1,101 @@
+// API call to get all messages for the current user
+export async function getMessagesService(username) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/messages`,
+      {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error fetching user messages', error);
+    throw error;
+  }
+}
+
+// API call to get list of user's contacts
+export async function getContactsService(username) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/create-message`,
+      {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error fetching user contacts', error);
+    throw error;
+  }
+}
+
+// API call to create a new message
+export async function createMessageService(
+  username,
+  messageDraftInput,
+  userIdInput,
+  recipientIdInput,
+) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/create-message`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          context: messageDraftInput,
+          senderId: userIdInput,
+          recipientId: recipientIdInput,
+        }),
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error creating new message', error);
+    throw error;
+  }
+}
+
+// API call to delete message from current user's view
+export async function deleteMessageService(
+  username,
+  messageIdList,
+  userIdInput,
+) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/message/${username}/message/delete`,
+      {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messageIdList: messageIdList,
+          userId: `${userIdInput}`,
+        }),
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error deleting message', error);
+    throw error;
+  }
+}
+
+export default {
+  getContactsService,
+  createMessageService,
+  deleteMessageService,
+};
