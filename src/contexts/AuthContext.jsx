@@ -44,8 +44,10 @@ function AuthProvider({ children }) {
       const response = await logoutService();
 
       if (response.status === 200) {
+        setUser(null);
         setIsAuthenticated(false);
         localStorage.clear();
+        sessionStorage.clear();
       }
     } catch (error) {
       console.error(error);
