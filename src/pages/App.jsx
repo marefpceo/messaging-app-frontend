@@ -1,13 +1,16 @@
-function App() {
+import { Outlet } from 'react-router';
+import { AuthProvider } from '../contexts/AuthContext';
+import Header from '../sections/Header';
 
+function App() {
   return (
-    <>
-      <div>
-        <p>mChat logo -- here --</p>
-      </div>
-      <h1>mChat Messaging</h1>
-    </>
-  )
+    <div className='flex flex-col h-svh overflow-auto'>
+      <Header />
+      <AuthProvider>
+        <Outlet />
+      </AuthProvider>
+    </div>
+  );
 }
 
-export default App
+export default App;
